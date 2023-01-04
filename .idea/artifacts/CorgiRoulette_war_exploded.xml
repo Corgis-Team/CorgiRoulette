@@ -21,6 +21,11 @@
           <element id="library" level="project" name="Maven: org.postgresql:postgresql:42.5.1" />
           <element id="library" level="project" name="Maven: org.checkerframework:checker-qual:3.5.0" />
           <element id="library" level="project" name="Maven: com.zaxxer:HikariCP:5.0.1" />
+          <element id="library" level="project" name="Maven: org.flywaydb:flyway-core:9.10.2" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-toml:2.14.0" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.14.0" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.14.0" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.14.0" />
           <element id="library" level="project" name="Maven: org.mockito:mockito-core:4.11.0" />
           <element id="library" level="project" name="Maven: net.bytebuddy:byte-buddy:1.12.19" />
           <element id="library" level="project" name="Maven: net.bytebuddy:byte-buddy-agent:1.12.19" />

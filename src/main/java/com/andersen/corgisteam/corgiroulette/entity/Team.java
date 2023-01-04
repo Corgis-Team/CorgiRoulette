@@ -7,6 +7,18 @@ public class Team {
     private long id;
     private String name;
 
+    public Team() {
+    }
+
+    public Team(String name) {
+        this.name = name;
+    }
+
+    public Team(long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public long getId() {
         return id;
     }

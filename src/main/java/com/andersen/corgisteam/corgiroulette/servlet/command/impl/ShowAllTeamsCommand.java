@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class ShowAllTeamsCommand implements Command {
-    private static final String TEAMS_SHOW_PATH = "/WEB-INF/jsp/showUsers.jsp";
+    private static final String TEAMS_SHOW_PATH = "/WEB-INF/jsp/showTeams.jsp";
 
     private final TeamService teamService;
 
@@ -20,7 +20,7 @@ public class ShowAllTeamsCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("users", teamService.getAll());
+        request.setAttribute("teams", teamService.getAll());
         request.getRequestDispatcher(TEAMS_SHOW_PATH).forward(request, response);
     }
 }

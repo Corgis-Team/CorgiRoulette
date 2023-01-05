@@ -6,7 +6,7 @@
 
 <html>
 <head>
-  <title>Add team</title>
+  <title>Edit team</title>
 </head>
 <body>
 <form action="update" method="post">

@@ -36,6 +36,25 @@ class TeamRepositoryImplTest {
         Assertions.assertThrows(QueryExecutionException.class, () -> teamRepository.save(team));
     }
 
+    @Test
+    void update() {
+        Team team = new Team("Blue");
+        teamRepository.save(team);
+        long teamId = team.getId();
+
+        Team updatedTeam = new Team(teamId, "Orange");
+        teamRepository.update(updatedTeam);
+        Team teamFromDb = teamRepository.findById(teamId);
+
+        Assertions.assertEquals(teamFromDb, updatedTeam);
+    }
+
+    @Test
+    void updateWithEmptyName() {
+        Team updatedTeam = new Team();
+        Assertions.assertThrows(QueryExecutionException.class, () -> teamRepository.update(updatedTeam));
+    }
+
     @AfterAll
     static void afterAll() {
         try {

@@ -20,6 +20,7 @@ public class TeamRepositoryImpl implements TeamRepository {
     private static final String QUERY_FOR_ALL_TEAMS = "SELECT * FROM teams";
     private static final String FIND_TEAM_BY_ID_QUERY = "SELECT * FROM teams WHERE id = ?";
     private static final String FIND_TEAM_BY_NAME_QUERY = "SELECT * FROM teams WHERE LOWER(name) LIKE LOWER(?)";
+    private static final String UPDATE_TEAM_QUERY = "UPDATE teams SET name = ? WHERE id = ?";
 
     @Override
     public Team save(Team team) {
@@ -114,7 +115,19 @@ public class TeamRepositoryImpl implements TeamRepository {
 
     @Override
     public void update(Team team) {
+        try (Connection connection = DatabaseConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_TEAM_QUERY)) {
 
+            statement.setString(1, team.getName());
+            statement.setLong(2, team.getId());
+            int affectedRows = statement.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new QueryExecutionException(String.format("Can't update team. No rows affected. Team: %s", team));
+            }
+        } catch (SQLException e) {
+            throw new QueryExecutionException(String.format("Can't update team. No rows affected. Team: %s", team), e);
+        }
     }
 
     @Override

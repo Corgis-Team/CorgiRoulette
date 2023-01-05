@@ -53,7 +53,7 @@ public class UserRepositoryImpl implements UserRepository {
 
             List<User> users = new ArrayList<>();
             while (res.next()) {
-                users.add(mapRowToTeam(res));
+                users.add(mapRowToUsers(res));
             }
 
             return users;
@@ -62,7 +62,7 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
-    private User mapRowToTeam(ResultSet res) throws SQLException {
+    private User mapRowToUsers(ResultSet res) throws SQLException {
         int id = res.getInt("id");
         String name = res.getString("name");
         String surname = res.getString("surname");

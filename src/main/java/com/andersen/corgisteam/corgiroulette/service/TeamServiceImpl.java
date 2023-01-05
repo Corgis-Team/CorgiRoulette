@@ -53,7 +53,9 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public void update(Team team) {
-
+        validate(team);
+        teamRepository.update(team);
+        log.info("Updated team with id {}", team.getId());
     }
 
     @Override

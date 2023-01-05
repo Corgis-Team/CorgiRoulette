@@ -19,7 +19,7 @@ public class CreateUserCommand implements Command {
 
     private static final String NAME_PARAMETER = "name";
     private static final String SURNAME_PARAMETER = "surname";
-    private static final String TEAM_PARAMETER = "teamId";
+    private static final String TEAM_PARAMETER = "team_id";
 
     private static final String USER_LIST_PATH_FORMAT = "%s%s/users";
     private static final String NEW_USER_FORM_PATH = "/users/new";

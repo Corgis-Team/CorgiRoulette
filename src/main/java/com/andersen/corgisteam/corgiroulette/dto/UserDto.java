@@ -1,6 +1,8 @@
 package com.andersen.corgisteam.corgiroulette.dto;
 
 public class UserDto {
+
+    private long id;
     private String name;
     private String surname;
     private long teamId;
@@ -8,10 +10,12 @@ public class UserDto {
     public UserDto() {
     }
 
-    public UserDto(String name, String surname, long teamId) {
-        this.name = name;
-        this.surname = surname;
-        this.teamId = teamId;
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void setName(String name) {

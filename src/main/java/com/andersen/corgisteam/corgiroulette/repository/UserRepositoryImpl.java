@@ -11,7 +11,7 @@ public class UserRepositoryImpl implements UserRepository {
             "VALUES (?, ?, ?, ?, ?)";
 
     @Override
-    public void saveUser(User user) {
+    public void save(User user) {
         try (Connection connection = DatabaseConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(QUERY_FOR_SAVING,
                      Statement.RETURN_GENERATED_KEYS)) {

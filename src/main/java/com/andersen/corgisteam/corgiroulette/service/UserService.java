@@ -4,5 +4,5 @@ import com.andersen.corgisteam.corgiroulette.entity.User;
 
 public interface UserService {
 
-    void saveUser(User user);
+    void save(User user);
 }

@@ -37,7 +37,7 @@ public class CreateUserCommand implements Command {
             user.setName(request.getParameter(NAME_PARAMETER));
             user.setSurname(request.getParameter(SURNAME_PARAMETER));
             user.setTeamId(Long.parseLong(request.getParameter(TEAM_PARAMETER)));
-            userService.saveUser(user);
+            userService.save(user);
             response.sendRedirect(String.format(USER_LIST_PATH_FORMAT, request.getContextPath(), request.getServletPath()));
         } catch (ValidationException e) {
             log.warn("Can't create user cause: ", e);

@@ -1,6 +1,5 @@
 package com.andersen.corgisteam.corgiroulette.service;
 
-import com.andersen.corgisteam.corgiroulette.entity.Team;
 import com.andersen.corgisteam.corgiroulette.entity.User;
 import com.andersen.corgisteam.corgiroulette.repository.UserRepository;
 import com.andersen.corgisteam.corgiroulette.service.exception.FieldLengthExceedException;
@@ -25,11 +24,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveUser(User user) {
+    public void save(User user) {
         validate(user);
         user.setChosen(false);
         user.setLastDuel(LocalDateTime.now());
-        userRepository.saveUser(user);
+        userRepository.save(user);
         log.info("Successfully created user with id {}", user.getId());
     }
 

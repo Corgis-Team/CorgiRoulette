@@ -25,9 +25,9 @@ public class CommandProvider {
         commandMap.put(NEW_TEAM_FORM_COMMAND, new NewTeamFormCommand());
         commandMap.put(CREATE_TEAM_COMMAND, new CreateTeamCommand(teamService));
 
-        Command showAllUsersCommand = new ShowAllTeamsCommand(teamService);
-        commandMap.put(EMPTY_COMMAND, showAllUsersCommand);
-        commandMap.put(SHOW_ALL_TEAMS_COMMAND, showAllUsersCommand);
+        Command showAllTeamsCommand = new ShowAllTeamsCommand(teamService);
+        commandMap.put(EMPTY_COMMAND, showAllTeamsCommand);
+        commandMap.put(SHOW_ALL_TEAMS_COMMAND, showAllTeamsCommand);
 
         notFoundCommand = new NotFoundCommand();
     }

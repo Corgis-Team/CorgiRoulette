@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class SearchTeamFormCommand implements Command {
 
-    public static final String SEARCH_TEAM_PATH = "/WEB-INF/jsp/team/searchTeam.jsp";
+    private static final String SEARCH_TEAM_PATH = "/WEB-INF/jsp/team/searchTeam.jsp";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

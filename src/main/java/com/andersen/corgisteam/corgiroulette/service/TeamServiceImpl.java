@@ -31,7 +31,9 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public List<Team> getAll() {
-        return null;
+        List<Team> teams = teamRepository.findAll();
+        log.info("Successfully showed all teams");
+        return teams;
     }
 
     @Override

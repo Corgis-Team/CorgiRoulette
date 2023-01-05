@@ -8,12 +8,12 @@
     <title>Search team</title>
 </head>
 <body>
-<form action="search" method="get">
+<form action="${pageContext.request.contextPath}/roulette/teams/search/results" method="get">
     <label for="name">Name</label>
     <input id="name" name="name" type="text">
     <br><br>
     <button type="submit">Search teams</button>
-    <a href="<c:url value="/teams"/> ">
+    <a href="<c:url value="/roulette/teams"/> ">
       <input type="button" value="Search all"/>
     </a>
     <p><%= errorMessage%></p>

@@ -23,9 +23,9 @@
     <c:forEach items="${teams}" var="team">
         <tr>
             <td><c:out value="${team.name}"/></td>
-            <td><a href="${pageContext.request.contextPath}/teams/details?id=${user.id}">Details</a></td>
-            <td><a href="${pageContext.request.contextPath}/teams/edit?id=${user.id}">Edit</a></td>
-            <td><a href="${pageContext.request.contextPath}/teams/delete?id=${user.id}">Delete</a></td>
+            <td><a href="${pageContext.request.contextPath}/roulette/teams/details?id=${team.id}">Details</a></td>
+            <td><a href="${pageContext.request.contextPath}/roulette/teams/edit?id=${team.id}">Edit</a></td>
+            <td><a href="${pageContext.request.contextPath}/roulette/teams/delete?id=${team.id}">Delete</a></td>
         </tr>
     </c:forEach>
     </tbody>
@@ -34,7 +34,7 @@
 <br>
 
 <div>
-    <a href="<c:url value="/teams/new"/> ">
+    <a href="<c:url value="/roulette/teams/new"/> ">
         <button>Add new team</button>
     </a>
 </div>

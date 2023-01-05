@@ -17,7 +17,7 @@ public class TeamRepositoryImpl implements TeamRepository {
 
     private static final String SAVE_TEAM_QUERY = "INSERT INTO teams (name) VALUES (?)";
     private static final String FIND_TEAM_BY_ID_QUERY = "SELECT * FROM teams WHERE id = ?";
-    private static final String FIND_TEAM_BY_NAME_QUERY = "SELECT * FROM teams WHERE name LIKE ?";
+    private static final String FIND_TEAM_BY_NAME_QUERY = "SELECT * FROM teams WHERE LOWER(name) LIKE LOWER(?)";
 
     @Override
 

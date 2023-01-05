@@ -1,5 +1,7 @@
 package com.andersen.corgisteam.corgiroulette.servlet;
 
+import com.andersen.corgisteam.corgiroulette.mapper.UserMapper;
+import com.andersen.corgisteam.corgiroulette.mapper.UserMapperImpl;
 import com.andersen.corgisteam.corgiroulette.repository.TeamRepository;
 import com.andersen.corgisteam.corgiroulette.repository.TeamRepositoryImpl;
 import com.andersen.corgisteam.corgiroulette.repository.UserRepository;
@@ -26,8 +28,11 @@ public class RouletteServlet extends HttpServlet {
     public RouletteServlet() {
         TeamRepository teamRepository = new TeamRepositoryImpl();
         TeamService teamService = new TeamServiceImpl(teamRepository);
-        UserRepository userRepository = new UserRepositoryImpl();
-        UserService userService = new UserServiceImpl(userRepository, teamService);
+        
+        UserRepository userRepository = new UserRepositoryImpl(teamRepository);
+        UserMapper userMapper = new UserMapperImpl(teamRepository);
+        UserService userService = new UserServiceImpl(userRepository, userMapper);
+
         this.commandProvider = new CommandProvider(teamService, userService);
     }
 

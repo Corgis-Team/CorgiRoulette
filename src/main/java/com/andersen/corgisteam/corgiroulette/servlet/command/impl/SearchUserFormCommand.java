@@ -7,12 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class SearchTeamFormCommand implements Command {
+public class SearchUserFormCommand implements Command {
 
-    private static final String SEARCH_TEAM_PATH = "/WEB-INF/jsp/team/searchTeam.jsp";
+    private static final String SEARCH_USER_PATH = "/WEB-INF/jsp/user/searchUser.jsp";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher(SEARCH_TEAM_PATH).forward(request, response);
+        request.getRequestDispatcher(SEARCH_USER_PATH).forward(request, response);
     }
 }

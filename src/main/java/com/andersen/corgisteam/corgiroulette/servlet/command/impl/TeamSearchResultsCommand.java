@@ -5,6 +5,8 @@ import com.andersen.corgisteam.corgiroulette.repository.QueryExecutionException;
 import com.andersen.corgisteam.corgiroulette.service.TeamService;
 import com.andersen.corgisteam.corgiroulette.service.exception.ValidationException;
 import com.andersen.corgisteam.corgiroulette.servlet.command.Command;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -14,9 +16,12 @@ import java.util.List;
 
 public class TeamSearchResultsCommand implements Command {
 
-    private TeamService teamService;
+    private static final Logger log = LoggerFactory.getLogger(TeamSearchResultsCommand.class);
+
+    private final TeamService teamService;
 
     private static final String TEAM_SEARCH_RESULTS = "/WEB-INF/jsp/team/teamSearchResults.jsp";
+    private static final String SEARCH_TEAM_PATH = "/WEB-INF/jsp/team/searchTeam.jsp";
 
     private static final String NAME_PARAMETER = "name";
     private static final String TEAMS_PARAMETER = "teams";
@@ -34,8 +39,9 @@ public class TeamSearchResultsCommand implements Command {
             request.setAttribute(TEAMS_PARAMETER, teams);
             request.getRequestDispatcher(TEAM_SEARCH_RESULTS).forward(request, response);
         } catch (QueryExecutionException | ValidationException e) {
+            log.warn("Can't get teams matching criteria cause: ", e);
             request.setAttribute(ERROR_ATTRIBUTE_NAME, e.getMessage());
-            request.getRequestDispatcher(SearchTeamFormCommand.SEARCH_TEAM_PATH).forward(request, response);
+            request.getRequestDispatcher(SEARCH_TEAM_PATH).forward(request, response);
         }
     }
 }

@@ -16,6 +16,7 @@ import com.andersen.corgisteam.corgiroulette.entity.Team;
 public class TeamRepositoryImpl implements TeamRepository {
 
     private static final String SAVE_TEAM_QUERY = "INSERT INTO teams (name) VALUES (?)";
+    private static final String QUERY_FOR_ALL_TEAMS = "SELECT * FROM teams";
     private static final String FIND_TEAM_BY_ID_QUERY = "SELECT * FROM teams WHERE id = ?";
     private static final String FIND_TEAM_BY_NAME_QUERY = "SELECT * FROM teams WHERE LOWER(name) LIKE LOWER(?)";
 
@@ -48,7 +49,20 @@ public class TeamRepositoryImpl implements TeamRepository {
 
     @Override
     public List<Team> findAll() {
-        return null;
+        try (Connection connection = DatabaseConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(QUERY_FOR_ALL_TEAMS)) {
+
+            ResultSet res = statement.executeQuery();
+
+            List<Team> users = new ArrayList<>();
+            while (res.next()) {
+                users.add(mapRowToTeam(res));
+            }
+
+            return users;
+        } catch (SQLException e) {
+            throw new QueryExecutionException("Can't get all teams");
+        }
     }
 
     @Override

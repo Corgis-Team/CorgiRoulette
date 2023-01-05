@@ -28,9 +28,11 @@ public class RouletteServlet extends HttpServlet {
     public RouletteServlet() {
         TeamRepository teamRepository = new TeamRepositoryImpl();
         TeamService teamService = new TeamServiceImpl(teamRepository);
+        
         UserRepository userRepository = new UserRepositoryImpl(teamRepository);
         UserMapper userMapper = new UserMapperImpl(teamRepository);
         UserService userService = new UserServiceImpl(userRepository, userMapper);
+
         this.commandProvider = new CommandProvider(teamService, userService);
     }
 

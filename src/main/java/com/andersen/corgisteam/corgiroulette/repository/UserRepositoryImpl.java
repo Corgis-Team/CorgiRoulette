@@ -15,6 +15,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     private static final String QUERY_FOR_SAVING = "INSERT INTO users(name, surname, team_id, is_chosen, last_duel) " +
             "VALUES (?, ?, ?, ?, ?)";
+    private static final String QUERY_FOR_ALL_USERS = "SELECT * FROM users";
     private static final String FIND_USER_BY_ID_QUERY = "SELECT * FROM users WHERE id = ?";
     private static final String FIND_USERS_BY_FULL_NAME_QUERY = "SELECT * FROM users WHERE " +
             "LOWER(CONCAT(CONCAT(name, ' '), surname)) LIKE CONCAT(?) OR " +
@@ -55,6 +56,24 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
+    @Override
+    public List<User> findAll() {
+        try (Connection connection = DatabaseConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(QUERY_FOR_ALL_USERS)) {
+
+            ResultSet res = statement.executeQuery();
+
+            List<User> users = new ArrayList<>();
+            while (res.next()) {
+                users.add(mapRowToUser(res));
+            }
+
+            return users;
+        } catch (SQLException e) {
+            throw new QueryExecutionException("Can't get all users", e);
+        }
+    }
+    
     @Override
     public User findById(long id) {
         try (Connection connection = DatabaseConfig.getConnection();
@@ -134,6 +153,7 @@ public class UserRepositoryImpl implements UserRepository {
             throw new QueryExecutionException(String.format("No users with team id %s were found", teamId), e);
         }
     }
+
 
     private User mapRowToUser(ResultSet res) throws SQLException {
         long id = res.getLong("id");

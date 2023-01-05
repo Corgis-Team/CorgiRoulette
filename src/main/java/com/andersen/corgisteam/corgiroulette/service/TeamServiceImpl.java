@@ -31,7 +31,9 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public List<Team> getAll() {
-        return null;
+        List<Team> teams = teamRepository.findAll();
+        log.info("Successfully showed all teams");
+        return teams;
     }
 
     @Override
@@ -53,12 +55,16 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public void update(Team team) {
-
+        Team oldTeam = teamRepository.findById(team.getId());
+        validate(team);
+        teamRepository.update(team);
+        log.info("Updated team with id {}", oldTeam.getId());
     }
 
     @Override
     public void delete(long id) {
-
+        teamRepository.delete(id);
+        log.info("Team with id {} was successfully deleted", id);
     }
 
     private void validate(Team team) {

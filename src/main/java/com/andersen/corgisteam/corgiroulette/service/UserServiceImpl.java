@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(UserDto userDto) {
-        User user = userMapper.userModelToEntity(userDto);
+        User user = userMapper.userDtoToEntity(userDto);
 
         validate(user);
 
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto get(long id) {
         User user = userRepository.findById(id);
-        UserDto userDto = userMapper.userEntityToModel(user);
+        UserDto userDto = userMapper.userEntityToDto(user);
         log.info("Successfully found user with id {}", id);
         return userDto;
     }
@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
             throw new RequiredFieldIsEmptyException("Name field is required");
 
         List<User> users = userRepository.findAllByFullName(fullName);
-        List<UserDto> userDtoList = userMapper.userEntitiesToModels(users);
+        List<UserDto> userDtoList = userMapper.userEntitiesToDtos(users);
         log.info("Successfully found users with name {}", fullName);
         return userDtoList;
     }
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> getAllByTeamId(long teamId) {
         List<User> users = userRepository.findAllByTeamId(teamId);
-        List<UserDto> userDtoList = userMapper.userEntitiesToModels(users);
+        List<UserDto> userDtoList = userMapper.userEntitiesToDtos(users);
         log.info("Successfully found users with team id {}", teamId);
         return userDtoList;
     }

@@ -17,7 +17,7 @@ public class UserMapperImpl implements UserMapper {
     }
 
     @Override
-    public UserDto userEntityToModel(User user) {
+    public UserDto userEntityToDto(User user) {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setName(user.getName());
@@ -27,7 +27,7 @@ public class UserMapperImpl implements UserMapper {
     }
 
     @Override
-    public User userModelToEntity(UserDto userDto) {
+    public User userDtoToEntity(UserDto userDto) {
         User user = new User();
         user.setId(userDto.getId());
         user.setName(userDto.getName());
@@ -39,11 +39,11 @@ public class UserMapperImpl implements UserMapper {
     }
 
     @Override
-    public List<UserDto> userEntitiesToModels(List<User> users) {
+    public List<UserDto> userEntitiesToDtos(List<User> users) {
         List<UserDto> userDtoList = new ArrayList<>();
 
         for (User user : users) {
-            userDtoList.add(userEntityToModel(user));
+            userDtoList.add(userEntityToDto(user));
         }
 
         return userDtoList;

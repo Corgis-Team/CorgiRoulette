@@ -6,9 +6,9 @@ import com.andersen.corgisteam.corgiroulette.entity.User;
 import java.util.List;
 
 public interface UserMapper {
-    UserDto userEntityToModel(User user);
+    UserDto userEntityToDto(User user);
 
-    User userModelToEntity(UserDto userDto);
+    User userDtoToEntity(UserDto userDto);
 
-    List<UserDto> userEntitiesToModels(List<User> users);
+    List<UserDto> userEntitiesToDtos(List<User> users);
 }

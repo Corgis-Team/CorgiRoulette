@@ -17,6 +17,8 @@ public class CommandProvider {
     private static final String SEARCH_TEAM_COMMAND = "/teams/search";
     private static final String SEARCH_TEAM_RESULTS_COMMAND = "/teams/search/results";
     private static final String TEAM_DETAILS_COMMAND = "/teams/details";
+    private static final String EDIT_TEAM_FORM_COMMAND = "/teams/edit";
+    private static final String UPDATE_TEAM_COMMAND = "/teams/update";
 
     private static final String SHOW_ALL_TEAMS_COMMAND = "/teams";
     private final Command notFoundCommand;
@@ -32,6 +34,8 @@ public class CommandProvider {
         commandMap.put(SEARCH_TEAM_COMMAND, new SearchTeamFormCommand());
         commandMap.put(SEARCH_TEAM_RESULTS_COMMAND, new TeamSearchResultsCommand(teamService));
         commandMap.put(TEAM_DETAILS_COMMAND, new TeamDetailsCommand(teamService));
+        commandMap.put(EDIT_TEAM_FORM_COMMAND, new EditTeamFormCommand(teamService));
+        commandMap.put(UPDATE_TEAM_COMMAND, new UpdateTeamCommand(teamService));
 
         commandMap.put(NEW_USER_FORM_COMMAND, new CreateUserCommand(userService));
 

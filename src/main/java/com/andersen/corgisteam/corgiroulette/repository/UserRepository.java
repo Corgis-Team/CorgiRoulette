@@ -8,6 +8,8 @@ public interface UserRepository {
 
     void save(User user);
 
+    void update(User user);
+
     List<User> findAll();
 
     User findById(long id);
@@ -15,5 +17,4 @@ public interface UserRepository {
     List<User> findAllByFullName(String fullName);
 
     List<User> findAllByTeamId(long teamId);
-
 }

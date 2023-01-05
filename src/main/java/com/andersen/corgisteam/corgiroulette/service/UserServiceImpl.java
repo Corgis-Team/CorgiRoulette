@@ -4,6 +4,7 @@ import com.andersen.corgisteam.corgiroulette.dto.UserDto;
 import com.andersen.corgisteam.corgiroulette.entity.User;
 import com.andersen.corgisteam.corgiroulette.mapper.UserMapper;
 import com.andersen.corgisteam.corgiroulette.repository.UserRepository;
+import com.andersen.corgisteam.corgiroulette.service.exception.FieldContainsNumberException;
 import com.andersen.corgisteam.corgiroulette.service.exception.FieldLengthExceedException;
 import com.andersen.corgisteam.corgiroulette.service.exception.RequiredFieldIsEmptyException;
 import org.slf4j.Logger;
@@ -20,6 +21,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     private static final int FIELD_MAX_LENGTH = 100;
+    private static final String NUMBERS = ".*\\d.*";
 
     public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
@@ -37,6 +39,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void update(UserDto userDto) {
+        User user = new User();
+        user.setId(userDto.getId());
+        user.setName(userDto.getName());
+        user.setSurname(userDto.getSurname());
+        validate(user);
+        userRepository.update(user);
+        log.info("Successfully updated user with id {}", user.getId());
+    }
+
     public List<User> getAll() {
         List<User> users = userRepository.findAll();
         log.info("Successfully showed all users");
@@ -84,6 +96,16 @@ public class UserServiceImpl implements UserService {
 
         if (user.getSurname().length() > FIELD_MAX_LENGTH) {
             throw new FieldLengthExceedException(String.format("Surname length is greater than %d", FIELD_MAX_LENGTH));
+        }
+
+        if (user.getSurname().matches(NUMBERS)) {
+            throw new FieldContainsNumberException(String.format("Required field is contains numbers. Surname: %s",
+                    user.getSurname()));
+        }
+
+        if (user.getName().matches(NUMBERS)) {
+            throw new FieldContainsNumberException(String.format("Required field is contains numbers. Name: %s",
+                    user.getName()));
         }
     }
 }

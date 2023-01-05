@@ -12,6 +12,7 @@ import com.andersen.corgisteam.corgiroulette.servlet.command.impl.ShowAllTeamsCo
 
 public class CommandProvider {
 
+    private static final String EDIT_USER_FORM_COMMAND = "/users/edit";
     private static final String SHOW_ALL_USERS_COMMAND = "/users";
     private static final String NEW_USER_FORM_COMMAND = "/users/new";
     private static final String SEARCH_USER_COMMAND = "/users/search";
@@ -44,10 +45,12 @@ public class CommandProvider {
         commandMap.put(UPDATE_TEAM_COMMAND, new UpdateTeamCommand(teamService));
 
         commandMap.put(NEW_USER_FORM_COMMAND, new CreateUserCommand(userService));
+        commandMap.put(EDIT_USER_FORM_COMMAND, new UpdateUserCommand(userService));
         commandMap.put(SHOW_ALL_USERS_COMMAND, new ShowAllUsersCommand(userService));
         commandMap.put(SEARCH_USER_COMMAND, new SearchUserFormCommand());
         commandMap.put(SEARCH_USER_RESULTS_COMMAND, new UserSearchResultsCommand(userService));
         commandMap.put(USER_DETAILS_COMMAND, new UserDetailsCommand(userService, teamService));
+
 
         notFoundCommand = new NotFoundCommand();
     }

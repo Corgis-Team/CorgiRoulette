@@ -10,6 +10,8 @@ import java.util.List;
 public interface UserService {
 
     void save(UserDto user);
+    
+    void update(UserDto user);
 
     List<User> getAll();
 

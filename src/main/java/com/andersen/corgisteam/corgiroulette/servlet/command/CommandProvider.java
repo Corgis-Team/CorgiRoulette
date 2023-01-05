@@ -4,16 +4,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.andersen.corgisteam.corgiroulette.service.TeamService;
-import com.andersen.corgisteam.corgiroulette.servlet.command.impl.CreateTeamCommand;
-import com.andersen.corgisteam.corgiroulette.servlet.command.impl.DeleteTeamCommand;
-import com.andersen.corgisteam.corgiroulette.servlet.command.impl.NewTeamFormCommand;
-import com.andersen.corgisteam.corgiroulette.servlet.command.impl.NotFoundCommand;
+
+import com.andersen.corgisteam.corgiroulette.servlet.command.impl.*;
 
 public class CommandProvider {
 
     private static final String NEW_TEAM_FORM_COMMAND = "/teams/new";
     private static final String CREATE_TEAM_COMMAND = "/teams/create";
     private static final String DELETE_TEAM_COMMAND = "/teams/delete";
+    private static final String SEARCH_TEAM_COMMAND = "/teams/search";
+    private static final String SEARCH_TEAM_RESULTS_COMMAND = "/teams/search/results";
+    private static final String TEAM_DETAILS_COMMAND = "/teams/details";
 
     private final Command notFoundCommand;
 
@@ -24,6 +25,9 @@ public class CommandProvider {
         commandMap.put(NEW_TEAM_FORM_COMMAND, new NewTeamFormCommand());
         commandMap.put(CREATE_TEAM_COMMAND, new CreateTeamCommand(teamService));
         commandMap.put(DELETE_TEAM_COMMAND, new DeleteTeamCommand(teamService));
+        commandMap.put(SEARCH_TEAM_COMMAND, new SearchTeamFormCommand());
+        commandMap.put(SEARCH_TEAM_RESULTS_COMMAND, new TeamSearchResultsCommand(teamService));
+        commandMap.put(TEAM_DETAILS_COMMAND, new TeamDetailsCommand(teamService));
 
         notFoundCommand = new NotFoundCommand();
     }

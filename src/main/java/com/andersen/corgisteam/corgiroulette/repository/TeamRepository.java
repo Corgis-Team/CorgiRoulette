@@ -12,6 +12,8 @@ public interface TeamRepository {
 
     Team findById(long id);
 
+    List<Team> findByName(String name);
+
     void update(Team team);
 
     void delete(long id);

@@ -36,7 +36,19 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public Team get(long id) {
-        return null;
+        Team team = teamRepository.findById(id);
+        log.info("Team with id {} was found", id);
+        return team;
+    }
+
+    @Override
+    public List<Team> getAllByName(String name) {
+        if(name == null || name.isBlank())
+            throw new RequiredFieldIsEmptyException("Name field is required");
+
+        List<Team> teams = teamRepository.findByName(name);
+        log.info("Teams with name like {} were found", name);
+        return teams;
     }
 
     @Override

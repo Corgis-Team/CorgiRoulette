@@ -15,6 +15,7 @@ import com.andersen.corgisteam.corgiroulette.entity.Team;
 public class TeamRepositoryImpl implements TeamRepository {
 
     private static final String SAVE_TEAM_QUERY = "INSERT INTO teams (name) VALUES (?)";
+    private static final String DELETE_TEAM_QUERY = "DELETE FROM teams WHERE id = ?";
 
     @Override
 
@@ -60,6 +61,17 @@ public class TeamRepositoryImpl implements TeamRepository {
 
     @Override
     public void delete(long id) {
+        try (Connection connection = DatabaseConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(DELETE_TEAM_QUERY)) {
 
+            statement.setLong(1, id);
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new QueryExecutionException(format("Can't delete team. No rows affected. Team id: %s", id));
+            }
+        }
+        catch (SQLException e) {
+            throw new QueryExecutionException(String.format("Can't delete team. Team id: %s", id), e);
+        }
     }
 }

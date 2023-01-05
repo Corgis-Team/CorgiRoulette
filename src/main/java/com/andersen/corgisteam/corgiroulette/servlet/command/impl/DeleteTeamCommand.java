@@ -20,6 +20,7 @@ public class DeleteTeamCommand implements Command {
 
     private static final String TEAM_LIST_PATH_FORMAT = "%s%s/teams";
     private static final String TEAMS_LIST_PATH = "/teams";
+    private static final String NOT_FOUND_PATH = "/WEB-INF/jsp/notFound.jsp";
 
     private static final String ERROR_ATTRIBUTE_NAME = "errorMessage";
     private static final String ID_PARAMETER = "id";
@@ -37,11 +38,11 @@ public class DeleteTeamCommand implements Command {
         } catch (QueryExecutionException e) {
             log.warn("Can't delete team cause: ", e);
             request.setAttribute(ERROR_ATTRIBUTE_NAME, e.getMessage());
-            request.getRequestDispatcher(TEAMS_LIST_PATH).forward(request, response);
+            request.getRequestDispatcher(NOT_FOUND_PATH).forward(request, response);
         } catch (NumberFormatException e) {
             log.warn("Can't parse given parameter as id to delete team");
             request.setAttribute(ERROR_ATTRIBUTE_NAME, e.getMessage());
-            request.getRequestDispatcher(TEAMS_LIST_PATH).forward(request, response);
+            request.getRequestDispatcher(NOT_FOUND_PATH).forward(request, response);
         }
     }
 }

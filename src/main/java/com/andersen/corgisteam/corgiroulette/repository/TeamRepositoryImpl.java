@@ -67,7 +67,7 @@ public class TeamRepositoryImpl implements TeamRepository {
             statement.setLong(1, id);
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
-                throw new QueryExecutionException(format("Can't delete team. No rows affected. Team id: %s", id));
+                throw new QueryExecutionException(format("Team not found. Team id: %s", id));
             }
         }
         catch (SQLException e) {

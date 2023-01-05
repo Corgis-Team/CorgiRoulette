@@ -9,6 +9,7 @@ import com.andersen.corgisteam.corgiroulette.servlet.command.impl.*;
 
 public class CommandProvider {
 
+    private static final String EDIT_USER_FORM_COMMAND = "/users/edit";
     private static final String NEW_USER_FORM_COMMAND = "/users/new";
     private static final String NEW_TEAM_FORM_COMMAND = "/teams/new";
     private static final String CREATE_TEAM_COMMAND = "/teams/create";
@@ -29,6 +30,7 @@ public class CommandProvider {
         commandMap.put(TEAM_DETAILS_COMMAND, new TeamDetailsCommand(teamService));
 
         commandMap.put(NEW_USER_FORM_COMMAND, new CreateUserCommand(userService));
+        commandMap.put(EDIT_USER_FORM_COMMAND, new UpdateUserCommand(userService));
 
         notFoundCommand = new NotFoundCommand();
     }

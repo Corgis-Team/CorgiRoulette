@@ -5,4 +5,6 @@ import com.andersen.corgisteam.corgiroulette.dto.UserDto;
 public interface UserService {
 
     void save(UserDto user);
+
+    void update(UserDto user);
 }

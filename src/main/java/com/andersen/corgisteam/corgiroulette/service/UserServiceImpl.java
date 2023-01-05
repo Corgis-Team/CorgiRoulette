@@ -1,8 +1,8 @@
 package com.andersen.corgisteam.corgiroulette.service;
 
 import com.andersen.corgisteam.corgiroulette.dto.UserDto;
-import com.andersen.corgisteam.corgiroulette.entity.Team;
 import com.andersen.corgisteam.corgiroulette.entity.User;
+import com.andersen.corgisteam.corgiroulette.mapper.UserMapper;
 import com.andersen.corgisteam.corgiroulette.repository.UserRepository;
 import com.andersen.corgisteam.corgiroulette.service.exception.FieldLengthExceedException;
 import com.andersen.corgisteam.corgiroulette.service.exception.RequiredFieldIsEmptyException;
@@ -17,25 +17,18 @@ public class UserServiceImpl implements UserService {
     private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private final UserRepository userRepository;
-    private final TeamService teamService;
+    private final UserMapper userMapper;
 
     private static final int FIELD_MAX_LENGTH = 100;
 
-    public UserServiceImpl(UserRepository userRepository, TeamService teamService) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
-        this.teamService = teamService;
+        this.userMapper = userMapper;
     }
 
     @Override
     public void save(UserDto userDto) {
-        User user = new User();
-        user.setName(userDto.getName());
-        user.setSurname(userDto.getSurname());
-        long teamId = userDto.getTeamId();
-        Team team = teamService.get(teamId);
-        user.setTeam(team);
-        user.setChosen(false);
-        user.setLastDuel(LocalDateTime.now());
+        User user = userMapper.userDtoToEntity(userDto);
 
         validate(user);
 
@@ -48,6 +41,32 @@ public class UserServiceImpl implements UserService {
         List<User> users = userRepository.findAll();
         log.info("Successfully showed all users");
         return users;
+    }
+    
+    public UserDto get(long id) {
+        User user = userRepository.findById(id);
+        UserDto userDto = userMapper.userEntityToDto(user);
+        log.info("Successfully found user with id {}", id);
+        return userDto;
+    }
+
+    @Override
+    public List<UserDto> getAllByFullName(String fullName) {
+        if (fullName == null || fullName.isBlank())
+            throw new RequiredFieldIsEmptyException("Name field is required");
+
+        List<User> users = userRepository.findAllByFullName(fullName);
+        List<UserDto> userDtoList = userMapper.userEntitiesToDtos(users);
+        log.info("Successfully found users with name {}", fullName);
+        return userDtoList;
+    }
+
+    @Override
+    public List<UserDto> getAllByTeamId(long teamId) {
+        List<User> users = userRepository.findAllByTeamId(teamId);
+        List<UserDto> userDtoList = userMapper.userEntitiesToDtos(users);
+        log.info("Successfully found users with team id {}", teamId);
+        return userDtoList;
     }
 
     private void validate(User user) {

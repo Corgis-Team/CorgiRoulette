@@ -9,4 +9,11 @@ public interface UserRepository {
     void save(User user);
 
     List<User> findAll();
+
+    User findById(long id);
+
+    List<User> findAllByFullName(String fullName);
+
+    List<User> findAllByTeamId(long teamId);
+
 }

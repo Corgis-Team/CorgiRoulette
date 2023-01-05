@@ -10,10 +10,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserRepositoryImpl implements UserRepository {
+
     private final TeamRepository teamRepository;
+
     private static final String QUERY_FOR_SAVING = "INSERT INTO users(name, surname, team_id, is_chosen, last_duel) " +
             "VALUES (?, ?, ?, ?, ?)";
     private static final String QUERY_FOR_ALL_USERS = "SELECT * FROM users";
+    private static final String FIND_USER_BY_ID_QUERY = "SELECT * FROM users WHERE id = ?";
+    private static final String FIND_USERS_BY_FULL_NAME_QUERY = "SELECT * FROM users WHERE " +
+            "LOWER(CONCAT(CONCAT(name, ' '), surname)) LIKE CONCAT(?) OR " +
+            "LOWER(CONCAT(CONCAT(surname, ' '), name)) LIKE CONCAT(?)";
+    private static final String FIND_USERS_BY_TEAM_ID = "SELECT * FROM users WHERE team_id = ?";
 
     public UserRepositoryImpl(TeamRepository teamRepository) {
         this.teamRepository = teamRepository;
@@ -63,12 +70,93 @@ public class UserRepositoryImpl implements UserRepository {
 
             return users;
         } catch (SQLException e) {
-            throw new QueryExecutionException("Can't get all users");
+            throw new QueryExecutionException("Can't get all users", e);
+        }
+    }
+    
+    @Override
+    public User findById(long id) {
+        try (Connection connection = DatabaseConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_USER_BY_ID_QUERY,
+                     Statement.RETURN_GENERATED_KEYS)) {
+            connection.setAutoCommit(false);
+            connection.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
+
+            statement.setLong(1, id);
+
+            ResultSet res = statement.executeQuery();
+
+            if (res.next()) {
+                User user = mapRowToUser(res);
+                connection.commit();
+                return user;
+            } else {
+                throw new QueryExecutionException(String.format("User not found. User id: %s", id));
+            }
+
+        } catch (SQLException e) {
+            throw new QueryExecutionException(String.format("User not found. User id: %s", id), e);
         }
     }
 
+    @Override
+    public List<User> findAllByFullName(String fullName) {
+        try (Connection connection = DatabaseConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_USERS_BY_FULL_NAME_QUERY)) {
+            connection.setAutoCommit(false);
+            connection.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
+
+            statement.setString(1, "%" + fullName + "%");
+            statement.setString(2, "%" + fullName + "%");
+
+            ResultSet res = statement.executeQuery();
+
+            List<User> users = new ArrayList<>();
+
+            while (res.next()) {
+                users.add(mapRowToUser(res));
+            }
+
+            if (users.isEmpty()) {
+                throw new QueryExecutionException(String.format("No users with name %s were found", fullName));
+            }
+
+            connection.commit();
+
+            return users;
+        } catch (SQLException e) {
+            throw new QueryExecutionException(String.format("No users with name %s were found", fullName), e);
+        }
+    }
+
+    @Override
+    public List<User> findAllByTeamId(long teamId) {
+        try (Connection connection = DatabaseConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_USERS_BY_TEAM_ID)) {
+            connection.setAutoCommit(false);
+            connection.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
+
+            statement.setLong(1, teamId);
+
+            ResultSet res = statement.executeQuery();
+
+            List<User> users = new ArrayList<>();
+
+            while (res.next()) {
+                users.add(mapRowToUser(res));
+            }
+
+            connection.commit();
+
+            return users;
+        } catch (SQLException e) {
+            throw new QueryExecutionException(String.format("No users with team id %s were found", teamId), e);
+        }
+    }
+
+
     private User mapRowToUser(ResultSet res) throws SQLException {
-        int id = res.getInt("id");
+        long id = res.getLong("id");
         String name = res.getString("name");
         String surname = res.getString("surname");
         int teamId = res.getInt("team_id");

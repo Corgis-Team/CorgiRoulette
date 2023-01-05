@@ -14,6 +14,9 @@ public class CommandProvider {
 
     private static final String SHOW_ALL_USERS_COMMAND = "/users";
     private static final String NEW_USER_FORM_COMMAND = "/users/new";
+    private static final String SEARCH_USER_COMMAND = "/users/search";
+    private static final String SEARCH_USER_RESULTS_COMMAND = "/users/search/results";
+    private static final String USER_DETAILS_COMMAND = "/users/details";
     private static final String NEW_TEAM_FORM_COMMAND = "/teams/new";
     private static final String CREATE_TEAM_COMMAND = "/teams/create";
     private static final String DELETE_TEAM_COMMAND = "/teams/delete";
@@ -36,12 +39,15 @@ public class CommandProvider {
         commandMap.put(SHOW_ALL_TEAMS_COMMAND,  new ShowAllTeamsCommand(teamService));
         commandMap.put(SEARCH_TEAM_COMMAND, new SearchTeamFormCommand());
         commandMap.put(SEARCH_TEAM_RESULTS_COMMAND, new TeamSearchResultsCommand(teamService));
-        commandMap.put(TEAM_DETAILS_COMMAND, new TeamDetailsCommand(teamService));
+        commandMap.put(TEAM_DETAILS_COMMAND, new TeamDetailsCommand(teamService, userService));
         commandMap.put(EDIT_TEAM_FORM_COMMAND, new EditTeamFormCommand(teamService));
         commandMap.put(UPDATE_TEAM_COMMAND, new UpdateTeamCommand(teamService));
 
         commandMap.put(NEW_USER_FORM_COMMAND, new CreateUserCommand(userService));
         commandMap.put(SHOW_ALL_USERS_COMMAND, new ShowAllUsersCommand(userService));
+        commandMap.put(SEARCH_USER_COMMAND, new SearchUserFormCommand());
+        commandMap.put(SEARCH_USER_RESULTS_COMMAND, new UserSearchResultsCommand(userService));
+        commandMap.put(USER_DETAILS_COMMAND, new UserDetailsCommand(userService, teamService));
 
         notFoundCommand = new NotFoundCommand();
     }

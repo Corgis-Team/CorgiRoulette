@@ -1,14 +1,18 @@
 package com.andersen.corgisteam.corgiroulette.repository;
 
 import com.andersen.corgisteam.corgiroulette.database.DatabaseConfig;
+import com.andersen.corgisteam.corgiroulette.entity.Team;
 import com.andersen.corgisteam.corgiroulette.entity.User;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserRepositoryImpl implements UserRepository {
 
     private static final String QUERY_FOR_SAVING = "INSERT INTO users(name, surname, team_id, is_chosen, last_duel) " +
             "VALUES (?, ?, ?, ?, ?)";
+    private static final String QUERY_FOR_ALL_USERS = "SELECT * FROM users";
 
     @Override
     public void save(User user) {
@@ -38,5 +42,31 @@ public class UserRepositoryImpl implements UserRepository {
             throw new QueryExecutionException(String.format("Can't save user. No rows affected. User: %s\nReason: %s",
                     user, e.getMessage()));
         }
+    }
+
+    @Override
+    public List<User> findAll() {
+        try (Connection connection = DatabaseConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(QUERY_FOR_ALL_USERS)) {
+
+            ResultSet res = statement.executeQuery();
+
+            List<User> users = new ArrayList<>();
+            while (res.next()) {
+                users.add(mapRowToTeam(res));
+            }
+
+            return users;
+        } catch (SQLException e) {
+            throw new QueryExecutionException("Can't get all users");
+        }
+    }
+
+    private User mapRowToTeam(ResultSet res) throws SQLException {
+        int id = res.getInt("id");
+        String name = res.getString("name");
+        String surname = res.getString("surname");
+        Team team = (Team) res.getObject("team");
+        return new User(id, name, surname, team);
     }
 }

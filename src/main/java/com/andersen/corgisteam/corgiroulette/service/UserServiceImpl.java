@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
@@ -40,6 +41,13 @@ public class UserServiceImpl implements UserService {
 
         userRepository.save(user);
         log.info("Successfully created user with id {}", user.getId());
+    }
+
+    @Override
+    public List<User> getAll() {
+        List<User> users = userRepository.findAll();
+        log.info("Successfully showed all users");
+        return users;
     }
 
     private void validate(User user) {

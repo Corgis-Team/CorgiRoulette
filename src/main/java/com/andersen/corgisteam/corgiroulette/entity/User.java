@@ -16,6 +16,13 @@ public class User {
     public User() {
     }
 
+    public User(long id, String name, String surname, Team team) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.team = team;
+    }
+
     public String getSurname() {
         return surname;
     }

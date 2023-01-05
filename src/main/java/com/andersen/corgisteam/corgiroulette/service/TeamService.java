@@ -12,6 +12,8 @@ public interface TeamService {
 
     Team get(long id);
 
+    List<Team> getAllByName(String name);
+
     void update(Team team);
 
     void delete(long id);

@@ -2,6 +2,7 @@ package com.andersen.corgisteam.corgiroulette.servlet.command.impl;
 
 import com.andersen.corgisteam.corgiroulette.entity.Team;
 import com.andersen.corgisteam.corgiroulette.service.TeamService;
+import com.andersen.corgisteam.corgiroulette.service.exception.ValidationException;
 import com.andersen.corgisteam.corgiroulette.servlet.command.Command;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +42,7 @@ public class UpdateTeamCommand implements Command {
             teamService.update(team);
 
             response.sendRedirect(String.format(TEAM_DETAILS_PATH, request.getServletPath(), team.getId()));
-        } catch (RuntimeException e) {
+        } catch (ValidationException e) {
             log.warn("Can't update team cause: ", e);
 
             long teamId = Long.parseLong(request.getParameter(ID_PARAMETER));

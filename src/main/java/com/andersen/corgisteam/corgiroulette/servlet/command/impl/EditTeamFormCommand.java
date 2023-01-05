@@ -1,8 +1,8 @@
 package com.andersen.corgisteam.corgiroulette.servlet.command.impl;
 
 import com.andersen.corgisteam.corgiroulette.entity.Team;
-import com.andersen.corgisteam.corgiroulette.repository.EntityNotFoundException;
 import com.andersen.corgisteam.corgiroulette.service.TeamService;
+import com.andersen.corgisteam.corgiroulette.service.exception.ValidationException;
 import com.andersen.corgisteam.corgiroulette.servlet.command.Command;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,11 +40,7 @@ public class EditTeamFormCommand implements Command {
             log.warn("Can't parse given parameter as id", e);
             request.setAttribute(ERROR_ATTRIBUTE_NAME, e.getMessage());
             request.getRequestDispatcher(NOT_FOUND_PATH).forward(request, response);
-        } catch (EntityNotFoundException e) {
-            log.warn("Team not found: ", e);
-            request.setAttribute(ERROR_ATTRIBUTE_NAME, e.getMessage());
-            request.getRequestDispatcher(NOT_FOUND_PATH).forward(request, response);
-        } catch (RuntimeException e) {
+        } catch (ValidationException e) {
             log.warn("Can't update team cause: ", e);
             request.setAttribute(ERROR_ATTRIBUTE_NAME, e.getMessage());
             request.getRequestDispatcher(NOT_FOUND_PATH).forward(request, response);

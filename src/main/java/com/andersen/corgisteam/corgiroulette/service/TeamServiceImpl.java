@@ -53,9 +53,10 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public void update(Team team) {
+        Team oldTeam = teamRepository.findById(team.getId());
         validate(team);
         teamRepository.update(team);
-        log.info("Updated team with id {}", team.getId());
+        log.info("Updated team with id {}", oldTeam.getId());
     }
 
     @Override

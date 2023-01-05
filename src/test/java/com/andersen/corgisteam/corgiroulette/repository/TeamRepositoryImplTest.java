@@ -37,7 +37,7 @@ class TeamRepositoryImplTest {
     }
 
     @Test
-    public void update() {
+    void update() {
         Team team = new Team("Blue");
         teamRepository.save(team);
         long teamId = team.getId();
@@ -50,7 +50,7 @@ class TeamRepositoryImplTest {
     }
 
     @Test
-    public void updateWithEmptyName() {
+    void updateWithEmptyName() {
         Team updatedTeam = new Team();
         Assertions.assertThrows(QueryExecutionException.class, () -> teamRepository.update(updatedTeam));
     }

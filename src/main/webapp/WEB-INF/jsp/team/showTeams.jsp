@@ -19,6 +19,7 @@
                     <th><b>Id</b></th>
                     <th><b>Name</b></th>
                     <th><b>Show</b></th>
+                    <th><b>Detele</b></th>
                 </tr>
                 </thead>
 
@@ -28,7 +29,8 @@
                         <td><c:out value="${team.id}"/></td>
                         <td><c:out value="${team.name}"/></td>
                         <td><a href="${pageContext.request.contextPath}/teams/details?id=${team.id}">Show</a></td>
-
+                        <td><a href="${pageContext.request.contextPath}/teams/details?id=${team.id}">Show</a></td>
+                        <td><a href="${pageContext.request.contextPath}/teams/delete?id=${team.id}">Delete</a></td>
                     </tr>
                 </c:forEach>
                 </tbody>

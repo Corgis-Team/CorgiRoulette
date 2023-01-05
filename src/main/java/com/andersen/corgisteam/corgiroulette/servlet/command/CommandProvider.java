@@ -10,12 +10,10 @@ import com.andersen.corgisteam.corgiroulette.servlet.command.impl.NotFoundComman
 import com.andersen.corgisteam.corgiroulette.servlet.command.impl.ShowAllTeamsCommand;
 
 public class CommandProvider {
-
-    private static final String EMPTY_COMMAND = null;
     private static final String NEW_TEAM_FORM_COMMAND = "/teams/new";
     private static final String CREATE_TEAM_COMMAND = "/teams/create";
 
-    private static final String SHOW_ALL_TEAMS_COMMAND = "/";
+    private static final String SHOW_ALL_TEAMS_COMMAND = "/teams";
     private final Command notFoundCommand;
 
     private final Map<String, Command> commandMap;
@@ -26,7 +24,6 @@ public class CommandProvider {
         commandMap.put(CREATE_TEAM_COMMAND, new CreateTeamCommand(teamService));
 
         Command showAllTeamsCommand = new ShowAllTeamsCommand(teamService);
-        commandMap.put(EMPTY_COMMAND, showAllTeamsCommand);
         commandMap.put(SHOW_ALL_TEAMS_COMMAND, showAllTeamsCommand);
 
         notFoundCommand = new NotFoundCommand();

@@ -16,11 +16,13 @@ public class User {
     public User() {
     }
 
-    public User(long id, String name, String surname, Team team) {
+    public User(long id, String name, String surname, Team team, boolean isChosen, LocalDateTime lastDuel) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.team = team;
+        this.isChosen = isChosen;
+        this.lastDuel = lastDuel;
     }
 
     public String getSurname() {

@@ -5,14 +5,19 @@ import com.andersen.corgisteam.corgiroulette.entity.Team;
 import com.andersen.corgisteam.corgiroulette.entity.User;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserRepositoryImpl implements UserRepository {
-
+    private final TeamRepository teamRepository;
     private static final String QUERY_FOR_SAVING = "INSERT INTO users(name, surname, team_id, is_chosen, last_duel) " +
             "VALUES (?, ?, ?, ?, ?)";
     private static final String QUERY_FOR_ALL_USERS = "SELECT * FROM users";
+
+    public UserRepositoryImpl(TeamRepository teamRepository) {
+        this.teamRepository = teamRepository;
+    }
 
     @Override
     public void save(User user) {
@@ -53,7 +58,7 @@ public class UserRepositoryImpl implements UserRepository {
 
             List<User> users = new ArrayList<>();
             while (res.next()) {
-                users.add(mapRowToUsers(res));
+                users.add(mapRowToUser(res));
             }
 
             return users;
@@ -62,11 +67,14 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
-    private User mapRowToUsers(ResultSet res) throws SQLException {
+    private User mapRowToUser(ResultSet res) throws SQLException {
         int id = res.getInt("id");
         String name = res.getString("name");
         String surname = res.getString("surname");
-        Team team = (Team) res.getObject("team");
-        return new User(id, name, surname, team);
+        int teamId = res.getInt("team_id");
+        Team team = teamRepository.findById(teamId);
+        boolean isChosen = res.getBoolean("is_chosen");
+        LocalDateTime lastDuel = res.getTimestamp("last_duel").toLocalDateTime();
+        return new User(id, name, surname, team, isChosen, lastDuel);
     }
 }

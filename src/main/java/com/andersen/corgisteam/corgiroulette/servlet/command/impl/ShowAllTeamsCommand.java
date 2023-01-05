@@ -9,12 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class ShowAllTeamsCommand implements Command {
-    private static final String TEAMS_SHOW_PATH = "/WEB-INF/jsp/showTeams.jsp";
+    private static final String TEAMS_SHOW_PATH = "/WEB-INF/jsp/team/showTeams.jsp";
 
     private final TeamService teamService;
 
     public ShowAllTeamsCommand(TeamService teamService) {
-
         this.teamService = teamService;
     }
 

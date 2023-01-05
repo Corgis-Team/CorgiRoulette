@@ -22,9 +22,7 @@ public class CommandProvider {
         commandMap = new HashMap<>();
         commandMap.put(NEW_TEAM_FORM_COMMAND, new NewTeamFormCommand());
         commandMap.put(CREATE_TEAM_COMMAND, new CreateTeamCommand(teamService));
-
-        Command showAllTeamsCommand = new ShowAllTeamsCommand(teamService);
-        commandMap.put(SHOW_ALL_TEAMS_COMMAND, showAllTeamsCommand);
+        commandMap.put(SHOW_ALL_TEAMS_COMMAND,  new ShowAllTeamsCommand(teamService));
 
         notFoundCommand = new NotFoundCommand();
     }

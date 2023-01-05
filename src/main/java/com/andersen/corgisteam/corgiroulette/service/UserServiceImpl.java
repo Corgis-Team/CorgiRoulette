@@ -10,7 +10,6 @@ import com.andersen.corgisteam.corgiroulette.service.exception.RequiredFieldIsEm
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
@@ -79,6 +78,13 @@ public class UserServiceImpl implements UserService {
         List<UserDto> userDtoList = userMapper.userEntitiesToDtos(users);
         log.info("Successfully found users with team id {}", teamId);
         return userDtoList;
+    }
+
+    @Override
+    public void delete(long id) {
+        User user = userRepository.findById(id);
+        userRepository.delete(id);
+        log.info("Team with id {} was successfully deleted", user.getId());
     }
 
     private void validate(User user) {

@@ -17,4 +17,6 @@ public interface UserRepository {
     List<User> findAllByFullName(String fullName);
 
     List<User> findAllByTeamId(long teamId);
+
+    void delete(long id);
 }

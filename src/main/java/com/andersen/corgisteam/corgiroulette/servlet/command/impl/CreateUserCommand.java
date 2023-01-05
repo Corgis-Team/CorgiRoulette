@@ -1,5 +1,6 @@
 package com.andersen.corgisteam.corgiroulette.servlet.command.impl;
 
+import com.andersen.corgisteam.corgiroulette.dto.UserDto;
 import com.andersen.corgisteam.corgiroulette.entity.User;
 import com.andersen.corgisteam.corgiroulette.service.UserService;
 import com.andersen.corgisteam.corgiroulette.service.exception.ValidationException;
@@ -33,7 +34,7 @@ public class CreateUserCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            User user = new User();
+            UserDto user = new UserDto();
             user.setName(request.getParameter(NAME_PARAMETER));
             user.setSurname(request.getParameter(SURNAME_PARAMETER));
             user.setTeamId(Long.parseLong(request.getParameter(TEAM_PARAMETER)));

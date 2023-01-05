@@ -9,7 +9,7 @@ public class User {
     private long id;
     private String name;
     private String surname;
-    private long teamId;
+    private Team team;
     private boolean isChosen;
     private LocalDateTime lastDuel;
 
@@ -40,12 +40,12 @@ public class User {
         this.name = name;
     }
 
-    public long getTeamId() {
-        return teamId;
+    public Team getTeam() {
+        return team;
     }
 
-    public void setTeamId(long teamId) {
-        this.teamId = teamId;
+    public void setTeam(Team team) {
+        this.team = team;
     }
 
     public boolean isChosen() {
@@ -69,27 +69,15 @@ public class User {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
         User user = (User) o;
-        return getId() == user.getId() && getTeamId() == user.getTeamId() &&
-                isChosen() == user.isChosen() &&
+        return isChosen() == user.isChosen() &&
                 Objects.equals(getName(), user.getName()) &&
                 Objects.equals(getSurname(), user.getSurname()) &&
+                Objects.equals(getTeam(), user.getTeam()) &&
                 Objects.equals(getLastDuel(), user.getLastDuel());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getSurname(), getTeamId(), isChosen(), getLastDuel());
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", groupId=" + teamId +
-                ", isChosen=" + isChosen +
-                ", lastCompetition=" + lastDuel +
-                '}';
+        return Objects.hash(getName(), getSurname(), getTeam(), isChosen(), getLastDuel());
     }
 }

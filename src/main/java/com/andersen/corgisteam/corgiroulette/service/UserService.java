@@ -1,8 +1,8 @@
 package com.andersen.corgisteam.corgiroulette.service;
 
-import com.andersen.corgisteam.corgiroulette.entity.User;
+import com.andersen.corgisteam.corgiroulette.dto.UserDto;
 
 public interface UserService {
 
-    void save(User user);
+    void save(UserDto user);
 }

@@ -1,5 +1,7 @@
 package com.andersen.corgisteam.corgiroulette.service;
 
+import com.andersen.corgisteam.corgiroulette.dto.UserDto;
+import com.andersen.corgisteam.corgiroulette.entity.Team;
 import com.andersen.corgisteam.corgiroulette.entity.User;
 import com.andersen.corgisteam.corgiroulette.repository.UserRepository;
 import com.andersen.corgisteam.corgiroulette.service.exception.FieldLengthExceedException;
@@ -24,10 +26,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void save(User user) {
-        validate(user);
+    public void save(UserDto userDto) {
+        User user = new User();
+        user.setName(userDto.getName());
+        user.setSurname(userDto.getSurname());
+        long teamId = userDto.getTeamId();
+        Team team = teamService.get(teamId);
+        user.setTeam(team);
         user.setChosen(false);
         user.setLastDuel(LocalDateTime.now());
+
+        validate(user);
+
         userRepository.save(user);
         log.info("Successfully created user with id {}", user.getId());
     }
@@ -48,9 +58,5 @@ public class UserServiceImpl implements UserService {
         if (user.getSurname().length() > FIELD_MAX_LENGTH) {
             throw new FieldLengthExceedException(String.format("Surname length is greater than %d", FIELD_MAX_LENGTH));
         }
-
-        long teamId = user.getTeamId();
-        teamService.get(teamId);
     }
 }
-

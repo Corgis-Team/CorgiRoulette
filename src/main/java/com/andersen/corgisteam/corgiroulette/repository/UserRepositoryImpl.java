@@ -20,7 +20,7 @@ public class UserRepositoryImpl implements UserRepository {
 
             statement.setString(1, user.getName());
             statement.setString(2, user.getSurname());
-            statement.setLong(3, user.getTeamId());
+            statement.setLong(3, user.getTeam().getId());
             statement.setBoolean(4, user.isChosen());
             statement.setTimestamp(5, Timestamp.valueOf(user.getLastDuel()));
             int affectedRows = statement.executeUpdate();

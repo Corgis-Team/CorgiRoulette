@@ -17,7 +17,7 @@ import java.util.List;
 
 public class TeamDetailsCommand implements Command {
 
-    private static final Logger log = LoggerFactory.getLogger(CreateTeamCommand.class);
+    private static final Logger log = LoggerFactory.getLogger(TeamDetailsCommand.class);
 
     private final TeamService teamService;
 

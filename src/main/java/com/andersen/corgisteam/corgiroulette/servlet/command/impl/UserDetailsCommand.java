@@ -15,7 +15,7 @@ import java.io.IOException;
 
 public class UserDetailsCommand implements Command {
 
-    private static final Logger log = LoggerFactory.getLogger(CreateTeamCommand.class);
+    private static final Logger log = LoggerFactory.getLogger(UserDetailsCommand.class);
 
     private final UserService userService;
     private final TeamService teamService;

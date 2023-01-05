@@ -16,9 +16,9 @@ import java.util.List;
 
 public class TeamSearchResultsCommand implements Command {
 
-    private static final Logger log = LoggerFactory.getLogger(CreateTeamCommand.class);
+    private static final Logger log = LoggerFactory.getLogger(TeamSearchResultsCommand.class);
 
-    private TeamService teamService;
+    private final TeamService teamService;
 
     private static final String TEAM_SEARCH_RESULTS = "/WEB-INF/jsp/team/teamSearchResults.jsp";
 

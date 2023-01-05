@@ -16,7 +16,7 @@ import java.util.List;
 
 public class UserSearchResultsCommand implements Command {
 
-    private static final Logger log = LoggerFactory.getLogger(CreateTeamCommand.class);
+    private static final Logger log = LoggerFactory.getLogger(UserSearchResultsCommand.class);
 
     private final UserService userService;
 

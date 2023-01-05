@@ -37,7 +37,7 @@ public class UserRepositoryImpl implements UserRepository {
             connection.commit();
         } catch (SQLException e) {
             throw new QueryExecutionException(String.format("Can't save user. No rows affected. User: %s\nReason: %s",
-                    user, e.getMessage()));
+                    user, e.getMessage()), e);
         }
     }
 
@@ -59,7 +59,8 @@ public class UserRepositoryImpl implements UserRepository {
 
             connection.commit();
         } catch (SQLException e) {
-            throw new QueryExecutionException(String.format("Can't update user. No rows affected. User: %s", user));
+            throw new QueryExecutionException(String.format("Can't update user. No rows affected. User: %s\nReason:%s",
+                    user, e.getMessage()), e);
         }
     }
 }

@@ -20,6 +20,7 @@ public class UserServiceImpl implements UserService {
     private final TeamService teamService;
 
     private static final int FIELD_MAX_LENGTH = 100;
+    private static final String NUMBERS = ".*\\d.*";
 
     public UserServiceImpl(UserRepository userRepository, TeamService teamService) {
         this.userRepository = userRepository;
@@ -71,12 +72,12 @@ public class UserServiceImpl implements UserService {
             throw new FieldLengthExceedException(String.format("Surname length is greater than %d", FIELD_MAX_LENGTH));
         }
 
-        if (user.getSurname().matches(".*\\d.*")) {
+        if (user.getSurname().matches(NUMBERS)) {
             throw new FieldContainsNumberException(String.format("Required field is contains numbers. Surname: %s",
                     user.getSurname()));
         }
 
-        if (user.getName().matches(".*\\d.*")) {
+        if (user.getName().matches(NUMBERS)) {
             throw new FieldContainsNumberException(String.format("Required field is contains numbers. Name: %s",
                     user.getName()));
         }

@@ -64,7 +64,7 @@ public class TeamRepositoryImpl implements TeamRepository {
                 Team team = mapRowToTeam(res);
                 return team;
             } else{
-                throw new QueryExecutionException(String.format("Team not found. Id: %s", id));
+                throw new EntityNotFoundException(String.format("Team not found. Id: %s", id));
             }
         }
         catch (SQLException e) {

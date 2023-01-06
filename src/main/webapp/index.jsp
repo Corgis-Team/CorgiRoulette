@@ -32,6 +32,7 @@
 
 <form class="d-flex" action="${pageContext.request.contextPath}/roulette/" method="get">
     <button class="btn btn-danger" style="font-size: 24px;" type="submit">Create pair of opponents</button>
+
 </form>
 
 

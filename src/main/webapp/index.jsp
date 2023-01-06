@@ -15,15 +15,6 @@
 </div>
 
 <br>
-
-<div class="d-flex justify-content-center">
-    <form class="d-flex">
-        <button class="btn btn-danger" style="font-size: 24px;" type="submit">Create pair of opponents</button>
-    </form>
-</div>
-
-<br>
-<br>
 <div class="d-flex justify-content-center">
     <H3>The pair:</H3>
 </div>

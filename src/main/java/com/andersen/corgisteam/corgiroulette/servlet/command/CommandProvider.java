@@ -5,10 +5,8 @@ import java.util.Map;
 
 import com.andersen.corgisteam.corgiroulette.service.TeamService;
 
-import com.andersen.corgisteam.corgiroulette.servlet.command.impl.CreateTeamCommand;
-import com.andersen.corgisteam.corgiroulette.servlet.command.impl.NewTeamFormCommand;
-import com.andersen.corgisteam.corgiroulette.servlet.command.impl.NotFoundCommand;
-import com.andersen.corgisteam.corgiroulette.servlet.command.impl.ShowAllTeamsCommand;
+import com.andersen.corgisteam.corgiroulette.service.UserService;
+import com.andersen.corgisteam.corgiroulette.servlet.command.impl.*;
 
 public class CommandProvider {
 

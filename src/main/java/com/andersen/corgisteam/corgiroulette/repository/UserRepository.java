@@ -17,4 +17,8 @@ public interface UserRepository {
     List<User> findAllByFullName(String fullName);
 
     List<User> findAllByTeamId(long teamId);
+
+    void handlePair(long userId, long opponentId);
+
+    void refresh();
 }

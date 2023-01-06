@@ -22,6 +22,9 @@ public class UserRepositoryImpl implements UserRepository {
             "LOWER(CONCAT(CONCAT(name, ' '), surname)) LIKE CONCAT(?) OR " +
             "LOWER(CONCAT(CONCAT(surname, ' '), name)) LIKE CONCAT(?)";
     private static final String FIND_USERS_BY_TEAM_ID = "SELECT * FROM users WHERE team_id = ?";
+    private static final String QUERY_FOR_HANDLE_PAIR = "UPDATE users SET is_chosen = true, last_duel = ? " +
+            "WHERE id in (?,?)";
+    private static final String QUERY_FOR_UPDATE_ALL = "UPDATE users SET is_chosen = false";
 
     public UserRepositoryImpl(TeamRepository teamRepository) {
         this.teamRepository = teamRepository;
@@ -176,6 +179,36 @@ public class UserRepositoryImpl implements UserRepository {
             return users;
         } catch (SQLException e) {
             throw new QueryExecutionException(String.format("No users with team id %s were found", teamId), e);
+        }
+    }
+
+    @Override
+    public void handlePair(long userId, long opponentId) {
+        try (Connection connection = DatabaseConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(QUERY_FOR_HANDLE_PAIR)) {
+            statement.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+            statement.setLong(2, userId);
+            statement.setLong(3, opponentId);
+
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new QueryExecutionException(String.format("Can't handle pair of user id: %s & %s", userId, opponentId));
+            }
+        } catch (SQLException e) {
+            throw new QueryExecutionException(String.format("Can't handle pair of user id: %s & %s", userId, opponentId), e);
+        }
+    }
+
+    @Override
+    public void refresh() {
+        try (Connection connection = DatabaseConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(QUERY_FOR_UPDATE_ALL)) {
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new QueryExecutionException("Can't refresh chosen status for all users");
+            }
+        } catch (SQLException e) {
+            throw new QueryExecutionException("Can't refresh chosen status for all users", e);
         }
     }
 

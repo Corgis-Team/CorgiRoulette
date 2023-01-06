@@ -10,6 +10,7 @@ import com.andersen.corgisteam.corgiroulette.service.exception.RequiredFieldIsEm
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
+    private static final int INTERVAL = 7;
     private static final int FIELD_MAX_LENGTH = 100;
     private static final String NUMBERS = ".*\\d.*";
 
@@ -79,6 +81,30 @@ public class UserServiceImpl implements UserService {
         List<UserDto> userDtoList = userMapper.userEntitiesToDtos(users);
         log.info("Successfully found users with team id {}", teamId);
         return userDtoList;
+    }
+
+    @Override
+    public boolean validatePair(User user, User opponent) {
+        Duration duration = Duration.between(user.getLastDuel(), LocalDateTime.now());
+        long durationInDays1 = duration.toDays();
+        Duration durationOpponent = Duration.between(opponent.getLastDuel(), LocalDateTime.now());
+        long durationInDays2 = durationOpponent.toDays();
+
+        boolean isUserAvailable = false;
+        if (!user.isChosen()) {
+            isUserAvailable = true;
+        } else if (user.isChosen() && durationInDays1 >= INTERVAL) {
+            isUserAvailable = true;
+        }
+
+        boolean isOpponentAvailable = false;
+        if (!opponent.isChosen()) {
+            isOpponentAvailable = true;
+        } else if (opponent.isChosen() && durationInDays2 >= INTERVAL) {
+            isOpponentAvailable = true;
+        }
+
+        return isUserAvailable && isOpponentAvailable;
     }
 
     private void validate(User user) {

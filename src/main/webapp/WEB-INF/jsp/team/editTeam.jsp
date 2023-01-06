@@ -4,22 +4,40 @@
 <jsp:useBean id="errorMessage" class="java.lang.String" scope="request"/>
 <jsp:useBean id="team" class="com.andersen.corgisteam.corgiroulette.entity.Team" scope="request"/>
 
+<!DOCTYPE html>
 <html>
-<head>
-  <title>Edit team</title>
-</head>
+<jsp:include page="../header.jsp">
+    <jsp:param name="title" value="Edit team"/>
+</jsp:include>
 <body>
-<form action="update" method="post">
-  <input name="id" value="${team.id}" type="hidden">
-  <br><br>
-  <label for="name">Name</label>
-  <input id="name" name="name" type="text" value="${team.name}">
-  <br><br>
-  <button type="submit">Save changes</button>
-  <a href="<c:url value="/roulette/teams/details?id=${team.id}"/>">
-    <input type="button" value="Cancel"/>
-  </a>
-  <p><%= errorMessage%></p>
-</form>
+
+<jsp:include page="../navbar.jsp"/>
+
+<div class="d-flex justify-content-center">
+    <h2>Edit team's information: </h2>
+</div>
+<br>
+
+<div class="d-flex justify-content-center">
+    <form action="update" method="post">
+        <input name="id" value="${team.id}" type="hidden">
+
+        <div class="form-group">
+            <label for="name">Name
+                <input type="text" class="form-control" id="name" name="name" value="${team.name}"
+                       placeholder="Current name (Red)" required></label>
+        </div>
+        <br>
+
+        <p class="text-danger"><%= errorMessage%>
+        </p>
+        <br>
+
+        <div style="text-align: center;">
+            <button type="submit" class="btn btn-outline-danger" style="size:14px">Update team</button>
+            <a class="btn btn-outline-secondary" href="<c:url value="/roulette/teams"/>">Cancel</a>
+        </div>
+    </form>
+</div>
 </body>
 </html>

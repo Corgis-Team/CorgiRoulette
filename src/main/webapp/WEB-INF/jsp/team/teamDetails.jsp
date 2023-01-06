@@ -3,48 +3,70 @@
 
 <jsp:useBean id="team" class="com.andersen.corgisteam.corgiroulette.entity.Team" scope="request"/>
 
+<!DOCTYPE html>
 <html>
-<head>
-    <title>Team details</title>
-</head>
+<jsp:include page="../header.jsp">
+    <jsp:param name="title" value="Team details"/>
+</jsp:include>
 <body>
-    <p>Id: ${team.id}</p>
-    <p>Name: ${team.name}</p>
-    <h2>Team members:</h2>
-    <c:choose>
-        <c:when test="${team.userList != null && !team.userList.isEmpty()}">
-            <table>
-                <thead>
-                <tr>
-                    <th><b>Name</b></th>
-                    <th><b>Surname</b></th>
-                    <th><b>Details</b></th>
-                    <th><b>Edit</b></th>
-                    <th><b>Delete</b></th>
-                </tr>
-                </thead>
 
-                <tbody>
-                <c:forEach items="${team.userList}" var="user">
-                    <tr>
-                        <td><c:out value="${user.name}"/></td>
-                        <td><c:out value="${user.surname}"/></td>
-                        <td><a href="${pageContext.request.contextPath}/roulette/users/details?id=${user.id}">Details</a></td>
-                        <td><a href="${pageContext.request.contextPath}/roulette/users/edit?id=${user.id}">Edit</a></td>
-                        <td><a href="${pageContext.request.contextPath}/roulette/users/delete?id=${user.id}">Delete</a></td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </c:when>
-        <c:otherwise>
-            <H3>There are no users yet.</H3>
-        </c:otherwise>
-    </c:choose>
-    <br>
-    <p><a href="${pageContext.request.contextPath}/roulette/teams/edit?id=${team.id}">Edit team</a></p>
-    <p><a href="${pageContext.request.contextPath}/roulette/teams/delete?id=${team.id}">Delete team</a></p>
-    <p><a href="${pageContext.request.contextPath}/roulette/teams/search">Use search</a></p>
-    <p><a href="${pageContext.request.contextPath}/roulette/teams">Show all teams</a></p>
+<jsp:include page="../navbar.jsp"/>
+
+<div class="d-flex justify-content-center">
+    <h2>Information about team: </h2>
+</div>
+<br>
+
+<div class="d-flex justify-content-center">
+    <div class="card" style="width: 35rem; ">
+
+        <div class="card-body">
+            <h4 class="card-title">${team.name}</h4>
+            <br>
+            <h5 class="card-text">Members</h5>
+            <c:choose>
+                <c:when test="${team.userList != null && !team.userList.isEmpty()}">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Surname</th>
+                            <th>Details</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <c:forEach items="${team.userList}" var="user">
+                            <tr>
+                                <td><c:out value="${user.name}"/></td>
+                                <td><c:out value="${user.surname}"/></td>
+                                <td><a class="text-decoration-none link-danger"
+                                       href="${pageContext.request.contextPath}/roulette/users/details?id=${user.id}">Details</a>
+                                </td>
+                                <td><a class="text-decoration-none link-danger"
+                                       href="${pageContext.request.contextPath}/roulette/users/edit?id=${user.id}">Edit</a></td>
+                                <td><a class="text-decoration-none link-danger"
+                                       href="${pageContext.request.contextPath}/roulette/users/delete?id=${user.id}">Delete</a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </c:when>
+                <c:otherwise>
+                    <p>There are no users yet.</p>
+                </c:otherwise>
+            </c:choose>
+            <br>
+            <a class="text-decoration-none card-link link-danger"
+               href="${pageContext.request.contextPath}/roulette/teams/edit?id=${team.id}">Update</a>
+            <a class="text-decoration-none card-link link-danger"
+               href="${pageContext.request.contextPath}/roulette/teams/delete?id=${team.id}">Delete</a>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

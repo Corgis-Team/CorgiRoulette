@@ -4,23 +4,28 @@
 <jsp:useBean id="errorMessage" class="java.lang.String" scope="request"/>
 
 <html>
-<head>
-    <title>Show all teams</title>
-</head>
+<jsp:include page="../header.jsp">
+    <jsp:param name="title" value="Show all teams"/>
+</jsp:include>
 <body>
-<div>
-    <h2>Teams: </h2>
 
+<jsp:include page="../navbar.jsp"/>
+
+<div class="d-flex justify-content-center">
+    <h2>Teams: </h2>
+</div>
+
+<div class="d-flex justify-content-center">
     <c:choose>
         <c:when test="${teams != null && !teams.isEmpty()}">
-            <table>
+            <table class="table">
                 <thead>
                 <tr>
-                    <th><b>Id</b></th>
-                    <th><b>Name</b></th>
-                    <th><b>Show</b></th>
-                    <th><b>Edit</b></th>
-                    <th><b>Delete</b></th>
+                    <th scope="col"><b>Id</b></th>
+                    <th scope="col"><b>Name</b></th>
+                    <th scope="col"><b>Details</b></th>
+                    <th scope="col"><b>Edit</b></th>
+                    <th scope="col"><b>Delete</b></th>
                 </tr>
                 </thead>
 
@@ -29,9 +34,14 @@
                     <tr>
                         <td><c:out value="${team.id}"/></td>
                         <td><c:out value="${team.name}"/></td>
-                        <td><a href="${pageContext.request.contextPath}/roulette/teams/details?id=${team.id}">Show</a></td>
-                        <td><a href="${pageContext.request.contextPath}/roulette/teams/edit?id=${team.id}">Edit</a></td>
-                        <td><a href="${pageContext.request.contextPath}/roulette/teams/delete?id=${team.id}">Delete</a></td>
+                        <td><a class="text-decoration-none link-danger"
+                               href="${pageContext.request.contextPath}/roulette/teams/details?id=${team.id}">Details</a>
+                        </td>
+                        <td><a class="text-decoration-none link-danger"
+                               href="${pageContext.request.contextPath}/roulette/teams/edit?id=${team.id}">Edit</a>
+                        <td><a class="text-decoration-none link-danger"
+                               href="${pageContext.request.contextPath}/roulette/teams/delete?id=${team.id}">Delete</a>
+                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -39,20 +49,23 @@
             <br>
         </c:when>
         <c:otherwise>
-            <H3>There are no teams.</H3>
+            <div class="d-flex justify-content-center">
+                <H4>There are no teams.</H4>
+            </div>
             <br>
         </c:otherwise>
     </c:choose>
     <br>
-
-    <div>
-        <a href="<c:url value="/roulette/teams/new"/> ">
-            <button>Add new team</button>
-        </a>
-    </div>
-
-    <p><%= errorMessage%></p>
 </div>
+
+<div class="d-flex justify-content-center">
+    <a class="text-decoration-none link-danger" href="<c:url value="/roulette/teams/new"/>">
+        Add new team
+    </a>
+</div>
+
+<p><%= errorMessage%>
+</p>
 
 </body>
 </html>

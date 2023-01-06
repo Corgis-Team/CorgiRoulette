@@ -23,4 +23,12 @@ public interface UserRepository {
     void refresh();
 
     void delete(long id);
+
+    List<User> getUsersWhereIsChosenFalse();
+
+    List<User> getUsersWhichWereOpponentsBefore(long userId);
+
+    void updateStatusChosenUser(long userId);
+
+    void changeStatusForAllUsers();
 }

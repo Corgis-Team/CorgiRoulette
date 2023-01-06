@@ -18,6 +18,9 @@ public class PairRepositoryImpl implements PairRepository{
     private static final String QUERY_FOR_CHECK = "SELECT * FROM pairs WHERE (user_id = ? and opponent_id = ?) "
             + "OR (user_id = ? and opponent_id = ?)";
 
+    private static final String ADD_PAIR_OPPONENTS = "INSERT INTO users_opponents VALUES (?,?)";
+    private static final String DELETE_USERS_OPPONENTS = "DELETE FROM users_opponents WHERE chosen_user_id = ? OR opponent_user_id = ?";
+
     @Override
     public void save(Pair pair) {
         try (Connection connection = DatabaseConfig.getConnection();
@@ -63,6 +66,30 @@ public class PairRepositoryImpl implements PairRepository{
             return res.next();
         } catch (SQLException e) {
             throw new QueryExecutionException(String.format("Can't check pair. Pair: %s", pair), e);
+        }
+    }
+
+    @Override
+    public void createPairInBattleTable(long userId, long opponentId) {
+        try (Connection connection = DatabaseConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(ADD_PAIR_OPPONENTS)) {
+            statement.setLong(1, userId);
+            statement.setLong(2, opponentId);
+            statement.execute();
+        } catch (SQLException e) {
+            throw new QueryExecutionException("Can't create pair of opponents", e);
+        }
+    }
+
+    @Override
+    public void deleteUserOpponent(long userId) {
+        try (Connection connection = DatabaseConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(DELETE_USERS_OPPONENTS)) {
+            statement.setLong(1, userId);
+            statement.setLong(2, userId);
+            statement.execute();
+        } catch (SQLException e) {
+            throw new QueryExecutionException(String.format("Can't delete all pairs of opponents with for user. User id: %s", userId), e);
         }
     }
 

@@ -47,12 +47,14 @@ public class UserServiceImpl implements UserService {
         log.info("Successfully updated user with id {}", user.getId());
     }
 
+    @Override
     public List<User> getAll() {
         List<User> users = userRepository.findAll();
         log.info("Successfully showed all users");
         return users;
     }
 
+    @Override
     public User get(long id) {
         User user = userRepository.findById(id);
         log.info("Successfully found user with id {}", id);
@@ -134,5 +136,31 @@ public class UserServiceImpl implements UserService {
             throw new FieldContainsNumberException(String.format("Required field is contains numbers. Name: %s",
                 user.getName()));
         }
+    }
+
+    @Override
+    public List<User> getUsersWhereIsChosenFalse() {
+        List<User> users = userRepository.getUsersWhereIsChosenFalse();
+        log.info("Successfully found all users that haven't picked before");
+        return users;
+    }
+
+    @Override
+    public List<User> getUsersWhichWereOpponentsBefore(long userId) {
+        List<User> users = userRepository.getUsersWhichWereOpponentsBefore(userId);
+        log.info("Successfully found all users that haven't picked before as pair with user with id {}", userId);
+        return users;
+    }
+
+    @Override
+    public void updateStatusChosenUser(long userId) {
+        userRepository.updateStatusChosenUser(userId);
+        log.info("Successfully update status for user with id {}", userId);
+    }
+
+    @Override
+    public void changeStatusForAllUsers() {
+        userRepository.changeStatusForAllUsers();
+        log.info("Successfully update status for all users");
     }
 }

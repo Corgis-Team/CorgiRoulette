@@ -21,4 +21,6 @@ public interface UserRepository {
     void handlePair(long userId, long opponentId);
 
     void refresh();
+
+    void delete(long id);
 }

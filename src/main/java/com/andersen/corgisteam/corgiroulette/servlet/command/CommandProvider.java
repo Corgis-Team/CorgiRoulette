@@ -66,7 +66,6 @@ public class CommandProvider {
         notFoundCommand = new NotFoundCommand();
     }
 
-
     public Command getCommand(String commandName) {
         if (!commandMap.containsKey(commandName)) {
             return notFoundCommand;

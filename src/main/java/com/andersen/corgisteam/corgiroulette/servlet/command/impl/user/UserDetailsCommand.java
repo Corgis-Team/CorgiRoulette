@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import com.andersen.corgisteam.corgiroulette.entity.User;
 import com.andersen.corgisteam.corgiroulette.repository.exception.QueryExecutionException;
+import com.andersen.corgisteam.corgiroulette.repository.exception.EntityNotFoundException;
 import com.andersen.corgisteam.corgiroulette.service.UserService;
 import com.andersen.corgisteam.corgiroulette.servlet.command.Command;
 
@@ -37,7 +38,7 @@ public class UserDetailsCommand implements Command {
             request.setAttribute(USER_PARAMETER, user);
             request.getRequestDispatcher(TEAM_DETAILS_PATH).forward(request, response);
         }
-        catch (QueryExecutionException e) {
+        catch (QueryExecutionException | EntityNotFoundException e) {
             log.warn("Can't receive user's details cause: ", e);
             request.setAttribute(ERROR_ATTRIBUTE_NAME, e.getMessage());
             request.getRequestDispatcher(NOT_FOUND_PATH).forward(request, response);

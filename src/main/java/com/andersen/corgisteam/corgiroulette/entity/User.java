@@ -93,4 +93,16 @@ public class User {
     public int hashCode() {
         return Objects.hash(getName(), getSurname(), getTeam(), isChosen(), getLastDuel());
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", team=" + team +
+                ", isChosen=" + isChosen +
+                ", lastDuel=" + lastDuel +
+                '}';
+    }
 }

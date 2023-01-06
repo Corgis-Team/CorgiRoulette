@@ -10,13 +10,16 @@
 </jsp:include>
 <body>
 
+<jsp:include page="navbar.jsp"/>
+
 <div class="d-flex justify-content-center">
-    <jsp:include page="navbar.jsp"/>
 
     <h1>404 - Not Found</h1>
 </div>
+
 <div class="d-flex justify-content-center">
     <p>${errorMessage}</p>
 </div>
+
 </body>
 </html>

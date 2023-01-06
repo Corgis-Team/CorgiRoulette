@@ -4,37 +4,28 @@ import java.util.Objects;
 
 public class Pair {
 
-    private long userId;
-    private long opponentId;
+    private User user;
+    private User opponent;
 
-    public Pair(long userId, long opponentId) {
-        this.userId = userId;
-        this.opponentId = opponentId;
+    public Pair(User user, User opponent) {
+        this.user = user;
+        this.opponent = opponent;
     }
 
-    public long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public long getOpponentId() {
-        return opponentId;
+    public User getOpponent() {
+        return opponent;
     }
 
-    public void setOpponentId(long opponentId) {
-        this.opponentId = opponentId;
-    }
-
-
-    @Override
-    public String toString() {
-        return "Pair{" +
-                "userId=" + userId +
-                ", opponentId=" + opponentId +
-                '}';
+    public void setOpponent(User opponent) {
+        this.opponent = opponent;
     }
 
     @Override
@@ -42,12 +33,20 @@ public class Pair {
         if (this == o) return true;
         if (!(o instanceof Pair)) return false;
         Pair pair = (Pair) o;
-        return (userId == pair.userId && opponentId == pair.opponentId) ||
-                (userId == pair.opponentId && opponentId == pair.userId);
+        return (Objects.equals(user, pair.user) && Objects.equals(opponent, pair.opponent)) ||
+                (Objects.equals(opponent, pair.user) && Objects.equals(user, pair.opponent));
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUserId(), getOpponentId()) + Objects.hash(getOpponentId(), getUserId());
+        return Objects.hash(user, opponent) + Objects.hash(opponent, user);
+    }
+
+    @Override
+    public String toString() {
+        return "Pair{" +
+                "user=" + user +
+                ", opponent=" + opponent +
+                '}';
     }
 }

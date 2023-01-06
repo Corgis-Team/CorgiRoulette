@@ -27,8 +27,14 @@ public class RouletteServlet extends HttpServlet {
 
         TeamService teamService = new TeamServiceImpl(teamRepository, userRepository);
         UserMapper userMapper = new UserMapperImpl(teamRepository);
+
         UserService userService = new UserServiceImpl(userRepository, userMapper);
         FindOpponentsUsingList findOpponentsUsingList = new FindOpponentsUsingList(userService, pairRepository);
+
+        PairRepository pairRepository = new PairRepositoryImpl(userRepository);
+        PairGenerator pairGenerator = new PairGenerator(userRepository, pairRepository);
+        UserService userService = new UserServiceImpl(userRepository, userMapper, pairGenerator);
+
 
         this.commandProvider = new CommandProvider(teamService, userService, findOpponentsUsingList);
     }

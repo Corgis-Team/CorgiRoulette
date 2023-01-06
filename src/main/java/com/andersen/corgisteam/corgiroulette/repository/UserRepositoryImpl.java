@@ -25,8 +25,8 @@ public class UserRepositoryImpl implements UserRepository {
     private static final String QUERY_FOR_ALL_USERS = "SELECT * FROM users";
     private static final String FIND_USER_BY_ID_QUERY = "SELECT * FROM users WHERE id = ?";
     private static final String FIND_USERS_BY_FULL_NAME_QUERY = "SELECT * FROM users WHERE " +
-        "LOWER(CONCAT(CONCAT(name, ' '), surname)) LIKE CONCAT(?) OR " +
-        "LOWER(CONCAT(CONCAT(surname, ' '), name)) LIKE CONCAT(?)";
+        "LOWER(CONCAT(CONCAT(name, ' '), surname)) LIKE LOWER(?) OR " +
+        "LOWER(CONCAT(CONCAT(surname, ' '), name)) LIKE LOWER(?)";
     private static final String FIND_USERS_BY_TEAM_ID = "SELECT * FROM users WHERE team_id = ?";
     private static final String QUERY_FOR_HANDLE_PAIR = "UPDATE users SET is_chosen = true, last_duel = ? " +
             "WHERE id in (?,?)";

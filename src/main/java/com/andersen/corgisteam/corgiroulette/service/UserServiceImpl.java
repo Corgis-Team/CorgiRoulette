@@ -19,7 +19,7 @@ import com.andersen.corgisteam.corgiroulette.service.exception.RequiredFieldIsEm
 public class UserServiceImpl implements UserService {
 
     private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
-    private static final int FIELD_MAX_LENGTH = 100;
+    private static final int FIELD_MAX_LENGTH = 30;
     private static final String NUMBERS_REGEXP = ".*\\d.*";
     private final UserRepository userRepository;
     private final UserMapper userMapper;

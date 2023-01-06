@@ -2,6 +2,7 @@ package com.andersen.corgisteam.corgiroulette.repository;
 
 import com.andersen.corgisteam.corgiroulette.database.DatabaseConfig;
 import com.andersen.corgisteam.corgiroulette.entity.Pair;
+import com.andersen.corgisteam.corgiroulette.repository.exception.QueryExecutionException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,8 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.lang.String.format;
 
 public class PairRepositoryImpl implements PairRepository{
 
@@ -28,7 +27,7 @@ public class PairRepositoryImpl implements PairRepository{
 
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
-                throw new QueryExecutionException(format("Can't save pair. No rows affected. Pair: %s", pair));
+                throw new QueryExecutionException(String.format("Can't save pair. No rows affected. Pair: %s", pair));
             }
         } catch (SQLException e) {
             throw new QueryExecutionException(String.format("Can't save pair. Pair: %s", pair), e);

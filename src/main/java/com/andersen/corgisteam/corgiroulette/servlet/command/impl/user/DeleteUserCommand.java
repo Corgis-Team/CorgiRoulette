@@ -1,6 +1,6 @@
-package com.andersen.corgisteam.corgiroulette.servlet.command.impl;
+package com.andersen.corgisteam.corgiroulette.servlet.command.impl.user;
 
-import com.andersen.corgisteam.corgiroulette.repository.QueryExecutionException;
+import com.andersen.corgisteam.corgiroulette.repository.exception.QueryExecutionException;
 import com.andersen.corgisteam.corgiroulette.service.UserService;
 import com.andersen.corgisteam.corgiroulette.servlet.command.Command;
 import org.slf4j.Logger;

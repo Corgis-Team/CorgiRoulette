@@ -251,7 +251,7 @@ public class UserRepositoryImpl implements UserRepository {
             statement.setLong(1, id);
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
-                throw new QueryExecutionException(format("User not found. User id: %s", id));
+                throw new QueryExecutionException(String.format("User not found. User id: %s", id));
             }
         }
         catch (SQLException e) {

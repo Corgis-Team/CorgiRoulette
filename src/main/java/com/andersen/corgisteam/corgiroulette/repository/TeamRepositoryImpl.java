@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import static java.lang.String.format;
 
 import com.andersen.corgisteam.corgiroulette.database.DatabaseConfig;
 import com.andersen.corgisteam.corgiroulette.entity.Team;
@@ -31,7 +30,7 @@ public class TeamRepositoryImpl implements TeamRepository {
             statement.setString(1, team.getName());
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
-                throw new QueryExecutionException(format("Can't save team. No rows affected. Team: %s", team));
+                throw new QueryExecutionException(String.format("Can't save team. No rows affected. Team: %s", team));
             }
 
             ResultSet generatedKeys = statement.getGeneratedKeys();
@@ -39,7 +38,7 @@ public class TeamRepositoryImpl implements TeamRepository {
                 team.setId(generatedKeys.getLong(1));
             }
             else {
-                throw new QueryExecutionException(format("Can't save team. No ID obtained. Team: %s", team));
+                throw new QueryExecutionException(String.format("Can't save team. No ID obtained. Team: %s", team));
             }
 
             return team;
@@ -141,7 +140,7 @@ public class TeamRepositoryImpl implements TeamRepository {
             statement.setLong(1, id);
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
-                throw new QueryExecutionException(format("Team not found. Team id: %s", id));
+                throw new QueryExecutionException(String.format("Team not found. Team id: %s", id));
             }
         }
         catch (SQLException e) {

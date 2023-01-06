@@ -14,7 +14,7 @@ pipeline {
     stage ('Git') {
       steps{
         echo "Git step in process"
-        git branch: 'main', url: "${githubUrl}"
+        git branch: '21_data', url: "${githubUrl}"
         echo "Git step is finished"
       }
     }

@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.String.format;
+
 public class UserRepositoryImpl implements UserRepository {
 
     private final TeamRepository teamRepository;
@@ -22,6 +24,7 @@ public class UserRepositoryImpl implements UserRepository {
             "LOWER(CONCAT(CONCAT(name, ' '), surname)) LIKE CONCAT(?) OR " +
             "LOWER(CONCAT(CONCAT(surname, ' '), name)) LIKE CONCAT(?)";
     private static final String FIND_USERS_BY_TEAM_ID = "SELECT * FROM users WHERE team_id = ?";
+    private static final String DELETE_USER_QUERY = "DELETE FROM users WHERE id = ?";
 
     public UserRepositoryImpl(TeamRepository teamRepository) {
         this.teamRepository = teamRepository;
@@ -179,6 +182,21 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
+    @Override
+    public void delete(long id) {
+        try (Connection connection = DatabaseConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(DELETE_USER_QUERY)) {
+
+            statement.setLong(1, id);
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new QueryExecutionException(format("User not found. User id: %s", id));
+            }
+        }
+        catch (SQLException e) {
+            throw new QueryExecutionException(String.format("Can't delete user. User id: %s", id), e);
+        }
+    }
 
     private User mapRowToUser(ResultSet res) throws SQLException {
         long id = res.getLong("id");

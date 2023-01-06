@@ -1,13 +1,5 @@
 package com.andersen.corgisteam.corgiroulette.service;
 
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.time.Duration;
-import java.time.LocalDateTime;
-
 import com.andersen.corgisteam.corgiroulette.dto.RequestUserDto;
 import com.andersen.corgisteam.corgiroulette.entity.User;
 import com.andersen.corgisteam.corgiroulette.mapper.UserMapper;
@@ -15,6 +7,10 @@ import com.andersen.corgisteam.corgiroulette.repository.UserRepository;
 import com.andersen.corgisteam.corgiroulette.service.exception.FieldContainsNumberException;
 import com.andersen.corgisteam.corgiroulette.service.exception.FieldLengthExceedException;
 import com.andersen.corgisteam.corgiroulette.service.exception.RequiredFieldIsEmptyException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
@@ -23,12 +19,13 @@ public class UserServiceImpl implements UserService {
     private static final String NUMBERS_REGEXP = ".*\\d.*";
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final PairGenerator pairGenerator;
 
-    private static final int INTERVAL = 7;
-
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, PairGenerator pairGenerator) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.pairGenerator = pairGenerator;
+        pairGenerator.generatePairs();
     }
 
     @Override
@@ -36,6 +33,7 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.userDtoToEntity(requestUserDto);
         validate(user);
         userRepository.save(user);
+        pairGenerator.generatePairs();
         log.info("Successfully created user with id {}", user.getId());
     }
 
@@ -44,15 +42,18 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.userDtoToEntity(requestUserDto);
         validate(user);
         userRepository.update(user);
+        pairGenerator.generatePairs();
         log.info("Successfully updated user with id {}", user.getId());
     }
 
+    @Override
     public List<User> getAll() {
         List<User> users = userRepository.findAll();
         log.info("Successfully showed all users");
         return users;
     }
 
+    @Override
     public User get(long id) {
         User user = userRepository.findById(id);
         log.info("Successfully found user with id {}", id);
@@ -81,31 +82,8 @@ public class UserServiceImpl implements UserService {
     public void delete(long id) {
         User user = userRepository.findById(id);
         userRepository.delete(id);
+        pairGenerator.generatePairs();
         log.info("Team with id {} was successfully deleted", user.getId());
-    }
-
-    @Override
-    public boolean validatePair(User user, User opponent) {
-        Duration duration = Duration.between(user.getLastDuel(), LocalDateTime.now());
-        long durationInDays1 = duration.toDays();
-        Duration durationOpponent = Duration.between(opponent.getLastDuel(), LocalDateTime.now());
-        long durationInDays2 = durationOpponent.toDays();
-
-        boolean isUserAvailable = false;
-        if (!user.isChosen()) {
-            isUserAvailable = true;
-        } else if (user.isChosen() && durationInDays1 >= INTERVAL) {
-            isUserAvailable = true;
-        }
-
-        boolean isOpponentAvailable = false;
-        if (!opponent.isChosen()) {
-            isOpponentAvailable = true;
-        } else if (opponent.isChosen() && durationInDays2 >= INTERVAL) {
-            isOpponentAvailable = true;
-        }
-
-        return isUserAvailable && isOpponentAvailable;
     }
 
     private void validate(User user) {
@@ -127,12 +105,12 @@ public class UserServiceImpl implements UserService {
 
         if (user.getSurname().matches(NUMBERS_REGEXP)) {
             throw new FieldContainsNumberException(String.format("Required field is contains numbers. Surname: %s",
-                user.getSurname()));
+                    user.getSurname()));
         }
 
         if (user.getName().matches(NUMBERS_REGEXP)) {
             throw new FieldContainsNumberException(String.format("Required field is contains numbers. Name: %s",
-                user.getName()));
+                    user.getName()));
         }
     }
 }

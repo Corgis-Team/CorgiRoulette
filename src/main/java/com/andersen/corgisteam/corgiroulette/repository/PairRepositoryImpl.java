@@ -1,6 +1,7 @@
-package com.andersen.corgisteam.corgiroulette.pair;
+package com.andersen.corgisteam.corgiroulette.repository;
 
 import com.andersen.corgisteam.corgiroulette.database.DatabaseConfig;
+import com.andersen.corgisteam.corgiroulette.entity.Pair;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,8 +21,8 @@ public class PairRepositoryImpl implements PairRepository{
     public void save(Pair pair) {
         try (Connection connection = DatabaseConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(QUERY_FOR_SAVE_PAIR)) {
-            statement.setLong(1, pair.getIdOne());
-            statement.setLong(2, pair.getIdTwo());
+            statement.setLong(1, pair.getUserId());
+            statement.setLong(2, pair.getOpponentId());
 
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
@@ -53,10 +54,10 @@ public class PairRepositoryImpl implements PairRepository{
     public boolean checkPair(Pair pair) {
         try (Connection connection = DatabaseConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(QUERY_FOR_CHECK)) {
-            statement.setLong(1, pair.getIdOne());
-            statement.setLong(2, pair.getIdTwo());
-            statement.setLong(4, pair.getIdOne());
-            statement.setLong(3, pair.getIdTwo());
+            statement.setLong(1, pair.getUserId());
+            statement.setLong(2, pair.getOpponentId());
+            statement.setLong(4, pair.getUserId());
+            statement.setLong(3, pair.getOpponentId());
             ResultSet res = statement.executeQuery();
             return res.next();
         } catch (SQLException e) {

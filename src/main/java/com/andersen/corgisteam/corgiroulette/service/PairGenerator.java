@@ -1,9 +1,11 @@
-package com.andersen.corgisteam.corgiroulette.pair;
+package com.andersen.corgisteam.corgiroulette.service;
 
 
+import com.andersen.corgisteam.corgiroulette.entity.Pair;
 import com.andersen.corgisteam.corgiroulette.entity.User;
+import com.andersen.corgisteam.corgiroulette.repository.PairRepositoryImpl;
 import com.andersen.corgisteam.corgiroulette.repository.UserRepository;
-import com.andersen.corgisteam.corgiroulette.service.UserService;
+import com.andersen.corgisteam.corgiroulette.service.exception.NotAvailablePairsException;
 
 import java.util.HashSet;
 import java.util.List;
@@ -31,15 +33,15 @@ public class PairGenerator {
         while (tries.size() != pairs.size()) {
             int anotherTry = RANDOM.nextInt(pairs.size());
             Pair pair = pairs.get(anotherTry);
-            User user1 = userRepository.findById(pair.getIdOne());
-            User user2 = userRepository.findById(pair.getIdTwo());
-            if (userService.validatePair(user1, user2)) {
-                userRepository.handlePair(pair.getIdOne(), pair.getIdTwo());
+            User user = userRepository.findById(pair.getUserId());
+            User opponent = userRepository.findById(pair.getOpponentId());
+            if (userService.validatePair(user, opponent)) {
+                userRepository.handlePair(pair.getUserId(), pair.getOpponentId());
                 return pair;
             }
             tries.add(anotherTry);
         }
-        throw new RuntimeException("All users already answered today");
+        throw new NotAvailablePairsException("All users already answered today");
     }
 
     public void generatePairs() {

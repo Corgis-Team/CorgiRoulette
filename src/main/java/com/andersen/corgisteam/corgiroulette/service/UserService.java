@@ -19,6 +19,8 @@ public interface UserService {
 
     List<User> getAllByTeamId(long teamId);
 
+    boolean validatePair(User user, User opponent);
+
     void delete(long id);
 
 }

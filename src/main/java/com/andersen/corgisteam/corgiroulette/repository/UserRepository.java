@@ -18,5 +18,9 @@ public interface UserRepository {
 
     List<User> findAllByTeamId(long teamId);
 
+    void handlePair(long userId, long opponentId);
+
+    void refresh();
+
     void delete(long id);
 }

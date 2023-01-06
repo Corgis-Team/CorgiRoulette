@@ -5,6 +5,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 import com.andersen.corgisteam.corgiroulette.dto.RequestUserDto;
 import com.andersen.corgisteam.corgiroulette.entity.User;
 import com.andersen.corgisteam.corgiroulette.mapper.UserMapper;
@@ -20,6 +23,10 @@ public class UserServiceImpl implements UserService {
     private static final String NUMBERS_REGEXP = ".*\\d.*";
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+
+    private static final int INTERVAL = 7;
+    private static final int FIELD_MAX_LENGTH = 100;
+    private static final String NUMBERS = ".*\\d.*";
 
     public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
@@ -77,6 +84,30 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id);
         userRepository.delete(id);
         log.info("Team with id {} was successfully deleted", user.getId());
+    }
+
+    @Override
+    public boolean validatePair(User user, User opponent) {
+        Duration duration = Duration.between(user.getLastDuel(), LocalDateTime.now());
+        long durationInDays1 = duration.toDays();
+        Duration durationOpponent = Duration.between(opponent.getLastDuel(), LocalDateTime.now());
+        long durationInDays2 = durationOpponent.toDays();
+
+        boolean isUserAvailable = false;
+        if (!user.isChosen()) {
+            isUserAvailable = true;
+        } else if (user.isChosen() && durationInDays1 >= INTERVAL) {
+            isUserAvailable = true;
+        }
+
+        boolean isOpponentAvailable = false;
+        if (!opponent.isChosen()) {
+            isOpponentAvailable = true;
+        } else if (opponent.isChosen() && durationInDays2 >= INTERVAL) {
+            isOpponentAvailable = true;
+        }
+
+        return isUserAvailable && isOpponentAvailable;
     }
 
     private void validate(User user) {

@@ -7,18 +7,21 @@ import org.mockito.Mockito;
 
 import com.andersen.corgisteam.corgiroulette.entity.Team;
 import com.andersen.corgisteam.corgiroulette.repository.TeamRepository;
+import com.andersen.corgisteam.corgiroulette.repository.UserRepository;
 import com.andersen.corgisteam.corgiroulette.service.exception.FieldLengthExceedException;
 import com.andersen.corgisteam.corgiroulette.service.exception.RequiredFieldIsEmptyException;
 
 class TeamServiceImplTest {
 
     private TeamRepository teamRepository;
+    private UserRepository userRepository;
     private TeamService teamService;
 
     @BeforeEach
     void setUp() {
         teamRepository = Mockito.mock(TeamRepository.class);
-        teamService = new TeamServiceImpl(teamRepository);
+        userRepository = Mockito.mock(UserRepository.class);
+        teamService = new TeamServiceImpl(teamRepository, userRepository);
     }
 
     @Test

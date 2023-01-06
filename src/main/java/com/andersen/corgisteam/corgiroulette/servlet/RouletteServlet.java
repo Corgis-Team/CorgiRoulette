@@ -1,5 +1,13 @@
 package com.andersen.corgisteam.corgiroulette.servlet;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.andersen.corgisteam.corgiroulette.mapper.UserMapper;
 import com.andersen.corgisteam.corgiroulette.mapper.UserMapperImpl;
 import com.andersen.corgisteam.corgiroulette.repository.TeamRepository;
@@ -13,13 +21,6 @@ import com.andersen.corgisteam.corgiroulette.service.UserServiceImpl;
 import com.andersen.corgisteam.corgiroulette.servlet.command.Command;
 import com.andersen.corgisteam.corgiroulette.servlet.command.CommandProvider;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
 @WebServlet(name = "RouletteServlet", value = "/roulette/*")
 public class RouletteServlet extends HttpServlet {
 
@@ -27,9 +28,9 @@ public class RouletteServlet extends HttpServlet {
 
     public RouletteServlet() {
         TeamRepository teamRepository = new TeamRepositoryImpl();
-        TeamService teamService = new TeamServiceImpl(teamRepository);
-        
         UserRepository userRepository = new UserRepositoryImpl(teamRepository);
+
+        TeamService teamService = new TeamServiceImpl(teamRepository, userRepository);
         UserMapper userMapper = new UserMapperImpl(teamRepository);
         UserService userService = new UserServiceImpl(userRepository, userMapper);
 

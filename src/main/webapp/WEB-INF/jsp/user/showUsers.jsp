@@ -20,7 +20,8 @@
                     <th><b>Surname</b></th>
                     <th><b>Team</b></th>
                     <th><b>Show</b></th>
-                    <th><b>Detele</b></th>
+                    <th><b>Edit</b></th>
+                    <th><b>Delete</b></th>
                 </tr>
                 </thead>
 
@@ -30,8 +31,9 @@
                         <td><c:out value="${user.name}"/></td>
                         <td><c:out value="${user.surname}"/></td>
                         <td><c:out value="${user.team.name}"/></td>
-                        <td><a href="${pageContext.request.contextPath}/users/details?id=${user.id}">Show</a></td>
-                        <td><a href="${pageContext.request.contextPath}/users/delete?id=${user.id}">Delete</a></td>
+                        <td><a href="${pageContext.request.contextPath}/roulette/users/details?id=${user.id}">Show</a></td>
+                        <td><a href="${pageContext.request.contextPath}/roulette/users/edit?id=${user.id}">Edit</a></td>
+                        <td><a href="${pageContext.request.contextPath}/roulette/users/delete?id=${user.id}">Delete</a></td>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -46,7 +48,7 @@
     <br>
 
     <div>
-        <a href="<c:url value="/users/new"/> ">
+        <a href="<c:url value="/roulette/users/new"/> ">
             <button>Add new user</button>
         </a>
     </div>

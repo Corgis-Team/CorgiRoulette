@@ -12,7 +12,7 @@
     <p>Name: ${team.name}</p>
     <h2>Team members:</h2>
     <c:choose>
-        <c:when test="${users != null && !users.isEmpty()}">
+        <c:when test="${team.userList != null && !team.userList.isEmpty()}">
             <table>
                 <thead>
                 <tr>
@@ -25,7 +25,7 @@
                 </thead>
 
                 <tbody>
-                <c:forEach items="${users}" var="user">
+                <c:forEach items="${team.userList}" var="user">
                     <tr>
                         <td><c:out value="${user.name}"/></td>
                         <td><c:out value="${user.surname}"/></td>

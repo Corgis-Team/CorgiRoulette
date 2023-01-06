@@ -75,14 +75,18 @@ public class User {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof User)) {
+            return false;
+        }
         User user = (User) o;
         return isChosen() == user.isChosen() &&
-                Objects.equals(getName(), user.getName()) &&
-                Objects.equals(getSurname(), user.getSurname()) &&
-                Objects.equals(getTeam(), user.getTeam()) &&
-                Objects.equals(getLastDuel(), user.getLastDuel());
+            Objects.equals(getName(), user.getName()) &&
+            Objects.equals(getSurname(), user.getSurname()) &&
+            Objects.equals(getTeam(), user.getTeam()) &&
+            Objects.equals(getLastDuel(), user.getLastDuel());
     }
 
     @Override

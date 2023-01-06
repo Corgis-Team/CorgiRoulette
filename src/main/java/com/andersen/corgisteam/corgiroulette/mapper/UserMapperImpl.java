@@ -1,12 +1,12 @@
 package com.andersen.corgisteam.corgiroulette.mapper;
 
-import com.andersen.corgisteam.corgiroulette.dto.UserDto;
-import com.andersen.corgisteam.corgiroulette.entity.User;
-import com.andersen.corgisteam.corgiroulette.repository.TeamRepository;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.andersen.corgisteam.corgiroulette.dto.RequestUserDto;
+import com.andersen.corgisteam.corgiroulette.entity.User;
+import com.andersen.corgisteam.corgiroulette.repository.TeamRepository;
 
 public class UserMapperImpl implements UserMapper {
 
@@ -17,35 +17,39 @@ public class UserMapperImpl implements UserMapper {
     }
 
     @Override
-    public UserDto userEntityToDto(User user) {
-        UserDto userDto = new UserDto();
-        userDto.setId(user.getId());
-        userDto.setName(user.getName());
-        userDto.setSurname(user.getSurname());
-        userDto.setTeamId(user.getTeam().getId());
-        return userDto;
+    public RequestUserDto userEntityToDto(User user) {
+        RequestUserDto requestUserDto = new RequestUserDto();
+        requestUserDto.setId(user.getId());
+        requestUserDto.setName(user.getName());
+        requestUserDto.setSurname(user.getSurname());
+        requestUserDto.setTeamId(user.getTeam().getId());
+        return requestUserDto;
     }
 
     @Override
-    public User userDtoToEntity(UserDto userDto) {
+    public User userDtoToEntity(RequestUserDto requestUserDto) {
         User user = new User();
-        user.setId(userDto.getId());
-        user.setName(userDto.getName());
-        user.setSurname(userDto.getSurname());
-        user.setTeam(teamRepository.findById(userDto.getTeamId()));
+        user.setId(requestUserDto.getId());
+        user.setName(requestUserDto.getName());
+        user.setSurname(requestUserDto.getSurname());
+
+        if (requestUserDto.getTeamId() > 0) {
+            user.setTeam(teamRepository.findById(requestUserDto.getTeamId()));
+        }
+
         user.setChosen(false);
         user.setLastDuel(LocalDateTime.now());
         return user;
     }
 
     @Override
-    public List<UserDto> userEntitiesToDtos(List<User> users) {
-        List<UserDto> userDtoList = new ArrayList<>();
+    public List<RequestUserDto> userEntitiesToDtos(List<User> users) {
+        List<RequestUserDto> requestUserDtoList = new ArrayList<>();
 
         for (User user : users) {
-            userDtoList.add(userEntityToDto(user));
+            requestUserDtoList.add(userEntityToDto(user));
         }
 
-        return userDtoList;
+        return requestUserDtoList;
     }
 }

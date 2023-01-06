@@ -1,11 +1,12 @@
-package com.andersen.corgisteam.corgiroulette.servlet.command.impl;
+package com.andersen.corgisteam.corgiroulette.servlet.command.impl.team;
 
-import com.andersen.corgisteam.corgiroulette.servlet.command.Command;
+import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import com.andersen.corgisteam.corgiroulette.servlet.command.Command;
 
 public class SearchTeamFormCommand implements Command {
 

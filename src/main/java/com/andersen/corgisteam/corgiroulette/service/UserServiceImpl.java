@@ -1,27 +1,25 @@
 package com.andersen.corgisteam.corgiroulette.service;
 
-import com.andersen.corgisteam.corgiroulette.dto.UserDto;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.andersen.corgisteam.corgiroulette.dto.RequestUserDto;
 import com.andersen.corgisteam.corgiroulette.entity.User;
 import com.andersen.corgisteam.corgiroulette.mapper.UserMapper;
 import com.andersen.corgisteam.corgiroulette.repository.UserRepository;
 import com.andersen.corgisteam.corgiroulette.service.exception.FieldContainsNumberException;
 import com.andersen.corgisteam.corgiroulette.service.exception.FieldLengthExceedException;
 import com.andersen.corgisteam.corgiroulette.service.exception.RequiredFieldIsEmptyException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
     private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
-
+    private static final int FIELD_MAX_LENGTH = 30;
+    private static final String NUMBERS_REGEXP = ".*\\d.*";
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-
-    private static final int FIELD_MAX_LENGTH = 100;
-    private static final String NUMBERS = ".*\\d.*";
 
     public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
@@ -29,21 +27,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void save(UserDto userDto) {
-        User user = userMapper.userDtoToEntity(userDto);
-
+    public void save(RequestUserDto requestUserDto) {
+        User user = userMapper.userDtoToEntity(requestUserDto);
         validate(user);
-
         userRepository.save(user);
         log.info("Successfully created user with id {}", user.getId());
     }
 
     @Override
-    public void update(UserDto userDto) {
-        User user = new User();
-        user.setId(userDto.getId());
-        user.setName(userDto.getName());
-        user.setSurname(userDto.getSurname());
+    public void update(RequestUserDto requestUserDto) {
+        User user = userMapper.userDtoToEntity(requestUserDto);
         validate(user);
         userRepository.update(user);
         log.info("Successfully updated user with id {}", user.getId());
@@ -54,31 +47,29 @@ public class UserServiceImpl implements UserService {
         log.info("Successfully showed all users");
         return users;
     }
-    
-    public UserDto get(long id) {
+
+    public User get(long id) {
         User user = userRepository.findById(id);
-        UserDto userDto = userMapper.userEntityToDto(user);
         log.info("Successfully found user with id {}", id);
-        return userDto;
+        return user;
     }
 
     @Override
-    public List<UserDto> getAllByFullName(String fullName) {
-        if (fullName == null || fullName.isBlank())
+    public List<User> getAllByFullName(String fullName) {
+        if (fullName == null || fullName.isBlank()) {
             throw new RequiredFieldIsEmptyException("Name field is required");
+        }
 
         List<User> users = userRepository.findAllByFullName(fullName);
-        List<UserDto> userDtoList = userMapper.userEntitiesToDtos(users);
         log.info("Successfully found users with name {}", fullName);
-        return userDtoList;
+        return users;
     }
 
     @Override
-    public List<UserDto> getAllByTeamId(long teamId) {
+    public List<User> getAllByTeamId(long teamId) {
         List<User> users = userRepository.findAllByTeamId(teamId);
-        List<UserDto> userDtoList = userMapper.userEntitiesToDtos(users);
         log.info("Successfully found users with team id {}", teamId);
-        return userDtoList;
+        return users;
     }
 
     private void validate(User user) {
@@ -98,14 +89,14 @@ public class UserServiceImpl implements UserService {
             throw new FieldLengthExceedException(String.format("Surname length is greater than %d", FIELD_MAX_LENGTH));
         }
 
-        if (user.getSurname().matches(NUMBERS)) {
+        if (user.getSurname().matches(NUMBERS_REGEXP)) {
             throw new FieldContainsNumberException(String.format("Required field is contains numbers. Surname: %s",
-                    user.getSurname()));
+                user.getSurname()));
         }
 
-        if (user.getName().matches(NUMBERS)) {
+        if (user.getName().matches(NUMBERS_REGEXP)) {
             throw new FieldContainsNumberException(String.format("Required field is contains numbers. Name: %s",
-                    user.getName()));
+                user.getName()));
         }
     }
 }

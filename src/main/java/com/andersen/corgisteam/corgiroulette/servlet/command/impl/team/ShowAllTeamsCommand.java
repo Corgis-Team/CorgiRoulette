@@ -1,14 +1,16 @@
-package com.andersen.corgisteam.corgiroulette.servlet.command.impl;
+package com.andersen.corgisteam.corgiroulette.servlet.command.impl.team;
 
-import com.andersen.corgisteam.corgiroulette.service.TeamService;
-import com.andersen.corgisteam.corgiroulette.servlet.command.Command;
+import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import com.andersen.corgisteam.corgiroulette.service.TeamService;
+import com.andersen.corgisteam.corgiroulette.servlet.command.Command;
 
 public class ShowAllTeamsCommand implements Command {
+
     private static final String TEAMS_SHOW_PATH = "/WEB-INF/jsp/team/showTeams.jsp";
 
     private final TeamService teamService;

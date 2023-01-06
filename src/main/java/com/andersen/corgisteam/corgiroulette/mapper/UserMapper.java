@@ -1,14 +1,15 @@
 package com.andersen.corgisteam.corgiroulette.mapper;
 
-import com.andersen.corgisteam.corgiroulette.dto.UserDto;
-import com.andersen.corgisteam.corgiroulette.entity.User;
-
 import java.util.List;
 
+import com.andersen.corgisteam.corgiroulette.dto.RequestUserDto;
+import com.andersen.corgisteam.corgiroulette.entity.User;
+
 public interface UserMapper {
-    UserDto userEntityToDto(User user);
 
-    User userDtoToEntity(UserDto userDto);
+    RequestUserDto userEntityToDto(User user);
 
-    List<UserDto> userEntitiesToDtos(List<User> users);
+    User userDtoToEntity(RequestUserDto requestUserDto);
+
+    List<RequestUserDto> userEntitiesToDtos(List<User> users);
 }

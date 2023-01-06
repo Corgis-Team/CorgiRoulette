@@ -3,15 +3,34 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Corgi Roulette</title>
-</head>
+<jsp:include page="WEB-INF/jsp/header.jsp">
+    <jsp:param name="title" value="Corgi Roulette"/>
+</jsp:include>
 <body>
-<h1>Corgi Roulette</h1>
-<ul>
-    <li><a href="<c:url value="/roulette/users"/>">Users</a> </li>
-    <li><a href="<c:url value="/roulette/teams"/>">Teams</a> </li>
-    <li><a href="<c:url value="/roulette/history"/>">History</a> </li>
-</ul>
+
+<jsp:include page="WEB-INF/jsp/navbar.jsp"/>
+
+<div class="d-flex justify-content-center">
+    <H2>Corgi Roulette</H2>
+</div>
+
+<br>
+
+<div class="d-flex justify-content-center">
+    <form class="d-flex">
+        <button class="btn btn-danger" style="font-size: 24px;" type="submit">Create pair of opponents</button>
+    </form>
+</div>
+
+<br>
+<br>
+<div class="d-flex justify-content-center">
+    <H3>The pair:</H3>
+</div>
+<br>
+
+<div class="d-flex justify-content-center">
+    <H3>Name 1 and Name 2</H3>
+</div>
 </body>
 </html>

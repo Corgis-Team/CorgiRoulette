@@ -3,25 +3,31 @@
 
 <jsp:useBean id="errorMessage" class="java.lang.String" scope="request"/>
 
+<!DOCTYPE html>
 <html>
-<head>
-    <title>Show all users</title>
-</head>
+<jsp:include page="../header.jsp">
+    <jsp:param name="title" value="Show All Users"/>
+</jsp:include>
 <body>
-<div>
-    <h2>Users: </h2>
 
+<jsp:include page="../navbar.jsp"/>
+
+<div class="d-flex justify-content-center">
+    <h2>Users: </h2>
+</div>
+
+<div class="d-flex justify-content-center">
     <c:choose>
         <c:when test="${users != null && !users.isEmpty()}">
-            <table>
+            <table class="table">
                 <thead>
                 <tr>
-                    <th><b>Name</b></th>
-                    <th><b>Surname</b></th>
-                    <th><b>Team</b></th>
-                    <th><b>Show</b></th>
-                    <th><b>Edit</b></th>
-                    <th><b>Delete</b></th>
+                    <th scope="col"><b>Name</b></th>
+                    <th scope="col"><b>Surname</b></th>
+                    <th scope="col"><b>Team</b></th>
+                    <th scope="col"><b>Details</b></th>
+                    <th scope="col"><b>Edit</b></th>
+                    <th scope="col"><b>Delete</b></th>
                 </tr>
                 </thead>
 
@@ -31,9 +37,12 @@
                         <td><c:out value="${user.name}"/></td>
                         <td><c:out value="${user.surname}"/></td>
                         <td><c:out value="${user.team.name}"/></td>
-                        <td><a href="${pageContext.request.contextPath}/roulette/users/details?id=${user.id}">Show</a></td>
-                        <td><a href="${pageContext.request.contextPath}/roulette/users/edit?id=${user.id}">Edit</a></td>
-                        <td><a href="${pageContext.request.contextPath}/roulette/users/delete?id=${user.id}">Delete</a></td>
+                        <td><a class="text-decoration-none link-danger"
+                               href="${pageContext.request.contextPath}/roulette/users/details?id=${user.id}">Details</a></td>
+                        <td><a class="text-decoration-none link-danger"
+                               href="${pageContext.request.contextPath}/roulette/users/edit?id=${user.id}">Edit</a></td>
+                        <td><a class="text-decoration-none link-danger"
+                               href="${pageContext.request.contextPath}/roulette/users/delete?id=${user.id}">Delete</a></td>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -41,20 +50,22 @@
             <br>
         </c:when>
         <c:otherwise>
-            <H3>There are no users.</H3>
+            <div class="d-flex justify-content-center">
+                <H4>There are no users.</H4>
+            </div>
             <br>
         </c:otherwise>
     </c:choose>
     <br>
-
-    <div>
-        <a href="<c:url value="/roulette/users/new"/> ">
-            <button>Add new user</button>
-        </a>
-    </div>
-
-    <p><%= errorMessage%></p>
 </div>
+
+<div class="d-flex justify-content-center">
+    <a class="text-decoration-none link-danger" href="<c:url value="/roulette/users/new"/> ">
+        Add new user
+    </a>
+</div>
+
+<p><%= errorMessage%></p>
 
 </body>
 </html>

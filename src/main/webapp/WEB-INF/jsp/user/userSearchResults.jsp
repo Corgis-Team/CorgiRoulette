@@ -31,9 +31,9 @@
             <tr>
                 <td><c:out value="${user.name}"/></td>
                 <td><c:out value="${user.surname}"/></td>
-                <td><a href="${pageContext.request.contextPath}/roulette/users/details?id=${user.id}">Details</a></td>
-                <td><a href="${pageContext.request.contextPath}/roulette/users/edit?id=${user.id}">Edit</a></td>
-                <td><a href="${pageContext.request.contextPath}/roulette/users/delete?id=${user.id}">Delete</a></td>
+                <td><a class="text-decoration-none link-danger" href="${pageContext.request.contextPath}/roulette/users/details?id=${user.id}">Details</a></td>
+                <td><a class="text-decoration-none link-danger" href="${pageContext.request.contextPath}/roulette/users/edit?id=${user.id}">Edit</a></td>
+                <td><a class="text-decoration-none link-danger" href="${pageContext.request.contextPath}/roulette/users/delete?id=${user.id}">Delete</a></td>
             </tr>
         </c:forEach>
         </tbody>

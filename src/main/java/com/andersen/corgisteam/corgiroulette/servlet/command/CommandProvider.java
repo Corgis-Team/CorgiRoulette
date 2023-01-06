@@ -27,6 +27,7 @@ public class CommandProvider {
     private static final String USER_DETAILS_COMMAND = "/users/details";
     private static final String EDIT_USER_FORM_COMMAND = "/users/edit";
     private static final String UPDATE_USER_COMMAND = "/users/update";
+    private static final String DELETE_USER_COMMAND = "/users/delete";
     private static final String SEARCH_USER_COMMAND = "/users/search";
     private static final String SEARCH_USER_RESULTS_COMMAND = "/users/search/results";
 
@@ -52,6 +53,7 @@ public class CommandProvider {
         commandMap.put(USER_DETAILS_COMMAND, new UserDetailsCommand(userService));
         commandMap.put(EDIT_USER_FORM_COMMAND, new EditUserFormCommand(userService, teamService));
         commandMap.put(UPDATE_USER_COMMAND, new UpdateUserCommand(userService));
+        commandMap.put(DELETE_USER_COMMAND, new DeleteUserCommand(userService));
         commandMap.put(SEARCH_USER_COMMAND, new SearchUserFormCommand());
         commandMap.put(SEARCH_USER_RESULTS_COMMAND, new UserSearchResultsCommand(userService));
 

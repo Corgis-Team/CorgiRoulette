@@ -1,9 +1,9 @@
 package com.andersen.corgisteam.corgiroulette.service;
 
-import java.util.List;
-
 import com.andersen.corgisteam.corgiroulette.dto.RequestUserDto;
 import com.andersen.corgisteam.corgiroulette.entity.User;
+
+import java.util.List;
 
 public interface UserService {
 
@@ -18,4 +18,7 @@ public interface UserService {
     List<User> getAllByFullName(String fullName);
 
     List<User> getAllByTeamId(long teamId);
+
+    void delete(long id);
+
 }

@@ -72,6 +72,13 @@ public class UserServiceImpl implements UserService {
         return users;
     }
 
+    @Override
+    public void delete(long id) {
+        User user = userRepository.findById(id);
+        userRepository.delete(id);
+        log.info("Team with id {} was successfully deleted", user.getId());
+    }
+
     private void validate(User user) {
         if (user.getName() == null || user.getName().isBlank()) {
             throw new RequiredFieldIsEmptyException(String.format("Required field is empty. Name: %s", user.getName()));

@@ -1,4 +1,4 @@
-package com.andersen.corgisteam.corgiroulette.servlet.command.impl;
+package com.andersen.corgisteam.corgiroulette.servlet.command.impl.team;
 
 import java.io.IOException;
 

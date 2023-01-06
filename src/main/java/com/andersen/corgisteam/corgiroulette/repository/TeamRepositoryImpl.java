@@ -7,11 +7,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import static java.lang.String.format;
 
 import com.andersen.corgisteam.corgiroulette.database.DatabaseConfig;
 import com.andersen.corgisteam.corgiroulette.entity.Team;
+import com.andersen.corgisteam.corgiroulette.repository.exception.EntityNotFoundException;
+import com.andersen.corgisteam.corgiroulette.repository.exception.QueryExecutionException;
 
 public class TeamRepositoryImpl implements TeamRepository {
 
@@ -44,7 +45,7 @@ public class TeamRepositoryImpl implements TeamRepository {
             return team;
         }
         catch (SQLException e) {
-            throw new QueryExecutionException(String.format("Can't save team. Team: %s",team), e);
+            throw new QueryExecutionException(String.format("Can't save team. Team: %s", team), e);
         }
     }
 
@@ -61,8 +62,9 @@ public class TeamRepositoryImpl implements TeamRepository {
             }
 
             return users;
-        } catch (SQLException e) {
-            throw new QueryExecutionException("Can't get all teams");
+        }
+        catch (SQLException e) {
+            throw new QueryExecutionException("Can't get all teams", e);
         }
     }
 
@@ -71,14 +73,14 @@ public class TeamRepositoryImpl implements TeamRepository {
         try (Connection connection = DatabaseConfig.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_TEAM_BY_ID_QUERY)) {
 
-            statement.setLong(1,  id);
+            statement.setLong(1, id);
 
             ResultSet res = statement.executeQuery();
 
             if (res.next()) {
-                Team team = mapRowToTeam(res);
-                return team;
-            } else{
+                return mapRowToTeam(res);
+            }
+            else {
                 throw new EntityNotFoundException(String.format("Team not found. Id: %s", id));
             }
         }
@@ -102,7 +104,7 @@ public class TeamRepositoryImpl implements TeamRepository {
                 teams.add(mapRowToTeam(res));
             }
 
-            if(teams.isEmpty()){
+            if (teams.isEmpty()) {
                 throw new QueryExecutionException(String.format("No teams with name %s were found", name));
             }
 
@@ -125,7 +127,8 @@ public class TeamRepositoryImpl implements TeamRepository {
             if (affectedRows == 0) {
                 throw new QueryExecutionException(String.format("Can't update team. No rows affected. Team: %s", team));
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             throw new QueryExecutionException(String.format("Can't update team. No rows affected. Team: %s", team), e);
         }
     }
@@ -147,7 +150,7 @@ public class TeamRepositoryImpl implements TeamRepository {
     }
 
     private Team mapRowToTeam(ResultSet res) throws SQLException {
-        int id = res.getInt("id");
+        long id = res.getLong("id");
         String name = res.getString("name");
         return new Team(id, name);
     }

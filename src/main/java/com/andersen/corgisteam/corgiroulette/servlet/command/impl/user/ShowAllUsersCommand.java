@@ -1,16 +1,18 @@
-package com.andersen.corgisteam.corgiroulette.servlet.command.impl;
+package com.andersen.corgisteam.corgiroulette.servlet.command.impl.user;
 
-import com.andersen.corgisteam.corgiroulette.service.TeamService;
-import com.andersen.corgisteam.corgiroulette.service.UserService;
-import com.andersen.corgisteam.corgiroulette.servlet.command.Command;
+import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import com.andersen.corgisteam.corgiroulette.service.UserService;
+import com.andersen.corgisteam.corgiroulette.servlet.command.Command;
 
 public class ShowAllUsersCommand implements Command {
+
     private static final String USERS_SHOW_PATH = "/WEB-INF/jsp/user/showUsers.jsp";
+
     private final UserService userService;
 
     public ShowAllUsersCommand(UserService userService) {

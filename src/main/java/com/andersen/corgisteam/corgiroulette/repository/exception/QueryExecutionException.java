@@ -1,4 +1,4 @@
-package com.andersen.corgisteam.corgiroulette.repository;
+package com.andersen.corgisteam.corgiroulette.repository.exception;
 
 public class QueryExecutionException extends RuntimeException {
 

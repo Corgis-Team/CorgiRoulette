@@ -1,4 +1,4 @@
-package com.andersen.corgisteam.corgiroulette.servlet.command.impl;
+package com.andersen.corgisteam.corgiroulette.servlet.command.impl.team;
 
 import java.io.IOException;
 
@@ -21,14 +21,13 @@ public class CreateTeamCommand implements Command {
     private static final String NAME_PARAMETER = "name";
 
     private static final String TEAM_LIST_PATH_FORMAT = "%s%s/teams";
-    private static final String NEW_TEAM_FORM_PATH = "/teams/new";
+    private static final String NEW_TEAM_FORM_PATH_FORMAT = "%s/teams/new";
 
     private static final String ERROR_ATTRIBUTE_NAME = "errorMessage";
 
     private final TeamService teamService;
 
     public CreateTeamCommand(TeamService teamService) {
-
         this.teamService = teamService;
     }
 
@@ -44,7 +43,8 @@ public class CreateTeamCommand implements Command {
         catch (ValidationException e) {
             log.warn("Can't create team cause: ", e);
             request.setAttribute(ERROR_ATTRIBUTE_NAME, e.getMessage());
-            request.getRequestDispatcher(NEW_TEAM_FORM_PATH).forward(request, response);
+            request.getRequestDispatcher(String.format(NEW_TEAM_FORM_PATH_FORMAT, request.getServletPath()))
+                .forward(request, response);
         }
     }
 }

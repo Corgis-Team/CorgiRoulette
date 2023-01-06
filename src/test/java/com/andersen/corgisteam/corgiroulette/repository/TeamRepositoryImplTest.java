@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import com.andersen.corgisteam.corgiroulette.database.DatabaseConfig;
 import com.andersen.corgisteam.corgiroulette.entity.Team;
+import com.andersen.corgisteam.corgiroulette.repository.exception.QueryExecutionException;
 
 class TeamRepositoryImplTest {
 

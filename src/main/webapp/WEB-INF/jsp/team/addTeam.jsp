@@ -13,7 +13,7 @@
   <input id="name" name="name" type="text">
   <br><br>
   <button type="submit">Add team</button>
-  <a href="<c:url value="/teams"/> ">
+  <a href="<c:url value="/roulette/teams"/> ">
     <input type="button" value="Cancel"/>
   </a>
   <p><%= errorMessage%></p>

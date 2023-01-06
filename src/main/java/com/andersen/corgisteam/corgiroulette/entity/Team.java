@@ -1,11 +1,13 @@
 package com.andersen.corgisteam.corgiroulette.entity;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Team {
 
     private long id;
     private String name;
+    private List<User> userList;
 
     public Team() {
     }
@@ -35,6 +37,14 @@ public class Team {
         this.name = name;
     }
 
+    public List<User> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -57,6 +67,7 @@ public class Team {
         return "Team{" +
             "id=" + id +
             ", name='" + name + '\'' +
+            ", userList=" + userList +
             '}';
     }
 }

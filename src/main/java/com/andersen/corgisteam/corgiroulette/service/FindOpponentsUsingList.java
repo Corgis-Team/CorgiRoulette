@@ -89,7 +89,7 @@ public class FindOpponentsUsingList {
     }
 
 
-    public Pair createOpponents() {
+    public List<User> createOpponents() {
         List<User> originalUsersNotPicked = createListWithoutPicked();
 
         originalUsersNotPicked = checkForEmpty(originalUsersNotPicked);
@@ -99,7 +99,9 @@ public class FindOpponentsUsingList {
         List<User> suitableOpponentsUsers = deleteToChooseSuitableOpponents(userChosen, originalUsersNotPicked);
         suitableOpponentsUsers = checkCountOfOpponents(userChosen, suitableOpponentsUsers, originalUsersNotPicked);
         User opponentUser = getRandomElement(suitableOpponentsUsers);
-
-        return createPairOfOpponents(userChosen, opponentUser);
+        List<User> opponents = new ArrayList<>();
+        opponents.add(userChosen);
+        opponents.add(opponentUser);
+        return opponents;
     }
 }

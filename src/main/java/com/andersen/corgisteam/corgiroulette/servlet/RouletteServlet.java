@@ -10,14 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.andersen.corgisteam.corgiroulette.mapper.UserMapper;
 import com.andersen.corgisteam.corgiroulette.mapper.UserMapperImpl;
-import com.andersen.corgisteam.corgiroulette.repository.TeamRepository;
-import com.andersen.corgisteam.corgiroulette.repository.TeamRepositoryImpl;
-import com.andersen.corgisteam.corgiroulette.repository.UserRepository;
-import com.andersen.corgisteam.corgiroulette.repository.UserRepositoryImpl;
-import com.andersen.corgisteam.corgiroulette.service.TeamService;
-import com.andersen.corgisteam.corgiroulette.service.TeamServiceImpl;
-import com.andersen.corgisteam.corgiroulette.service.UserService;
-import com.andersen.corgisteam.corgiroulette.service.UserServiceImpl;
+import com.andersen.corgisteam.corgiroulette.repository.*;
+import com.andersen.corgisteam.corgiroulette.service.*;
 import com.andersen.corgisteam.corgiroulette.servlet.command.Command;
 import com.andersen.corgisteam.corgiroulette.servlet.command.CommandProvider;
 
@@ -29,12 +23,14 @@ public class RouletteServlet extends HttpServlet {
     public RouletteServlet() {
         TeamRepository teamRepository = new TeamRepositoryImpl();
         UserRepository userRepository = new UserRepositoryImpl(teamRepository);
+        PairRepository pairRepository = new PairRepositoryImpl();
 
         TeamService teamService = new TeamServiceImpl(teamRepository, userRepository);
         UserMapper userMapper = new UserMapperImpl(teamRepository);
         UserService userService = new UserServiceImpl(userRepository, userMapper);
+        FindOpponentsUsingList findOpponentsUsingList = new FindOpponentsUsingList(userService, pairRepository);
 
-        this.commandProvider = new CommandProvider(teamService, userService);
+        this.commandProvider = new CommandProvider(teamService, userService, findOpponentsUsingList);
     }
 
     @Override

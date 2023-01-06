@@ -28,9 +28,23 @@
     <H3>The pair:</H3>
 </div>
 <br>
+<c:choose>
+    <c:when test="${pair != null && !pair.isEmpty()}">
+        <div class="d-flex justify-content-center">
+            <c:forEach items="${pair}" var="user">
+                <div class="d-flex justify-content-center">
+                    <H4> ${user.name}/H4>
+                </div>
+            </c:forEach>
+        </div>
+    </c:when>
+    <c:otherwise>
+        <div class="d-flex justify-content-center">
+            <H4>There is no pair.</H4>
+        </div>
+        <br>
+    </c:otherwise>
+</c:choose>
 
-<div class="d-flex justify-content-center">
-    <H3>Name 1 and Name 2</H3>
-</div>
 </body>
 </html>

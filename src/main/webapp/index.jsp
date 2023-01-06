@@ -17,7 +17,7 @@
 <br>
 
 <div class="d-flex justify-content-center">
-    <form class="d-flex">
+    <form class="d-flex" action="${pageContext.request.contextPath}/roulette" method="get">
         <button class="btn btn-danger" style="font-size: 24px;" type="submit">Create pair of opponents</button>
     </form>
 </div>
@@ -29,20 +29,12 @@
 </div>
 <br>
 
-
-<form class="d-flex" action="${pageContext.request.contextPath}/roulette/" method="get">
-    <button class="btn btn-danger" style="font-size: 24px;" type="submit">Create pair of opponents</button>
-</form>
-
-
 <c:choose>
-    <c:when test="${pair != null && !pair.isEmpty()}">
+    <c:when test="${pair != null}">
         <div class="d-flex justify-content-center">
-            <c:forEach items="${pair}" var="user">
-                <div class="d-flex justify-content-center">
-                    <H4> ${user.name}/H4>
-                </div>
-            </c:forEach>
+            <div class="d-flex justify-content-center">
+                <H4> ${pair.user.name} ${pair.user.surname} vs ${pair.opponent.name} ${pair.opponent.surname}</H4>
+            </div>
         </div>
     </c:when>
     <c:otherwise>

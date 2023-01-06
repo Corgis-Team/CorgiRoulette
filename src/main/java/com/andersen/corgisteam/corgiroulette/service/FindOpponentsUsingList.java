@@ -80,7 +80,7 @@ public class FindOpponentsUsingList {
         userService.updateStatusChosenUser(opponentForUser.getId());
 
         createPairInBattleTable(chosenUser.getId(), opponentForUser.getId());
-        return new Pair(chosenUser.getId(), opponentForUser.getId());
+        return new Pair(chosenUser, opponentForUser);
     }
 
     public static User getRandomElement(List<User> list) {
@@ -89,7 +89,7 @@ public class FindOpponentsUsingList {
     }
 
 
-    public List<User> createOpponents() {
+    public Pair createOpponents() {
         List<User> originalUsersNotPicked = createListWithoutPicked();
 
         originalUsersNotPicked = checkForEmpty(originalUsersNotPicked);
@@ -99,9 +99,6 @@ public class FindOpponentsUsingList {
         List<User> suitableOpponentsUsers = deleteToChooseSuitableOpponents(userChosen, originalUsersNotPicked);
         suitableOpponentsUsers = checkCountOfOpponents(userChosen, suitableOpponentsUsers, originalUsersNotPicked);
         User opponentUser = getRandomElement(suitableOpponentsUsers);
-        List<User> opponents = new ArrayList<>();
-        opponents.add(userChosen);
-        opponents.add(opponentUser);
-        return opponents;
+        return new Pair(userChosen, opponentUser);
     }
 }

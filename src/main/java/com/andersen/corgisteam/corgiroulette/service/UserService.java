@@ -28,4 +28,4 @@ public interface UserService {
     void updateStatusChosenUser(long userId);
 
     void changeStatusForAllUsers();
-
+}

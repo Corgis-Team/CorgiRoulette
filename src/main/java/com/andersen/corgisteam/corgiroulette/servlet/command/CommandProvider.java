@@ -33,7 +33,7 @@ public class CommandProvider {
     private static final String SEARCH_USER_COMMAND = "/users/search";
     private static final String SEARCH_USER_RESULTS_COMMAND = "/users/search/results";
 
-    private static final String PAIR_GENERATOR_COMMAND = "/";
+    private static final String PAIR_GENERATOR_COMMAND = null;
 
     private final Command notFoundCommand;
 

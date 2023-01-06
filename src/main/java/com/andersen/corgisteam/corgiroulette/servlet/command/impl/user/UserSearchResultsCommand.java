@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import com.andersen.corgisteam.corgiroulette.entity.User;
 import com.andersen.corgisteam.corgiroulette.repository.exception.QueryExecutionException;
+import com.andersen.corgisteam.corgiroulette.repository.exception.EntityNotFoundException;
 import com.andersen.corgisteam.corgiroulette.service.UserService;
 import com.andersen.corgisteam.corgiroulette.service.exception.ValidationException;
 import com.andersen.corgisteam.corgiroulette.servlet.command.Command;
@@ -39,7 +40,7 @@ public class UserSearchResultsCommand implements Command {
             request.setAttribute(USERS_PARAMETER, userList);
             request.getRequestDispatcher(USER_SEARCH_RESULTS).forward(request, response);
         }
-        catch (QueryExecutionException | ValidationException e) {
+        catch (QueryExecutionException | EntityNotFoundException | ValidationException e) {
             log.warn("Can't receive users search results cause: ", e);
             request.setAttribute(ERROR_ATTRIBUTE_NAME, e.getMessage());
             request.getRequestDispatcher(NOT_FOUND_PATH).forward(request, response);

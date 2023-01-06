@@ -28,6 +28,13 @@
     <H3>The pair:</H3>
 </div>
 <br>
+
+
+<form class="d-flex" action="${pageContext.request.contextPath}/roulette/" method="get">
+    <button class="btn btn-danger" style="font-size: 24px;" type="submit">Create pair of opponents</button>
+</form>
+
+
 <c:choose>
     <c:when test="${pair != null && !pair.isEmpty()}">
         <div class="d-flex justify-content-center">

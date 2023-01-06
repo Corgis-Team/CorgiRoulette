@@ -113,4 +113,30 @@ public class UserServiceImpl implements UserService {
                     user.getName()));
         }
     }
+
+    @Override
+    public List<User> getUsersWhereIsChosenFalse() {
+        List<User> users = userRepository.getUsersWhereIsChosenFalse();
+        log.info("Successfully found all users that haven't picked before");
+        return users;
+    }
+
+    @Override
+    public List<User> getUsersWhichWereOpponentsBefore(long userId) {
+        List<User> users = userRepository.getUsersWhichWereOpponentsBefore(userId);
+        log.info("Successfully found all users that haven't picked before as pair with user with id {}", userId);
+        return users;
+    }
+
+    @Override
+    public void updateStatusChosenUser(long userId) {
+        userRepository.updateStatusChosenUser(userId);
+        log.info("Successfully update status for user with id {}", userId);
+    }
+
+    @Override
+    public void changeStatusForAllUsers() {
+        userRepository.changeStatusForAllUsers();
+        log.info("Successfully update status for all users");
+    }
 }

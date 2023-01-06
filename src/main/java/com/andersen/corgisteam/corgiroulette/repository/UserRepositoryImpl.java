@@ -32,6 +32,11 @@ public class UserRepositoryImpl implements UserRepository {
             "WHERE id in (?,?)";
     private static final String QUERY_FOR_UPDATE_ALL = "UPDATE users SET is_chosen = false";
     private static final String DELETE_USER_QUERY = "DELETE FROM users WHERE id = ?";
+
+    private static final String SELECT_USERS_WHERE_IS_CHOSEN_FALSE = "SELECT * FROM users WHERE is_chosen = false";
+    private static final String SELECT_USERS_OPPONENTS_BEFORE = "SELECT DISTINCT id, name, surname, team_id, is_chosen FROM users JOIN users_opponents uo ON id = chosen_user_id OR id = opponent_user_id WHERE opponent_user_id = ? OR chosen_user_id = ?";
+    private static final String CHANGE_STATUS_FOR_USERS_OPPONENTS = "UPDATE users SET is_chosen = true WHERE id = ?";
+    private static final String CHANGE_STATUS_FOR_ALL_USERS = "UPDATE users SET is_chosen = false";
     
     private final TeamRepository teamRepository;
 
@@ -256,6 +261,59 @@ public class UserRepositoryImpl implements UserRepository {
         }
         catch (SQLException e) {
             throw new QueryExecutionException(String.format("Can't delete user. User id: %s", id), e);
+        }
+    }
+
+    @Override
+    public List<User> getUsersWhereIsChosenFalse() {
+        try (Connection connection = DatabaseConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SELECT_USERS_WHERE_IS_CHOSEN_FALSE)) {
+            ResultSet res = statement.executeQuery();
+            List<User> users = new ArrayList<>();
+            while (res.next()) {
+                users.add(mapRowToUser(res));
+            }
+            return users;
+        } catch (SQLException e) {
+            throw new QueryExecutionException("Can't find users that haven't chosen", e);
+        }
+    }
+
+    @Override
+    public List<User> getUsersWhichWereOpponentsBefore(long userId) {
+        try (Connection connection = DatabaseConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SELECT_USERS_OPPONENTS_BEFORE)) {
+            statement.setLong(1, userId);
+            statement.setLong(2, userId);
+            ResultSet res = statement.executeQuery();
+            List<User> users = new ArrayList<>();
+            while (res.next()) {
+                users.add(mapRowToUser(res));
+            }
+            return users;
+        } catch (SQLException e) {
+            throw new QueryExecutionException(String.format("Can't find users opponents before. User id: %s", userId), e);
+        }
+    }
+
+    @Override
+    public void updateStatusChosenUser(long userId) {
+        try (Connection connection = DatabaseConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(CHANGE_STATUS_FOR_USERS_OPPONENTS)) {
+            statement.setLong(1, userId);
+            statement.execute();
+        } catch (SQLException e) {
+            throw new QueryExecutionException(String.format("Can't update status of user. User id: %s", userId), e);
+        }
+    }
+
+    @Override
+    public void changeStatusForAllUsers() {
+        try (Connection connection = DatabaseConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(CHANGE_STATUS_FOR_ALL_USERS)) {
+            statement.execute();
+        } catch (SQLException e) {
+            throw new QueryExecutionException("Can't update all users status", e);
         }
     }
 

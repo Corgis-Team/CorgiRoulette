@@ -11,4 +11,8 @@ public interface PairRepository {
     List<Pair> findAll();
 
     boolean checkPair(Pair pair);
+
+    void createPairInBattleTable(long userId, long opponentId);
+
+    void deleteUserOpponent(long userId);
 }

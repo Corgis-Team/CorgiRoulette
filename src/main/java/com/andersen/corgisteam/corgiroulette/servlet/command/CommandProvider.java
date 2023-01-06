@@ -3,9 +3,11 @@ package com.andersen.corgisteam.corgiroulette.servlet.command;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.andersen.corgisteam.corgiroulette.service.FindOpponentsUsingList;
 import com.andersen.corgisteam.corgiroulette.service.TeamService;
 import com.andersen.corgisteam.corgiroulette.service.UserService;
 import com.andersen.corgisteam.corgiroulette.servlet.command.impl.*;
+import com.andersen.corgisteam.corgiroulette.servlet.command.impl.pair.FindOpponentsUsingListsCommand;
 import com.andersen.corgisteam.corgiroulette.servlet.command.impl.team.*;
 import com.andersen.corgisteam.corgiroulette.servlet.command.impl.user.*;
 
@@ -31,11 +33,13 @@ public class CommandProvider {
     private static final String SEARCH_USER_COMMAND = "/users/search";
     private static final String SEARCH_USER_RESULTS_COMMAND = "/users/search/results";
 
+    private static final String PAIR_GENERATOR_COMMAND = null;
+
     private final Command notFoundCommand;
 
     private final Map<String, Command> commandMap;
 
-    public CommandProvider(TeamService teamService, UserService userService) {
+    public CommandProvider(TeamService teamService, UserService userService, FindOpponentsUsingList findOpponentsUsingList) {
         commandMap = new HashMap<>();
         commandMap.put(SHOW_ALL_TEAMS_COMMAND, new ShowAllTeamsCommand(teamService));
         commandMap.put(NEW_TEAM_FORM_COMMAND, new NewTeamFormCommand());
@@ -57,8 +61,11 @@ public class CommandProvider {
         commandMap.put(SEARCH_USER_COMMAND, new SearchUserFormCommand());
         commandMap.put(SEARCH_USER_RESULTS_COMMAND, new UserSearchResultsCommand(userService));
 
+        commandMap.put(PAIR_GENERATOR_COMMAND, new FindOpponentsUsingListsCommand(findOpponentsUsingList));
+
         notFoundCommand = new NotFoundCommand();
     }
+
 
     public Command getCommand(String commandName) {
         if (!commandMap.containsKey(commandName)) {

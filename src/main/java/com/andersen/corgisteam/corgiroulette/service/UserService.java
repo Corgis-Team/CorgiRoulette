@@ -20,4 +20,12 @@ public interface UserService {
     List<User> getAllByTeamId(long teamId);
 
     void delete(long id);
+
+    List<User> getUsersWhereIsChosenFalse();
+
+    List<User> getUsersWhichWereOpponentsBefore(long userId);
+
+    void updateStatusChosenUser(long userId);
+
+    void changeStatusForAllUsers();
 }

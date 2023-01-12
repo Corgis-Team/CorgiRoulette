@@ -32,9 +32,30 @@
 <c:choose>
     <c:when test="${pair != null}">
         <div class="d-flex justify-content-center">
-            <div class="d-flex justify-content-center">
-                <H4> ${pair.user.name} ${pair.user.surname} vs ${pair.opponent.name} ${pair.opponent.surname}</H4>
-            </div>
+            <H4> ${pair.user.name} ${pair.user.surname} vs ${pair.opponent.name} ${pair.opponent.surname}</H4>
+        </div>
+        <br>
+        <div class="d-flex justify-content-center">
+            <form action="roulette/marks/create" method="post">
+                <div class="d-flex justify-content-center">
+                    <div class="form-group">
+                        <input type="hidden" id="userOneId" name="userOneId" value="${pair.user.id}"/>
+                        <label for="markOne">${pair.user.name}'s mark</label><br>
+                        <input type="number" min="0" value="0" step="0.5" class="form-control" id="markOne"
+                               name="markOne" placeholder="Mark for user 1" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" id="userTwoId" name="userTwoId" value="${pair.opponent.id}"/>
+                        <label for="markTwo">${pair.opponent.name}'s mark</label><br>
+                        <input type="number" min="0" value="0" step="0.5" class="form-control" id="markTwo"
+                               name="markTwo" placeholder="Mark for user 2" required>
+                    </div>
+                </div>
+                <br>
+                <div style="text-align: center;">
+                    <button type="submit" class="btn btn-outline-danger" style="size:14px">Submit marks</button>
+                </div>
+            </form>
         </div>
     </c:when>
     <c:otherwise>

@@ -17,6 +17,9 @@
                     <a class="nav-link active" aria-current="page" href="<c:url value="/roulette/teams"/>">Teams</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="<c:url value="/roulette/marks"/>">Marks</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link disabled" aria-current="page" href="<c:url value="/roulette/history"/>">History</a>
                 </li>
 

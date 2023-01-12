@@ -1,5 +1,5 @@
 def githubUrl = "https://github.com/Corgis-Team/CorgiRoulette"
-def tomcatServerUrl = "http://34.155.91.76:8080/"
+def tomcatServerUrl = "http://34.155.155.149:8080/"
 def tomcatCredentialsId = "7f9fd2fc-ceda-49b1-babf-0dc994e39f00"
 def tomcatContextPath = "/CorgiRoulette"
 pipeline {

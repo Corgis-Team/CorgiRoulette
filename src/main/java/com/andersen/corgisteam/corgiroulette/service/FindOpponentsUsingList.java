@@ -3,7 +3,7 @@ package com.andersen.corgisteam.corgiroulette.service;
 import com.andersen.corgisteam.corgiroulette.entity.Pair;
 import com.andersen.corgisteam.corgiroulette.entity.User;
 import com.andersen.corgisteam.corgiroulette.repository.PairRepository;
-import com.andersen.corgisteam.corgiroulette.service.exception.NotAvailablePairsException;
+import com.andersen.corgisteam.corgiroulette.service.exception.NullListForGeneratePairException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,11 +44,16 @@ public class FindOpponentsUsingList {
         return users;
     }
 
-    public List<User> checkForOdd(List<User> users) {
-        if (users.size() == 1) {
-            System.out.println(users.get(0).getName() + " is lucky!");
-            userService.updateStatusChosenUser(users.get(0).getId());
-            throw new NotAvailablePairsException("All users already answered today");
+    public List<User> checkForOddAndTeammates(List<User> users) {
+        List<Long> teamsIDs = new ArrayList<>();
+        for (User newUser : users) {
+            teamsIDs.add(newUser.getId());
+        }
+
+        boolean allEqual = teamsIDs.stream().distinct().count() <= 1;
+        if (allEqual) {
+            userService.changeStatusForAllUsers();
+            users = userService.getUsersWhereIsChosenFalse();
         }
         return users;
     }
@@ -84,8 +89,10 @@ public class FindOpponentsUsingList {
     }
 
     public static User getRandomElement(List<User> list) {
-        Random rand = new Random();
-        return list.get(rand.nextInt(list.size()));
+        if (list.isEmpty()) {
+            Random rand = new Random();
+            return list.get(rand.nextInt(list.size()));
+        }  throw new NullListForGeneratePairException("List for random shouldn't be null");
     }
 
 
@@ -93,12 +100,13 @@ public class FindOpponentsUsingList {
         List<User> originalUsersNotPicked = createListWithoutPicked();
 
         originalUsersNotPicked = checkForEmpty(originalUsersNotPicked);
+        originalUsersNotPicked = checkForOddAndTeammates(originalUsersNotPicked);
         User userChosen = getRandomElement(originalUsersNotPicked);
-        originalUsersNotPicked = checkForOdd(originalUsersNotPicked);
 
         List<User> suitableOpponentsUsers = deleteToChooseSuitableOpponents(userChosen, originalUsersNotPicked);
         suitableOpponentsUsers = checkCountOfOpponents(userChosen, suitableOpponentsUsers, originalUsersNotPicked);
         User opponentUser = getRandomElement(suitableOpponentsUsers);
-        return new Pair(userChosen, opponentUser);
+
+        return createPairOfOpponents(userChosen, opponentUser);
     }
 }

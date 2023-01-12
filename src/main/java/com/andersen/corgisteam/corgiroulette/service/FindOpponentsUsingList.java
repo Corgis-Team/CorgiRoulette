@@ -47,7 +47,7 @@ public class FindOpponentsUsingList {
     public List<User> checkForOddAndTeammates(List<User> users) {
         List<Long> teamsIDs = new ArrayList<>();
         for (User newUser : users) {
-            teamsIDs.add(newUser.getId());
+            teamsIDs.add(newUser.getTeam().getId());
         }
 
         boolean allEqual = teamsIDs.stream().distinct().count() <= 1;
@@ -90,9 +90,10 @@ public class FindOpponentsUsingList {
 
     public static User getRandomElement(List<User> list) {
         if (list.isEmpty()) {
-            Random rand = new Random();
-            return list.get(rand.nextInt(list.size()));
-        }  throw new NullListForGeneratePairException("List for random shouldn't be null");
+            throw new NullListForGeneratePairException("List for random shouldn't be null");
+        }
+        Random rand = new Random();
+        return list.get(rand.nextInt(list.size()));
     }
 
 

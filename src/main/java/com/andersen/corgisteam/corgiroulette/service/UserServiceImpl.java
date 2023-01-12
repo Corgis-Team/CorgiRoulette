@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.pairGenerator = pairGenerator;
-        pairGenerator.generatePairs();
+  //      pairGenerator.generatePairs();
     }
 
     @Override
@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.userDtoToEntity(requestUserDto);
         validate(user);
         userRepository.save(user);
-        pairGenerator.generatePairs();
+      //  pairGenerator.generatePairs();
         log.info("Successfully created user with id {}", user.getId());
     }
 
@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.userDtoToEntity(requestUserDto);
         validate(user);
         userRepository.update(user);
-        pairGenerator.generatePairs();
+  //      pairGenerator.generatePairs();
         log.info("Successfully updated user with id {}", user.getId());
     }
 
@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
     public void delete(long id) {
         User user = userRepository.findById(id);
         userRepository.delete(id);
-        pairGenerator.generatePairs();
+//        pairGenerator.generatePairs();
         log.info("Team with id {} was successfully deleted", user.getId());
     }
 

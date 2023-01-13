@@ -21,7 +21,7 @@ public class ChangeOpponentCommand implements Command {
     private static final String USER_TO_CHANGE_ID_PARAMETER = "userToChangeId";
     private static final String USER_TO_SAVE_PARAMETER = "userToSaveId";
 
-    private static final String FIND_OPPONENTS_SHOW_PATH = "/index.jsp";
+    private static final String MAIN_PATH = "/index.jsp";
     private static final String NOT_FOUND_PATH = "/WEB-INF/jsp/notFound.jsp";
 
     private static final String ERROR_ATTRIBUTE_NAME = "errorMessage";
@@ -46,7 +46,7 @@ public class ChangeOpponentCommand implements Command {
             Pair pair = new Pair(userToSave, userToChange);
             pair = pairService.changeOpponent(pair);
             request.setAttribute("pair", pair);
-            request.getRequestDispatcher(FIND_OPPONENTS_SHOW_PATH).forward(request, response);
+            request.getRequestDispatcher(MAIN_PATH).forward(request, response);
         } catch (NumberFormatException | EntityNotFoundException e) {
             log.warn("Can't receive user's details cause: ", e);
             request.setAttribute(ERROR_ATTRIBUTE_NAME, e.getMessage());

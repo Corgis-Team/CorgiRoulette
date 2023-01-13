@@ -32,6 +32,7 @@ public class CommandProvider {
     private static final String DELETE_USER_COMMAND = "/users/delete";
     private static final String SEARCH_USER_COMMAND = "/users/search";
     private static final String SEARCH_USER_RESULTS_COMMAND = "/users/search/results";
+    private static final String REFRESH_USERS_COMMAND = "/users/refresh";
 
     private static final String SHOW_USERS_MARKS_COMMAND = "/marks";
     private static final String CREATE_MARK_COMMAND = "/marks/create";
@@ -77,6 +78,7 @@ public class CommandProvider {
 
         commandMap.put(PAIR_GENERATOR_COMMAND, new FindOpponentsUsingListsCommand(pairService));
         commandMap.put(CHANGE_OPPONENT_COMMAND, new ChangeOpponentCommand(userService, pairService));
+        commandMap.put(REFRESH_USERS_COMMAND, new RefreshUsersCommand(userService));
 
         notFoundCommand = new NotFoundCommand();
     }

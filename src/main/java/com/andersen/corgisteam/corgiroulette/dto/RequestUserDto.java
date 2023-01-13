@@ -5,6 +5,7 @@ public class RequestUserDto {
     private long id;
     private String name;
     private String surname;
+    private boolean isChosen;
     private long teamId;
 
     public RequestUserDto() {
@@ -40,5 +41,13 @@ public class RequestUserDto {
 
     public void setTeamId(long teamId) {
         this.teamId = teamId;
+    }
+
+    public boolean isChosen() {
+        return isChosen;
+    }
+
+    public void setChosen(boolean chosen) {
+        isChosen = chosen;
     }
 }

@@ -32,12 +32,12 @@ public class UserMapperImpl implements UserMapper {
         user.setId(requestUserDto.getId());
         user.setName(requestUserDto.getName());
         user.setSurname(requestUserDto.getSurname());
+        user.setChosen(requestUserDto.isChosen());
 
         if (requestUserDto.getTeamId() > 0) {
             user.setTeam(teamRepository.findById(requestUserDto.getTeamId()));
         }
 
-        user.setChosen(false);
         user.setLastDuel(LocalDateTime.now());
         return user;
     }

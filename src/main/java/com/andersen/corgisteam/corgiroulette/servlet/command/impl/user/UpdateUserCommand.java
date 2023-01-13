@@ -21,6 +21,7 @@ public class UpdateUserCommand implements Command {
     private static final String ID_PARAMETER = "id";
     private static final String NAME_PARAMETER = "name";
     private static final String SURNAME_PARAMETER = "surname";
+    private static final String IS_CHOSEN_PARAMETER = "isChosen";
     private static final String TEAM_PARAMETER = "team_id";
 
     private static final String USER_LIST_PATH_FORMAT = "%s%s/users";
@@ -40,6 +41,9 @@ public class UpdateUserCommand implements Command {
             user.setId(Long.parseLong(request.getParameter(ID_PARAMETER)));
             user.setName(request.getParameter(NAME_PARAMETER));
             user.setSurname(request.getParameter(SURNAME_PARAMETER));
+
+            user.setChosen(Boolean.parseBoolean(request.getParameter(IS_CHOSEN_PARAMETER)));
+
             user.setTeamId(Long.parseLong(request.getParameter(TEAM_PARAMETER)));
 
             userService.update(user);

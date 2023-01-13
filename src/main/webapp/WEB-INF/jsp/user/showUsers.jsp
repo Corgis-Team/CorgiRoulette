@@ -25,6 +25,7 @@
                     <tr>
                         <th scope="col"><b>Name</b></th>
                         <th scope="col"><b>Surname</b></th>
+                        <th scope="col"><b>Was chosen?</b></th>
                         <th scope="col"><b>Team</b></th>
                         <th scope="col"><b>Details</b></th>
                         <th scope="col"><b>Edit</b></th>
@@ -37,6 +38,7 @@
                         <tr>
                             <td><c:out value="${user.name}"/></td>
                             <td><c:out value="${user.surname}"/></td>
+                            <td><c:out value="${user.chosen ? 'Yes' : 'No'}"/></td>
                             <td><c:out value="${user.team.name}"/></td>
                             <td><a class="text-decoration-none link-danger"
                                    href="${pageContext.request.contextPath}/roulette/users/details?id=${user.id}">Details</a>

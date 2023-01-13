@@ -21,7 +21,10 @@ public class PairRepositoryImpl implements PairRepository{
 
 
     private static final String ADD_PAIR_OPPONENTS = "INSERT INTO users_opponents VALUES (?,?)";
-    private static final String DELETE_USERS_OPPONENTS = "DELETE FROM users_opponents WHERE chosen_user_id = ? OR opponent_user_id = ?";
+    private static final String DELETE_USERS_OPPONENTS = "DELETE FROM users_opponents " +
+            "WHERE chosen_user_id = ? OR opponent_user_id = ?";
+    private static final String DELETE_PAIR_QUERY = "DELETE FROM users_opponents " +
+            "WHERE (chosen_user_id = ? AND opponent_user_id = ?) OR (opponent_user_id = ? AND chosen_user_id = ?)";
 
     private final UserRepository userRepository;
 
@@ -97,7 +100,25 @@ public class PairRepositoryImpl implements PairRepository{
             statement.setLong(2, userId);
             statement.execute();
         } catch (SQLException e) {
-            throw new QueryExecutionException(String.format("Can't delete all pairs of opponents with for user. User id: %s", userId), e);
+            throw new QueryExecutionException(String.format(
+                    "Can't delete all pairs of opponents with for user. User id: %s", userId), e);
+        }
+    }
+
+    @Override
+    public void deletePair(Pair pair) {
+        try (Connection connection = DatabaseConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(DELETE_PAIR_QUERY)) {
+            statement.setLong(1, pair.getUser().getId());
+            statement.setLong(2, pair.getOpponent().getId());
+
+            statement.setLong(3, pair.getUser().getId());
+            statement.setLong(4, pair.getOpponent().getId());
+
+            statement.execute();
+        } catch (SQLException e) {
+            throw new QueryExecutionException(String.format("Can't delete pair. User id: %s, Opponent id: %s",
+                    pair.getUser().getId(), pair.getOpponent().getId()), e);
         }
     }
 

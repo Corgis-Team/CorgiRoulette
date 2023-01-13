@@ -5,4 +5,6 @@ import com.andersen.corgisteam.corgiroulette.entity.Pair;
 public interface PairService {
 
     Pair getPair();
+
+    Pair changeOpponent(Pair pair);
 }

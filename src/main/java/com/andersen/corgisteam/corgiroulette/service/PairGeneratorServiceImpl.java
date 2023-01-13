@@ -46,6 +46,11 @@ public class PairGeneratorServiceImpl implements PairGeneratorService {
     }
 
     @Override
+    public Pair changeOpponent(Pair pair) {
+        return null;
+    }
+
+    @Override
     public boolean validatePair(User user, User opponent) {
         Duration duration = Duration.between(user.getLastDuel(), LocalDateTime.now());
         long durationInDays1 = duration.toDays();

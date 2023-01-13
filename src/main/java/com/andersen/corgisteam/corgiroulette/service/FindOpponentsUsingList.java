@@ -19,19 +19,30 @@ public class FindOpponentsUsingList implements PairService {
         this.pairRepository = pairRepository;
     }
 
-    public void createPairInBattleTable(long userId, long opponentId) {
-        pairRepository.createPairInBattleTable(userId, opponentId);
-        log.info("Successfully created new pair with for user with id {}", userId);
-        log.info("The opponent with id {}", opponentId);
+    @Override
+    public Pair getPair() {
+        List<User> originalUsersNotPicked = getUsersNotPicked();
+        User userChosen = getRandomElement(originalUsersNotPicked);
+        User opponentUser = getOpponent(userChosen, originalUsersNotPicked);
+
+        return createPairOfOpponents(userChosen, opponentUser);
     }
 
-    public void deleteUserOpponent(long userId) {
-        pairRepository.deleteUserOpponent(userId);
-        log.info("Successfully deleted pairs with id {}", userId);
+    @Override
+    public Pair changeOpponent(Pair pair) {
+        deletePair(pair);
+        List<User> originalUsersNotPicked = getUsersNotPicked();
+        pair.setOpponent(getOpponent(pair.getUser(), originalUsersNotPicked));
+
+        return createPairOfOpponents(pair);
     }
 
-    public List<User> createListWithoutPicked() {
-        return userService.getUsersWhereIsChosenFalse();
+    private List<User> getUsersNotPicked() {
+        List<User> originalUsersNotPicked = userService.getUsersWhereIsChosenFalse();
+        originalUsersNotPicked = checkForEmpty(originalUsersNotPicked);
+        originalUsersNotPicked = checkForOddAndTeammates(originalUsersNotPicked);
+
+        return originalUsersNotPicked;
     }
 
     public List<User> checkForEmpty(List<User> users) {
@@ -53,6 +64,12 @@ public class FindOpponentsUsingList implements PairService {
             users = userService.getUsersWhereIsChosenFalse();
         }
         return users;
+    }
+
+    private User getOpponent(User userToSave, List<User> originalUsersNotPicked) {
+        List<User> suitableOpponentsUsers = deleteToChooseSuitableOpponents(userToSave, originalUsersNotPicked);
+        suitableOpponentsUsers = checkCountOfOpponents(userToSave, suitableOpponentsUsers, originalUsersNotPicked);
+        return getRandomElement(suitableOpponentsUsers);
     }
 
     public List<User> deleteToChooseSuitableOpponents(User user, List<User> users) {
@@ -77,6 +94,17 @@ public class FindOpponentsUsingList implements PairService {
         return usersOpponents;
     }
 
+    public void deleteUserOpponent(long userId) {
+        pairRepository.deleteUserOpponent(userId);
+        log.info("Successfully deleted pairs with id {}", userId);
+    }
+
+    public void deletePair(Pair pair) {
+        pairRepository.deletePair(pair);
+        log.info("Successfully deleted pair with users id {} and {}",
+                pair.getUser().getId(), pair.getOpponent().getId());
+    }
+
     public Pair createPairOfOpponents(User chosenUser, User opponentForUser) {
         userService.updateStatusChosenUser(chosenUser.getId());
         userService.updateStatusChosenUser(opponentForUser.getId());
@@ -85,26 +113,23 @@ public class FindOpponentsUsingList implements PairService {
         return new Pair(chosenUser, opponentForUser);
     }
 
+    public Pair createPairOfOpponents(Pair pair) {
+        userService.updateStatusChosenUser(pair.getOpponent().getId());
+        createPairInBattleTable(pair.getUser().getId(), pair.getOpponent().getId());
+        return pair;
+    }
+
+    public void createPairInBattleTable(long userId, long opponentId) {
+        pairRepository.createPairInBattleTable(userId, opponentId);
+        log.info("Successfully created new pair for user with id {}", userId);
+        log.info("The opponent with id {}", opponentId);
+    }
+
     public static User getRandomElement(List<User> list) {
         if (list.isEmpty()) {
             throw new NullListForGeneratePairException("List for random shouldn't be null");
         }
         Random rand = new Random();
         return list.get(rand.nextInt(list.size()));
-    }
-
-    @Override
-    public Pair getPair() {
-        List<User> originalUsersNotPicked = createListWithoutPicked();
-
-        originalUsersNotPicked = checkForEmpty(originalUsersNotPicked);
-        originalUsersNotPicked = checkForOddAndTeammates(originalUsersNotPicked);
-        User userChosen = getRandomElement(originalUsersNotPicked);
-
-        List<User> suitableOpponentsUsers = deleteToChooseSuitableOpponents(userChosen, originalUsersNotPicked);
-        suitableOpponentsUsers = checkCountOfOpponents(userChosen, suitableOpponentsUsers, originalUsersNotPicked);
-        User opponentUser = getRandomElement(suitableOpponentsUsers);
-
-        return createPairOfOpponents(userChosen, opponentUser);
     }
 }

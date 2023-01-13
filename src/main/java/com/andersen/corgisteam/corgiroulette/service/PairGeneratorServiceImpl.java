@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-public class PairServiceImpl implements PairService {
+public class PairGeneratorServiceImpl implements PairGeneratorService {
 
     private static final Random RANDOM = new Random();
     private static final int INTERVAL = 7;
@@ -22,7 +22,7 @@ public class PairServiceImpl implements PairService {
     private final PairRepository pairRepository;
     private final UserRepository userRepository;
 
-    public PairServiceImpl(PairRepository pairRepository, UserRepository userRepository) {
+    public PairGeneratorServiceImpl(PairRepository pairRepository, UserRepository userRepository) {
         this.pairRepository = pairRepository;
         this.userRepository = userRepository;
     }
@@ -43,11 +43,6 @@ public class PairServiceImpl implements PairService {
             tries.add(anotherTry);
         }
         throw new NotAvailablePairsException("All users already answered today");
-    }
-
-    @Override
-    public void refresh() {
-        userRepository.refresh();
     }
 
     @Override

@@ -135,8 +135,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changeStatusForAllUsers() {
-        userRepository.changeStatusForAllUsers();
+    public void refreshUsers() {
+        userRepository.refresh();
         log.info("Successfully update status for all users");
     }
 }

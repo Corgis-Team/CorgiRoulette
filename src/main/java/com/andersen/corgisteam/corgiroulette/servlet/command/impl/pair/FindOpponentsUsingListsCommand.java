@@ -19,7 +19,7 @@ public class FindOpponentsUsingListsCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("pair", findOpponents.createOpponents());
+        request.setAttribute("pair", findOpponents.getPair());
         request.getRequestDispatcher(FIND_OPPONENTS_SHOW_PATH).forward(request, response);
     }
 }

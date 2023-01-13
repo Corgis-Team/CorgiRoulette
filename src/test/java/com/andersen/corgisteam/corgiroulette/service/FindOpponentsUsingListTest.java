@@ -122,7 +122,7 @@ class FindOpponentsUsingListTest {
         List <User> allUsers = userRepository.findAll();
         System.out.println(allUsers);
         for (int i = 0; i < (int)Math.ceil(allUsers.size()/2.0); i++) {
-            Pair pair = findOpponentsUsingList.createOpponents();
+            Pair pair = findOpponentsUsingList.getPair();
             log.info("Create pair for user id {}", pair.getUser().getId());
             log.info("Create pair for opponent id {}", pair.getOpponent().getId());
             Assertions.assertEquals(pair, findOpponentsUsingList.createPairOfOpponents(pair.getUser(),pair.getUser()));

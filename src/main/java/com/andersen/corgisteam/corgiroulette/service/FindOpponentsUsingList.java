@@ -7,11 +7,9 @@ import com.andersen.corgisteam.corgiroulette.service.exception.NullListForGenera
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
-public class FindOpponentsUsingList {
+public class FindOpponentsUsingList implements PairService {
     private static final Logger log = LoggerFactory.getLogger(FindOpponentsUsingList.class);
     private final UserService userService;
     private final PairRepository pairRepository;
@@ -38,21 +36,20 @@ public class FindOpponentsUsingList {
 
     public List<User> checkForEmpty(List<User> users) {
         if (users.isEmpty()) {
-            userService.changeStatusForAllUsers();
+            userService.refreshUsers();
             users = userService.getUsersWhereIsChosenFalse();
         }
         return users;
     }
 
     public List<User> checkForOddAndTeammates(List<User> users) {
-        List<Long> teamsIDs = new ArrayList<>();
+        Set<Long> teamsIDs = new HashSet<>();
         for (User newUser : users) {
             teamsIDs.add(newUser.getTeam().getId());
         }
 
-        boolean allEqual = teamsIDs.stream().distinct().count() <= 1;
-        if (allEqual) {
-            userService.changeStatusForAllUsers();
+        if (teamsIDs.size() <= 1) {
+            userService.refreshUsers();
             users = userService.getUsersWhereIsChosenFalse();
         }
         return users;
@@ -96,8 +93,8 @@ public class FindOpponentsUsingList {
         return list.get(rand.nextInt(list.size()));
     }
 
-
-    public Pair createOpponents() {
+    @Override
+    public Pair getPair() {
         List<User> originalUsersNotPicked = createListWithoutPicked();
 
         originalUsersNotPicked = checkForEmpty(originalUsersNotPicked);

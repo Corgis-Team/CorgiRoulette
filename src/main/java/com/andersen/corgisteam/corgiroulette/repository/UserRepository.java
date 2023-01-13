@@ -29,6 +29,4 @@ public interface UserRepository {
     List<User> getUsersWhichWereOpponentsBefore(long userId);
 
     void updateStatusChosenUser(long userId);
-
-    void changeStatusForAllUsers();
 }

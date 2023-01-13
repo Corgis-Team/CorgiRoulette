@@ -3,15 +3,13 @@ package com.andersen.corgisteam.corgiroulette.service;
 import com.andersen.corgisteam.corgiroulette.entity.Pair;
 import com.andersen.corgisteam.corgiroulette.entity.User;
 import com.andersen.corgisteam.corgiroulette.repository.PairRepository;
-import com.andersen.corgisteam.corgiroulette.service.exception.NotAvailablePairsException;
+import com.andersen.corgisteam.corgiroulette.service.exception.NullListForGeneratePairException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
-public class FindOpponentsUsingList {
+public class FindOpponentsUsingList implements PairService {
     private static final Logger log = LoggerFactory.getLogger(FindOpponentsUsingList.class);
     private final UserService userService;
     private final PairRepository pairRepository;
@@ -38,17 +36,21 @@ public class FindOpponentsUsingList {
 
     public List<User> checkForEmpty(List<User> users) {
         if (users.isEmpty()) {
-            userService.changeStatusForAllUsers();
+            userService.refreshUsers();
             users = userService.getUsersWhereIsChosenFalse();
         }
         return users;
     }
 
-    public List<User> checkForOdd(List<User> users) {
-        if (users.size() == 1) {
-            System.out.println(users.get(0).getName() + " is lucky!");
-            userService.updateStatusChosenUser(users.get(0).getId());
-            throw new NotAvailablePairsException("All users already answered today");
+    public List<User> checkForOddAndTeammates(List<User> users) {
+        Set<Long> teamsIDs = new HashSet<>();
+        for (User newUser : users) {
+            teamsIDs.add(newUser.getTeam().getId());
+        }
+
+        if (teamsIDs.size() <= 1) {
+            userService.refreshUsers();
+            users = userService.getUsersWhereIsChosenFalse();
         }
         return users;
     }
@@ -84,21 +86,25 @@ public class FindOpponentsUsingList {
     }
 
     public static User getRandomElement(List<User> list) {
+        if (list.isEmpty()) {
+            throw new NullListForGeneratePairException("List for random shouldn't be null");
+        }
         Random rand = new Random();
         return list.get(rand.nextInt(list.size()));
     }
 
-
-    public Pair createOpponents() {
+    @Override
+    public Pair getPair() {
         List<User> originalUsersNotPicked = createListWithoutPicked();
 
         originalUsersNotPicked = checkForEmpty(originalUsersNotPicked);
+        originalUsersNotPicked = checkForOddAndTeammates(originalUsersNotPicked);
         User userChosen = getRandomElement(originalUsersNotPicked);
-        originalUsersNotPicked = checkForOdd(originalUsersNotPicked);
 
         List<User> suitableOpponentsUsers = deleteToChooseSuitableOpponents(userChosen, originalUsersNotPicked);
         suitableOpponentsUsers = checkCountOfOpponents(userChosen, suitableOpponentsUsers, originalUsersNotPicked);
         User opponentUser = getRandomElement(suitableOpponentsUsers);
-        return new Pair(userChosen, opponentUser);
+
+        return createPairOfOpponents(userChosen, opponentUser);
     }
 }

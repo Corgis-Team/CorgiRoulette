@@ -30,13 +30,13 @@ public class UserRepositoryImpl implements UserRepository {
     private static final String FIND_USERS_BY_TEAM_ID = "SELECT * FROM users WHERE team_id = ?";
     private static final String QUERY_FOR_HANDLE_PAIR = "UPDATE users SET is_chosen = true, last_duel = ? " +
             "WHERE id in (?,?)";
-    private static final String QUERY_FOR_UPDATE_ALL = "UPDATE users SET is_chosen = false";
     private static final String DELETE_USER_QUERY = "DELETE FROM users WHERE id = ?";
 
     private static final String SELECT_USERS_WHERE_IS_CHOSEN_FALSE = "SELECT * FROM users WHERE is_chosen = false";
-    private static final String SELECT_USERS_OPPONENTS_BEFORE = "SELECT DISTINCT id, name, surname, team_id, is_chosen FROM users JOIN users_opponents uo ON id = chosen_user_id OR id = opponent_user_id WHERE opponent_user_id = ? OR chosen_user_id = ?";
+    private static final String SELECT_USERS_OPPONENTS_BEFORE = "SELECT DISTINCT * FROM users JOIN users_opponents uo ON " +
+            "id = chosen_user_id OR id = opponent_user_id WHERE opponent_user_id = ? OR chosen_user_id = ?";
     private static final String CHANGE_STATUS_FOR_USERS_OPPONENTS = "UPDATE users SET is_chosen = true WHERE id = ?";
-    private static final String CHANGE_STATUS_FOR_ALL_USERS = "UPDATE users SET is_chosen = false";
+    private static final String CHANGE_STATUS_FOR_ALL_USERS_TO_FALSE = "UPDATE users SET is_chosen = false";
     
     private final TeamRepository teamRepository;
 
@@ -238,7 +238,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public void refresh() {
         try (Connection connection = DatabaseConfig.getConnection();
-             PreparedStatement statement = connection.prepareStatement(QUERY_FOR_UPDATE_ALL)) {
+             PreparedStatement statement = connection.prepareStatement(CHANGE_STATUS_FOR_ALL_USERS_TO_FALSE)) {
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
                 throw new QueryExecutionException("Can't refresh chosen status for all users");
@@ -304,16 +304,6 @@ public class UserRepositoryImpl implements UserRepository {
             statement.execute();
         } catch (SQLException e) {
             throw new QueryExecutionException(String.format("Can't update status of user. User id: %s", userId), e);
-        }
-    }
-
-    @Override
-    public void changeStatusForAllUsers() {
-        try (Connection connection = DatabaseConfig.getConnection();
-             PreparedStatement statement = connection.prepareStatement(CHANGE_STATUS_FOR_ALL_USERS)) {
-            statement.execute();
-        } catch (SQLException e) {
-            throw new QueryExecutionException("Can't update all users status", e);
         }
     }
 

@@ -21,7 +21,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     private static final String QUERY_FOR_SAVING = "INSERT INTO users(name, surname, team_id, is_chosen, last_duel) " +
         "VALUES (?, ?, ?, ?, ?)";
-    private static final String QUERY_FOR_UPDATE = "UPDATE users SET name = ?, surname = ?, team_id = ? WHERE id = ?";
+    private static final String QUERY_FOR_UPDATE = "UPDATE users SET name = ?, surname = ?, is_chosen = ?, " +
+            "team_id = ? WHERE id = ?";
     private static final String QUERY_FOR_ALL_USERS = "SELECT * FROM users";
     private static final String FIND_USER_BY_ID_QUERY = "SELECT * FROM users WHERE id = ?";
     private static final String FIND_USERS_BY_FULL_NAME_QUERY = "SELECT * FROM users WHERE " +
@@ -33,7 +34,7 @@ public class UserRepositoryImpl implements UserRepository {
     private static final String DELETE_USER_QUERY = "DELETE FROM users WHERE id = ?";
 
     private static final String SELECT_USERS_WHERE_IS_CHOSEN_FALSE = "SELECT * FROM users WHERE is_chosen = false";
-    private static final String SELECT_USERS_OPPONENTS_BEFORE = "SELECT DISTINCT * FROM users JOIN users_opponents uo ON " +
+    private static final String SELECT_USERS_OPPONENTS_BEFORE = "SELECT DISTINCT * FROM users JOIN users_opponents ON " +
             "id = chosen_user_id OR id = opponent_user_id WHERE opponent_user_id = ? OR chosen_user_id = ?";
     private static final String CHANGE_STATUS_FOR_USERS_OPPONENTS = "UPDATE users SET is_chosen = true WHERE id = ?";
     private static final String CHANGE_STATUS_FOR_ALL_USERS_TO_FALSE = "UPDATE users SET is_chosen = false";
@@ -92,15 +93,16 @@ public class UserRepositoryImpl implements UserRepository {
 
             statement.setString(1, user.getName());
             statement.setString(2, user.getSurname());
+            statement.setBoolean(3, user.isChosen());
 
             if (user.getTeam() != null) {
-                statement.setLong(3, user.getTeam().getId());
+                statement.setLong(4, user.getTeam().getId());
             }
             else {
-                statement.setNull(3, Types.BIGINT);
+                statement.setNull(4, Types.BIGINT);
             }
 
-            statement.setLong(4, user.getId());
+            statement.setLong(5, user.getId());
             int affectedRows = statement.executeUpdate();
 
             if (affectedRows == 0) {

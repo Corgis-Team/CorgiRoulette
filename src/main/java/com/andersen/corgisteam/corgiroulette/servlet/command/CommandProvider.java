@@ -1,15 +1,17 @@
 package com.andersen.corgisteam.corgiroulette.servlet.command;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.andersen.corgisteam.corgiroulette.service.FindOpponentsUsingList;
+import com.andersen.corgisteam.corgiroulette.service.MarkService;
 import com.andersen.corgisteam.corgiroulette.service.TeamService;
 import com.andersen.corgisteam.corgiroulette.service.UserService;
-import com.andersen.corgisteam.corgiroulette.servlet.command.impl.*;
+import com.andersen.corgisteam.corgiroulette.servlet.command.impl.NotFoundCommand;
+import com.andersen.corgisteam.corgiroulette.servlet.command.impl.mark.*;
 import com.andersen.corgisteam.corgiroulette.servlet.command.impl.pair.FindOpponentsUsingListsCommand;
 import com.andersen.corgisteam.corgiroulette.servlet.command.impl.team.*;
 import com.andersen.corgisteam.corgiroulette.servlet.command.impl.user.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class CommandProvider {
 
@@ -33,13 +35,19 @@ public class CommandProvider {
     private static final String SEARCH_USER_COMMAND = "/users/search";
     private static final String SEARCH_USER_RESULTS_COMMAND = "/users/search/results";
 
+    private static final String SHOW_USERS_MARKS_COMMAND = "/marks";
+    private static final String CREATE_MARK_COMMAND = "/marks/create";
+    private static final String EDIT_MARK_FORM_COMMAND = "/marks/edit";
+    private static final String UPDATE_MARK_COMMAND = "/marks/update";
+    private static final String DELETE_MARK_COMMAND = "/marks/delete";
+
     private static final String PAIR_GENERATOR_COMMAND = null;
 
     private final Command notFoundCommand;
 
     private final Map<String, Command> commandMap;
 
-    public CommandProvider(TeamService teamService, UserService userService, FindOpponentsUsingList findOpponentsUsingList) {
+    public CommandProvider(TeamService teamService, UserService userService, MarkService markService, FindOpponentsUsingList findOpponentsUsingList) {
         commandMap = new HashMap<>();
         commandMap.put(SHOW_ALL_TEAMS_COMMAND, new ShowAllTeamsCommand(teamService));
         commandMap.put(NEW_TEAM_FORM_COMMAND, new NewTeamFormCommand());
@@ -54,12 +62,18 @@ public class CommandProvider {
         commandMap.put(SHOW_ALL_USERS_COMMAND, new ShowAllUsersCommand(userService));
         commandMap.put(NEW_USER_FORM_COMMAND, new NewUserFormCommand(teamService));
         commandMap.put(CREATE_USER_COMMAND, new CreateUserCommand(userService));
-        commandMap.put(USER_DETAILS_COMMAND, new UserDetailsCommand(userService));
+        commandMap.put(USER_DETAILS_COMMAND, new UserDetailsCommand(userService, markService));
         commandMap.put(EDIT_USER_FORM_COMMAND, new EditUserFormCommand(userService, teamService));
         commandMap.put(UPDATE_USER_COMMAND, new UpdateUserCommand(userService));
         commandMap.put(DELETE_USER_COMMAND, new DeleteUserCommand(userService));
         commandMap.put(SEARCH_USER_COMMAND, new SearchUserFormCommand());
         commandMap.put(SEARCH_USER_RESULTS_COMMAND, new UserSearchResultsCommand(userService));
+
+        commandMap.put(SHOW_USERS_MARKS_COMMAND, new ShowUsersMarksCommand(markService));
+        commandMap.put(CREATE_MARK_COMMAND, new CreateMarkCommand(markService, userService));
+        commandMap.put(EDIT_MARK_FORM_COMMAND, new EditMarkFormCommand(markService));
+        commandMap.put(UPDATE_MARK_COMMAND, new UpdateMarkCommand(markService));
+        commandMap.put(DELETE_MARK_COMMAND, new DeleteMarkCommand(markService));
 
         commandMap.put(PAIR_GENERATOR_COMMAND, new FindOpponentsUsingListsCommand(findOpponentsUsingList));
 

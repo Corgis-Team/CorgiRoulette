@@ -17,6 +17,10 @@
         <h2>Users: </h2>
     </div>
 
+    <div class="d-flex justify-content-end">
+        <a class="btn btn-outline-danger" href="${pageContext.request.contextPath}/roulette/users/refresh">Refresh</a>
+    </div>
+
     <div class="d-flex justify-content-center">
         <c:choose>
             <c:when test="${users != null && !users.isEmpty()}">

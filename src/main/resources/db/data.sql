@@ -9,7 +9,7 @@ values ('Red'),
        ('Blue');
 
 insert into users(name, surname, team_id, is_chosen, last_duel)
-values ('Vladislav', 'Nemirov', 3, false, '2023-01-01 00:00:00.000000'),
+values ('Vladislav', 'Nemiro', 3, false, '2023-01-01 00:00:00.000000'),
        ('Sergei', 'Losev', 3, false, '2023-01-01 00:00:00.000000'),
        ('Polina', 'Belkevich', 3, false, '2023-01-01 00:00:00.000000'),
        ('Andrey', 'Pshtyr', 3, false, '2023-01-01 00:00:00.000000'),

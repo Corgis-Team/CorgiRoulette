@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="andersen@localhost" uuid="8a115e0d-9d37-479d-bb3b-827e7ae05539">
+    <data-source source="LOCAL" name="corgiroulette@34.97.223.209" uuid="d3e63a4d-74ee-48aa-9e92-d0e888f889e5">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://34.97.223.209:5432/corgiroulette</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="andersen@localhost" uuid="82aa6f81-066d-465d-a076-33031daf6cb9">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>

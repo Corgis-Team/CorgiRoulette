@@ -1,11 +1,9 @@
 package com.andersen.corgisteam.corgiroulette.servlet.command;
 
-import com.andersen.corgisteam.corgiroulette.service.FindOpponentsUsingList;
-import com.andersen.corgisteam.corgiroulette.service.MarkService;
-import com.andersen.corgisteam.corgiroulette.service.TeamService;
-import com.andersen.corgisteam.corgiroulette.service.UserService;
+import com.andersen.corgisteam.corgiroulette.service.*;
 import com.andersen.corgisteam.corgiroulette.servlet.command.impl.NotFoundCommand;
 import com.andersen.corgisteam.corgiroulette.servlet.command.impl.mark.*;
+import com.andersen.corgisteam.corgiroulette.servlet.command.impl.pair.ChangeOpponentCommand;
 import com.andersen.corgisteam.corgiroulette.servlet.command.impl.pair.FindOpponentsUsingListsCommand;
 import com.andersen.corgisteam.corgiroulette.servlet.command.impl.team.*;
 import com.andersen.corgisteam.corgiroulette.servlet.command.impl.user.*;
@@ -42,12 +40,14 @@ public class CommandProvider {
     private static final String DELETE_MARK_COMMAND = "/marks/delete";
 
     private static final String PAIR_GENERATOR_COMMAND = null;
+    private static final String CHANGE_OPPONENT_COMMAND = "/opponent/change";
 
     private final Command notFoundCommand;
 
     private final Map<String, Command> commandMap;
 
-    public CommandProvider(TeamService teamService, UserService userService, MarkService markService, FindOpponentsUsingList findOpponentsUsingList) {
+    public CommandProvider(TeamService teamService, UserService userService,
+                           MarkService markService, PairService pairService) {
         commandMap = new HashMap<>();
         commandMap.put(SHOW_ALL_TEAMS_COMMAND, new ShowAllTeamsCommand(teamService));
         commandMap.put(NEW_TEAM_FORM_COMMAND, new NewTeamFormCommand());
@@ -75,7 +75,8 @@ public class CommandProvider {
         commandMap.put(UPDATE_MARK_COMMAND, new UpdateMarkCommand(markService));
         commandMap.put(DELETE_MARK_COMMAND, new DeleteMarkCommand(markService));
 
-        commandMap.put(PAIR_GENERATOR_COMMAND, new FindOpponentsUsingListsCommand(findOpponentsUsingList));
+        commandMap.put(PAIR_GENERATOR_COMMAND, new FindOpponentsUsingListsCommand(pairService));
+        commandMap.put(CHANGE_OPPONENT_COMMAND, new ChangeOpponentCommand(userService, pairService));
 
         notFoundCommand = new NotFoundCommand();
     }

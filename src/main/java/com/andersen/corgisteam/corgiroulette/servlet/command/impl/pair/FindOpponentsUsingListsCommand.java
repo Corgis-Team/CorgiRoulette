@@ -1,6 +1,6 @@
 package com.andersen.corgisteam.corgiroulette.servlet.command.impl.pair;
 
-import com.andersen.corgisteam.corgiroulette.service.FindOpponentsUsingList;
+import com.andersen.corgisteam.corgiroulette.service.PairService;
 import com.andersen.corgisteam.corgiroulette.servlet.command.Command;
 
 import javax.servlet.ServletException;
@@ -11,15 +11,15 @@ import java.io.IOException;
 public class FindOpponentsUsingListsCommand implements Command {
     private static final String FIND_OPPONENTS_SHOW_PATH = "index.jsp";
 
-    private final FindOpponentsUsingList findOpponents;
+    private final PairService pairService;
 
-    public FindOpponentsUsingListsCommand(FindOpponentsUsingList findOpponents) {
-        this.findOpponents = findOpponents;
+    public FindOpponentsUsingListsCommand(PairService pairService) {
+        this.pairService = pairService;
     }
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("pair", findOpponents.getPair());
+        request.setAttribute("pair", pairService.getPair());
         request.getRequestDispatcher(FIND_OPPONENTS_SHOW_PATH).forward(request, response);
     }
 }

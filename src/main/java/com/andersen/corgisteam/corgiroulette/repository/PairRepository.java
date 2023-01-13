@@ -15,4 +15,6 @@ public interface PairRepository {
     void createPairInBattleTable(long userId, long opponentId);
 
     void deleteUserOpponent(long userId);
+
+    void deletePair(Pair pair);
 }

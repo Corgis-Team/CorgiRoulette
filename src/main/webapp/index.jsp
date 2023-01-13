@@ -32,13 +32,23 @@
 <c:choose>
     <c:when test="${pair != null}">
         <div class="d-flex justify-content-center">
-            <H4> ${pair.user.name} ${pair.user.surname} vs ${pair.opponent.name} ${pair.opponent.surname}</H4>
+            <form action="${pageContext.request.contextPath}/roulette/opponent/change" method="post">
+                <input type="hidden" name="userToChangeId" value="${pair.user.id}">
+                <input type="hidden" name="userToSaveId" value="${pair.opponent.id}">
+                <button type="submit" class="btn btn-link link-secondary">Change</button>
+            </form>
+            <h2> ${pair.user.name} ${pair.user.surname} vs ${pair.opponent.name} ${pair.opponent.surname}</h2>
+            <form action="${pageContext.request.contextPath}/roulette/opponent/change" method="post">
+                <input type="hidden" name="userToChangeId" value="${pair.opponent.id}">
+                <input type="hidden" name="userToSaveId" value="${pair.user.id}">
+                <button type="submit" class="btn btn-link link-secondary">Change</button>
+            </form>
         </div>
         <br>
         <div class="d-flex justify-content-center">
-            <form action="roulette/marks/create" method="post">
+            <form action="${pageContext.request.contextPath}/roulette/marks/create" method="post">
                 <div class="d-flex justify-content-center">
-                    <div class="form-group">
+                    <div class="form-group me-2">
                         <input type="hidden" id="userOneId" name="userOneId" value="${pair.user.id}"/>
                         <label for="markOne">${pair.user.name}'s mark</label><br>
                         <input type="number" min="0" value="0" step="0.5" class="form-control" id="markOne"

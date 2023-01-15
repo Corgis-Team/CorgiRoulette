@@ -1,9 +1,10 @@
-package com.andersen.corgisteam.corgiroulette.service;
+package com.andersen.corgisteam.corgiroulette.service.impl;
 
 import com.andersen.corgisteam.corgiroulette.dto.RequestUserDto;
 import com.andersen.corgisteam.corgiroulette.entity.User;
 import com.andersen.corgisteam.corgiroulette.mapper.UserMapper;
 import com.andersen.corgisteam.corgiroulette.repository.UserRepository;
+import com.andersen.corgisteam.corgiroulette.service.UserService;
 import com.andersen.corgisteam.corgiroulette.service.exception.FieldContainsNumberException;
 import com.andersen.corgisteam.corgiroulette.service.exception.FieldLengthExceedException;
 import com.andersen.corgisteam.corgiroulette.service.exception.RequiredFieldIsEmptyException;

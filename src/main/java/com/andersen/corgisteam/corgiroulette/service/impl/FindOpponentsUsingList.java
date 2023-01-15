@@ -1,8 +1,10 @@
-package com.andersen.corgisteam.corgiroulette.service;
+package com.andersen.corgisteam.corgiroulette.service.impl;
 
 import com.andersen.corgisteam.corgiroulette.entity.Pair;
 import com.andersen.corgisteam.corgiroulette.entity.User;
 import com.andersen.corgisteam.corgiroulette.repository.PairRepository;
+import com.andersen.corgisteam.corgiroulette.service.PairService;
+import com.andersen.corgisteam.corgiroulette.service.UserService;
 import com.andersen.corgisteam.corgiroulette.service.exception.NullListForGeneratePairException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,10 +31,12 @@ public class FindOpponentsUsingList implements PairService {
     }
 
     @Override
-    public Pair changeOpponent(Pair pair) {
+    public Pair changeOpponent(User userToSave, User userToChange) {
+        Pair pair = new Pair(userToSave, userToChange);
         deletePair(pair);
+
         List<User> originalUsersNotPicked = getUsersNotPicked();
-        pair.setOpponent(getOpponent(pair.getUser(), originalUsersNotPicked));
+        pair.setOpponent(getOpponent(userToSave, originalUsersNotPicked));
 
         return createPairOfOpponents(pair);
     }

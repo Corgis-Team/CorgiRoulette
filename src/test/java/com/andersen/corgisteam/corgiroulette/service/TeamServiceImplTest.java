@@ -1,5 +1,6 @@
 package com.andersen.corgisteam.corgiroulette.service;
 
+import com.andersen.corgisteam.corgiroulette.service.impl.TeamServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

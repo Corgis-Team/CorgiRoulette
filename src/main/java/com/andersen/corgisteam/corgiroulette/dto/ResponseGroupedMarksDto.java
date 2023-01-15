@@ -6,9 +6,6 @@ public class ResponseGroupedMarksDto {
     private User user;
 
     private double mark;
-
-    public ResponseGroupedMarksDto() {
-    }
     
     public User getUser() {
         return user;

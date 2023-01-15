@@ -3,7 +3,12 @@ package com.andersen.corgisteam.corgiroulette.servlet;
 import com.andersen.corgisteam.corgiroulette.mapper.UserMapper;
 import com.andersen.corgisteam.corgiroulette.mapper.UserMapperImpl;
 import com.andersen.corgisteam.corgiroulette.repository.*;
+import com.andersen.corgisteam.corgiroulette.repository.impl.MarkRepositoryImpl;
+import com.andersen.corgisteam.corgiroulette.repository.impl.PairRepositoryImpl;
+import com.andersen.corgisteam.corgiroulette.repository.impl.TeamRepositoryImpl;
+import com.andersen.corgisteam.corgiroulette.repository.impl.UserRepositoryImpl;
 import com.andersen.corgisteam.corgiroulette.service.*;
+import com.andersen.corgisteam.corgiroulette.service.impl.*;
 import com.andersen.corgisteam.corgiroulette.servlet.command.Command;
 import com.andersen.corgisteam.corgiroulette.servlet.command.CommandProvider;
 
@@ -17,9 +22,12 @@ import java.io.IOException;
 @WebServlet(name = "RouletteServlet", value = "/roulette/*")
 public class RouletteServlet extends HttpServlet {
 
-    private final CommandProvider commandProvider;
+    private CommandProvider commandProvider;
 
-    public RouletteServlet() {
+    @Override
+    public void init() throws ServletException {
+        super.init();
+
         TeamRepository teamRepository = new TeamRepositoryImpl();
         UserRepository userRepository = new UserRepositoryImpl(teamRepository);
         PairRepository pairRepository = new PairRepositoryImpl(userRepository);

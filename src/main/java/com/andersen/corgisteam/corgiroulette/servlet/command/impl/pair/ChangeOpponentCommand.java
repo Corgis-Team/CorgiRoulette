@@ -43,8 +43,7 @@ public class ChangeOpponentCommand implements Command {
             long userTwoId = Long.parseLong(request.getParameter(USER_TO_SAVE_PARAMETER));
             User userToSave = userService.get(userTwoId);
 
-            Pair pair = new Pair(userToSave, userToChange);
-            pair = pairService.changeOpponent(pair);
+            Pair pair = pairService.changeOpponent(userToSave, userToChange);
             request.setAttribute("pair", pair);
             request.getRequestDispatcher(MAIN_PATH).forward(request, response);
         } catch (NumberFormatException | EntityNotFoundException e) {

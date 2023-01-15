@@ -1,4 +1,4 @@
-package com.andersen.corgisteam.corgiroulette.service;
+package com.andersen.corgisteam.corgiroulette.service.impl;
 
 import com.andersen.corgisteam.corgiroulette.entity.Pair;
 import com.andersen.corgisteam.corgiroulette.entity.User;

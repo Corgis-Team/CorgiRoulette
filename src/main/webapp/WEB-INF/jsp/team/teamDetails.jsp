@@ -21,7 +21,7 @@
     <div class="card" style="width: 35rem; ">
 
         <div class="card-body">
-            <h4 class="card-title">${team.name}</h4>
+            <h4 class="card-title">${team.name} team</h4>
             <br>
             <h5 class="card-text">Members</h5>
             <c:choose>
@@ -31,6 +31,7 @@
                         <tr>
                             <th>Name</th>
                             <th>Surname</th>
+                            <th>Was chosen?</th>
                             <th>Details</th>
                             <th>Edit</th>
                             <th>Delete</th>
@@ -42,6 +43,7 @@
                             <tr>
                                 <td><c:out value="${user.name}"/></td>
                                 <td><c:out value="${user.surname}"/></td>
+                                <td><c:out value="${user.chosen ? 'Yes' : 'No'}"/></td>
                                 <td><a class="text-decoration-none link-danger"
                                        href="${pageContext.request.contextPath}/roulette/users/details?id=${user.id}">Details</a>
                                 </td>

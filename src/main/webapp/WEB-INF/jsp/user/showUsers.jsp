@@ -27,13 +27,13 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col"><b>Name</b></th>
-                        <th scope="col"><b>Surname</b></th>
-                        <th scope="col"><b>Was chosen?</b></th>
-                        <th scope="col"><b>Team</b></th>
-                        <th scope="col"><b>Details</b></th>
-                        <th scope="col"><b>Edit</b></th>
-                        <th scope="col"><b>Delete</b></th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Surname</th>
+                        <th scope="col">Was chosen?</th>
+                        <th scope="col">Team</th>
+                        <th scope="col">Details</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
                     </tr>
                     </thead>
 

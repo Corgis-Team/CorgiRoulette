@@ -21,28 +21,30 @@
         <button class="btn btn-danger" style="font-size: 24px;" type="submit">Create pair of opponents</button>
     </form>
 </div>
-
 <br>
-<br>
-<div class="d-flex justify-content-center">
-    <H3>The pair:</H3>
-</div>
 <br>
 
 <c:choose>
     <c:when test="${pair != null}">
         <div class="d-flex justify-content-center">
-            <form action="${pageContext.request.contextPath}/roulette/opponent/change" method="post">
-                <input type="hidden" name="userToChangeId" value="${pair.user.id}">
-                <input type="hidden" name="userToSaveId" value="${pair.opponent.id}">
-                <button type="submit" class="btn btn-link link-secondary">Change</button>
-            </form>
-            <h2> ${pair.user.name} ${pair.user.surname} vs ${pair.opponent.name} ${pair.opponent.surname}</h2>
-            <form action="${pageContext.request.contextPath}/roulette/opponent/change" method="post">
-                <input type="hidden" name="userToChangeId" value="${pair.opponent.id}">
-                <input type="hidden" name="userToSaveId" value="${pair.user.id}">
-                <button type="submit" class="btn btn-link link-secondary">Change</button>
-            </form>
+            <div>
+                <h2 class="mb-0">${pair.user.name} ${pair.user.surname}</h2>
+                <form action="${pageContext.request.contextPath}/roulette/opponent/change" method="post">
+                    <input type="hidden" name="userToChangeId" value="${pair.user.id}">
+                    <input type="hidden" name="userToSaveId" value="${pair.opponent.id}">
+                    <button type="submit" class="btn btn-sm btn-link link-secondary">Change</button>
+                </form>
+            </div>
+            <h2 class="align-self-stretch mx-2"><i>VS</i></h2>
+            <div>
+                <h2 class="mb-0">${pair.opponent.name} ${pair.opponent.surname}</h2>
+                <form class="d-flex justify-content-end p-0"
+                      action="${pageContext.request.contextPath}/roulette/opponent/change" method="post">
+                    <input type="hidden" name="userToChangeId" value="${pair.opponent.id}">
+                    <input type="hidden" name="userToSaveId" value="${pair.user.id}">
+                    <button type="submit" class="btn btn-sm btn-link link-secondary">Change</button>
+                </form>
+            </div>
         </div>
         <br>
         <div class="d-flex justify-content-center">

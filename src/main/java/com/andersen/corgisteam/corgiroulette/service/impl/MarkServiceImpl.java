@@ -1,8 +1,9 @@
-package com.andersen.corgisteam.corgiroulette.service;
+package com.andersen.corgisteam.corgiroulette.service.impl;
 
 import com.andersen.corgisteam.corgiroulette.dto.ResponseGroupedMarksDto;
 import com.andersen.corgisteam.corgiroulette.entity.Mark;
 import com.andersen.corgisteam.corgiroulette.repository.MarkRepository;
+import com.andersen.corgisteam.corgiroulette.service.MarkService;
 import com.andersen.corgisteam.corgiroulette.service.exception.InvalidNumberException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -47,8 +47,9 @@ public class CommandProvider {
 
     private final Map<String, Command> commandMap;
 
-    public CommandProvider(TeamService teamService, UserService userService,
-                           MarkService markService, PairService pairService) {
+    public CommandProvider(TeamService teamService, UserService userService, MarkService markService,
+                           PairService pairService) {
+
         commandMap = new HashMap<>();
         commandMap.put(SHOW_ALL_TEAMS_COMMAND, new ShowAllTeamsCommand(teamService));
         commandMap.put(NEW_TEAM_FORM_COMMAND, new NewTeamFormCommand());
@@ -82,7 +83,6 @@ public class CommandProvider {
 
         notFoundCommand = new NotFoundCommand();
     }
-
 
     public Command getCommand(String commandName) {
         if (!commandMap.containsKey(commandName)) {

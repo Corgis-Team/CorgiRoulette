@@ -2,6 +2,7 @@ package com.andersen.corgisteam.corgiroulette.repository;
 
 import java.sql.SQLException;
 
+import com.andersen.corgisteam.corgiroulette.repository.impl.TeamRepositoryImpl;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;

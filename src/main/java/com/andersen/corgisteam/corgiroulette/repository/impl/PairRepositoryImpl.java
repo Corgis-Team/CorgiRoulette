@@ -1,8 +1,10 @@
-package com.andersen.corgisteam.corgiroulette.repository;
+package com.andersen.corgisteam.corgiroulette.repository.impl;
 
 import com.andersen.corgisteam.corgiroulette.database.DatabaseConfig;
 import com.andersen.corgisteam.corgiroulette.entity.Pair;
 import com.andersen.corgisteam.corgiroulette.entity.User;
+import com.andersen.corgisteam.corgiroulette.repository.PairRepository;
+import com.andersen.corgisteam.corgiroulette.repository.UserRepository;
 import com.andersen.corgisteam.corgiroulette.repository.exception.QueryExecutionException;
 
 import java.sql.Connection;
@@ -12,7 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PairRepositoryImpl implements PairRepository{
+public class PairRepositoryImpl implements PairRepository {
 
     private static final String QUERY_FOR_PAIRS = "SELECT * FROM pairs";
     private static final String QUERY_FOR_SAVE_PAIR = "INSERT INTO pairs VALUES (?,?)";

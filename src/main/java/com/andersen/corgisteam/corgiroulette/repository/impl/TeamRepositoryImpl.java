@@ -1,4 +1,4 @@
-package com.andersen.corgisteam.corgiroulette.repository;
+package com.andersen.corgisteam.corgiroulette.repository.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.andersen.corgisteam.corgiroulette.database.DatabaseConfig;
 import com.andersen.corgisteam.corgiroulette.entity.Team;
+import com.andersen.corgisteam.corgiroulette.repository.TeamRepository;
 import com.andersen.corgisteam.corgiroulette.repository.exception.EntityNotFoundException;
 import com.andersen.corgisteam.corgiroulette.repository.exception.QueryExecutionException;
 

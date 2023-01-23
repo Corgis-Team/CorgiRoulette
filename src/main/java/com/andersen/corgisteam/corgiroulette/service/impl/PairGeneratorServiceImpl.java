@@ -1,10 +1,11 @@
-package com.andersen.corgisteam.corgiroulette.service;
+package com.andersen.corgisteam.corgiroulette.service.impl;
 
 
 import com.andersen.corgisteam.corgiroulette.entity.Pair;
 import com.andersen.corgisteam.corgiroulette.entity.User;
 import com.andersen.corgisteam.corgiroulette.repository.PairRepository;
 import com.andersen.corgisteam.corgiroulette.repository.UserRepository;
+import com.andersen.corgisteam.corgiroulette.service.PairGeneratorService;
 import com.andersen.corgisteam.corgiroulette.service.exception.NotAvailablePairsException;
 
 import java.time.Duration;
@@ -46,7 +47,7 @@ public class PairGeneratorServiceImpl implements PairGeneratorService {
     }
 
     @Override
-    public Pair changeOpponent(Pair pair) {
+    public Pair changeOpponent(User userToSave, User userToChange) {
         return null;
     }
 

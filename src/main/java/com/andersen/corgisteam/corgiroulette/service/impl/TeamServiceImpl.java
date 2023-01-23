@@ -1,7 +1,8 @@
-package com.andersen.corgisteam.corgiroulette.service;
+package com.andersen.corgisteam.corgiroulette.service.impl;
 
 import java.util.List;
 
+import com.andersen.corgisteam.corgiroulette.service.TeamService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

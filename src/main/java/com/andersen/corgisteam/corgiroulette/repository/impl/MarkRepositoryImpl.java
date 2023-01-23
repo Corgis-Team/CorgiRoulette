@@ -1,9 +1,11 @@
-package com.andersen.corgisteam.corgiroulette.repository;
+package com.andersen.corgisteam.corgiroulette.repository.impl;
 
 import com.andersen.corgisteam.corgiroulette.database.DatabaseConfig;
 import com.andersen.corgisteam.corgiroulette.dto.ResponseGroupedMarksDto;
 import com.andersen.corgisteam.corgiroulette.entity.Mark;
 import com.andersen.corgisteam.corgiroulette.entity.User;
+import com.andersen.corgisteam.corgiroulette.repository.MarkRepository;
+import com.andersen.corgisteam.corgiroulette.repository.UserRepository;
 import com.andersen.corgisteam.corgiroulette.repository.exception.EntityNotFoundException;
 import com.andersen.corgisteam.corgiroulette.repository.exception.QueryExecutionException;
 
